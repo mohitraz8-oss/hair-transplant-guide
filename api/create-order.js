@@ -1,4 +1,4 @@
-// Creates a Razorpay order for the fixed price (₹299). The amount is set
+// Creates a Razorpay order for the fixed price (₹1). The amount is set
 // on the server so it can never be tampered with from the browser.
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ error: 'method_not_allowed' });
@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
   const keySecret = process.env.RAZORPAY_KEY_SECRET;
   if (!keyId || !keySecret) return res.status(500).json({ error: 'not_configured' });
 
-  const amount = 29900; // ₹299 in paise. Change here if you ever reprice.
+  const amount = 100; // ₹1 in paise. Change here if you ever reprice.
 
   try {
     const auth = Buffer.from(keyId + ':' + keySecret).toString('base64');
