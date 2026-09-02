@@ -486,7 +486,7 @@ const SECTIONS_META = [{
 }, {
   "id": 5,
   "num": "05",
-  "illustration": "hairline-photo",
+  "illustration": "natural-hairline-photo",
   "title": {
     "en": "Designing a Natural Hairline",
     "hi": "नैचुरल हेयरलाइन डिज़ाइन करना"
@@ -498,7 +498,7 @@ const SECTIONS_META = [{
 }, {
   "id": 6,
   "num": "06",
-  "illustration": "questions",
+  "illustration": "clinic-checklist",
   "title": {
     "en": "Before Choosing a Clinic",
     "hi": "क्लिनिक चुनने से पहले"
@@ -510,7 +510,7 @@ const SECTIONS_META = [{
 }, {
   "id": 7,
   "num": "07",
-  "illustration": "cost",
+  "illustration": "cost-infographic",
   "title": {
     "en": "Understanding the Real Cost",
     "hi": "असल कीमत को समझें"
@@ -522,7 +522,7 @@ const SECTIONS_META = [{
 }, {
   "id": 8,
   "num": "08",
-  "illustration": "surgeryday",
+  "illustration": "surgery-day-photo",
   "title": {
     "en": "Before & During Surgery",
     "hi": "सर्जरी से पहले और उसके दौरान"
@@ -534,7 +534,7 @@ const SECTIONS_META = [{
 }, {
   "id": 9,
   "num": "09",
-  "illustration": "timeline",
+  "illustration": "recovery-photo",
   "title": {
     "en": "Pain, Recovery & Day-by-Day Aftercare",
     "hi": "दर्द, रिकवरी और दिन-प्रतिदिन देखभाल"
@@ -546,7 +546,7 @@ const SECTIONS_META = [{
 }, {
   "id": 10,
   "num": "10",
-  "illustration": "longterm",
+  "illustration": "medication-photo",
   "title": {
     "en": "Long-Term Planning: Your Remaining Hair",
     "hi": "लंबी अवधि की प्लानिंग: आपके बाकी बाल"
@@ -794,8 +794,8 @@ const FAQ_ITEMS = [{
     hi: 'मेरे हेयर ट्रांसप्लांट की असल कीमत कितनी होगी, और कोटेशन की तुलना कैसे करूं?'
   },
   a: {
-    en: 'Cost in India typically runs around ₹250–₹400 per graft, but the final price depends on grafts needed, technique, and the clinic. When comparing quotes, check what’s actually included — consultation, medicines, follow-up visits — since a lower headline price sometimes hides extra charges later.',
-    hi: 'भारत में आमतौर पर प्रति ग्राफ्ट लगभग ₹250–₹400 खर्च आता है, लेकिन अंतिम कीमत ज़रूरी ग्राफ्ट्स, तकनीक और क्लिनिक पर निर्भर करती है। दो कोटेशन की तुलना करते समय यह ज़रूर देखें कि उसमें असल में क्या-क्या शामिल है — कंसल्टेशन, दवाइयां, फॉलो-अप विज़िट — क्योंकि कम दिखने वाली कीमत में कई बार बाद में अतिरिक्त चार्ज छुपे होते हैं।'
+    en: 'Cost in India can vary widely — anywhere from around ₹10 to ₹400 per graft — depending on the clinic’s tier, technique, and city. When comparing quotes, check what’s actually included — consultation, medicines, follow-up visits — since a lower headline price sometimes hides extra charges later.',
+    hi: 'भारत में कीमत काफी अलग-अलग हो सकती है — क्लिनिक के स्तर, तकनीक और शहर के हिसाब से यह लगभग ₹10 से ₹400 प्रति ग्राफ्ट तक हो सकती है। दो कोटेशन की तुलना करते समय यह ज़रूर देखें कि उसमें असल में क्या-क्या शामिल है — कंसल्टेशन, दवाइयां, फॉलो-अप विज़िट — क्योंकि कम दिखने वाली कीमत में कई बार बाद में अतिरिक्त चार्ज छुपे होते हैं।'
   }
 }];
 const L = (obj, lang) => obj == null ? '' : obj[lang] ?? obj.en ?? '';
@@ -829,6 +829,30 @@ const PHOTO_ILLUSTRATIONS = {
   'hairline-photo': {
     en: '/hairline-example.jpg',
     hi: '/hairline-example.jpg'
+  },
+  'natural-hairline-photo': {
+    en: '/natural-hairline-photo.jpg',
+    hi: '/natural-hairline-photo.jpg'
+  },
+  'clinic-checklist': {
+    en: '/clinic-checklist-infographic.jpg',
+    hi: '/clinic-checklist-infographic.jpg'
+  },
+  'cost-infographic': {
+    en: '/cost-comparison-infographic.jpg',
+    hi: '/cost-comparison-infographic.jpg'
+  },
+  'surgery-day-photo': {
+    en: '/surgery-day-photo.jpg',
+    hi: '/surgery-day-photo.jpg'
+  },
+  'recovery-photo': {
+    en: '/recovery-photo.jpg',
+    hi: '/recovery-photo.jpg'
+  },
+  'medication-photo': {
+    en: '/medication-photo.jpg',
+    hi: '/medication-photo.jpg'
   }
 };
 function SectionIllustration({
