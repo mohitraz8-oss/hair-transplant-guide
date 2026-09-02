@@ -438,7 +438,7 @@ const PartyPopper = p => /*#__PURE__*/React.createElement(Ic, p, P('M5.8 11.3 2 
 const SECTIONS_META = [{
   "id": 1,
   "num": "01",
-  "illustration": "scalp",
+  "illustration": "candidate-photo",
   "title": {
     "en": "Should I Get a Hair Transplant?",
     "hi": "क्या मुझे हेयर ट्रांसप्लांट कराना चाहिए?"
@@ -450,7 +450,7 @@ const SECTIONS_META = [{
 }, {
   "id": 2,
   "num": "02",
-  "illustration": "graft",
+  "illustration": "graft-photo",
   "title": {
     "en": "Understanding Grafts & How Many You Need",
     "hi": "ग्राफ्ट्स को समझें और कितने चाहिए"
@@ -474,7 +474,7 @@ const SECTIONS_META = [{
 }, {
   "id": 4,
   "num": "04",
-  "illustration": "process",
+  "illustration": "technique-photo",
   "title": {
     "en": "FUE vs FUT: Understanding the Techniques",
     "hi": "FUE बनाम FUT: तकनीकों को समझें"
@@ -486,7 +486,7 @@ const SECTIONS_META = [{
 }, {
   "id": 5,
   "num": "05",
-  "illustration": "hairline",
+  "illustration": "hairline-photo",
   "title": {
     "en": "Designing a Natural Hairline",
     "hi": "नैचुरल हेयरलाइन डिज़ाइन करना"
@@ -806,6 +806,48 @@ const INK = '#292524',
   HAIR = '#e7e5e4',
   ACC = '#047857',
   ACC_SOFT = '#d1fae5';
+
+// Some sections use a real photo instead of a line-drawing. Map illustration
+// kind -> image path per language (same path for both if no Hindi variant).
+const PHOTO_ILLUSTRATIONS = {
+  'donor-photo': {
+    en: '/donor-compare-en.jpg',
+    hi: '/donor-compare-hi.jpg'
+  },
+  'candidate-photo': {
+    en: '/candidate-compare-en.jpg',
+    hi: '/candidate-compare-hi.jpg'
+  },
+  'graft-photo': {
+    en: '/graft-photo.jpg',
+    hi: '/graft-photo.jpg'
+  },
+  'technique-photo': {
+    en: '/fue-vs-fut.jpg',
+    hi: '/fue-vs-fut.jpg'
+  },
+  'hairline-photo': {
+    en: '/hairline-example.jpg',
+    hi: '/hairline-example.jpg'
+  }
+};
+function SectionIllustration({
+  kind,
+  lang
+}) {
+  const photo = PHOTO_ILLUSTRATIONS[kind];
+  if (photo) {
+    return /*#__PURE__*/React.createElement("img", {
+      src: photo[lang] || photo.en,
+      alt: kind,
+      className: "w-full rounded-2xl border border-stone-200"
+    });
+  }
+  return /*#__PURE__*/React.createElement(Illustration, {
+    kind: kind,
+    lang: lang
+  });
+}
 function Illustration({
   kind,
   lang
@@ -1561,11 +1603,7 @@ function Preview({
     className: "rounded-2xl border border-stone-200 bg-white p-6"
   }, /*#__PURE__*/React.createElement("div", {
     className: "mb-5"
-  }, SECTIONS_META[0].illustration === 'donor-photo' ? /*#__PURE__*/React.createElement("img", {
-    src: lang === 'hi' ? '/donor-compare-hi.jpg' : '/donor-compare-en.jpg',
-    alt: lang === 'hi' ? 'अच्छा बनाम कमज़ोर डोनर एरिया' : 'Good vs weak donor area',
-    className: "w-full rounded-2xl border border-stone-200"
-  }) : /*#__PURE__*/React.createElement(Illustration, {
+  }, /*#__PURE__*/React.createElement(SectionIllustration, {
     kind: SECTIONS_META[0].illustration,
     lang: lang
   })), /*#__PURE__*/React.createElement("div", {
@@ -1740,7 +1778,7 @@ function GuideHome({
     className: "mb-2 flex items-center justify-between text-sm"
   }, /*#__PURE__*/React.createElement("span", {
     className: "font-medium text-stone-700"
-  }, count, " ", L(UI.progressLabel, lang), " ", L(UI.ofSections, lang)), /*#__PURE__*/React.createElement("span", {
+  }, count, " ", L(UI.progressLabel, lang), " ", lang === 'hi' ? `/ ${SECTIONS_META.length} सेक्शन` : `of ${SECTIONS_META.length} sections`), /*#__PURE__*/React.createElement("span", {
     className: "text-stone-400"
   }, pct, "%")), /*#__PURE__*/React.createElement("div", {
     className: "h-2 w-full overflow-hidden rounded-full bg-stone-100"
@@ -1787,11 +1825,7 @@ function SectionReader({
     className: "mb-1 text-sm font-medium text-stone-400"
   }, L(UI.sectionLabel, lang), " ", meta.num), /*#__PURE__*/React.createElement("h1", {
     className: "font-serif text-3xl leading-tight tracking-tight text-stone-900 sm:text-4xl"
-  }, L(meta.title, lang))), meta.illustration === 'donor-photo' ? /*#__PURE__*/React.createElement("img", {
-    src: lang === 'hi' ? '/donor-compare-hi.jpg' : '/donor-compare-en.jpg',
-    alt: lang === 'hi' ? 'अच्छा बनाम कमज़ोर डोनर एरिया' : 'Good vs weak donor area',
-    className: "w-full rounded-2xl border border-stone-200"
-  }) : /*#__PURE__*/React.createElement(Illustration, {
+  }, L(meta.title, lang))), /*#__PURE__*/React.createElement(SectionIllustration, {
     kind: meta.illustration,
     lang: lang
   }), /*#__PURE__*/React.createElement("div", {
