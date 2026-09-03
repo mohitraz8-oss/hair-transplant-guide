@@ -582,7 +582,7 @@ const PREVIEW_SAMPLE = [{
 // is the real source of truth and re-checks the amount independently.
 const TIERS = [{
   id: 'essential',
-  price: '₹199',
+  price: '₹1',
   name: {
     en: 'Essential',
     hi: 'एसेंशियल'
@@ -597,7 +597,7 @@ const TIERS = [{
   }
 }, {
   id: 'premium',
-  price: '₹499',
+  price: '₹2',
   popular: true,
   name: {
     en: 'Premium',
@@ -613,7 +613,7 @@ const TIERS = [{
   }
 }, {
   id: 'full',
-  price: '₹999',
+  price: '₹3',
   name: {
     en: 'Full',
     hi: 'फुल'
@@ -632,7 +632,7 @@ const UI = {
     en: 'Hair Transplant Starter Guide',
     hi: 'हेयर ट्रांसप्लांट स्टार्टर गाइड'
   },
-  price: '₹199',
+  price: '₹1',
   oneTime: {
     en: 'One-time payment',
     hi: 'एक बार का भुगतान'
@@ -1740,7 +1740,7 @@ function Landing({
     className: "inline-flex items-center justify-center gap-2 rounded-xl border border-stone-300 bg-white px-6 py-3.5 text-base font-semibold text-stone-700 transition hover:border-stone-400"
   }, L(UI.viewPreview, lang))), !unlocked && /*#__PURE__*/React.createElement("p", {
     className: "mt-3 text-sm text-stone-400"
-  }, lang === 'hi' ? 'शुरुआत ₹199 से' : 'Starting at ₹199', " · ", L(UI.oneTime, lang))), /*#__PURE__*/React.createElement("section", {
+  }, lang === 'hi' ? 'शुरुआत ₹1 से' : 'Starting at ₹1', " · ", L(UI.oneTime, lang))), /*#__PURE__*/React.createElement("section", {
     className: "mb-8"
   }, /*#__PURE__*/React.createElement("img", {
     src: "/before-after.jpg",
@@ -2498,7 +2498,7 @@ function App() {
     onHome: () => go('guide')
   }), /*#__PURE__*/React.createElement("footer", {
     className: "border-t border-stone-200 py-6 text-center text-xs text-stone-400"
-  }, L(UI.brand, lang), " · ", lang === 'hi' ? 'शुरुआत ₹199 से' : 'From ₹199'));
+  }, L(UI.brand, lang), " · ", lang === 'hi' ? 'शुरुआत ₹1 से' : 'From ₹1'));
 }
 ReactDOM.createRoot(document.getElementById("root")).render(/*#__PURE__*/React.createElement(App, null));</script>
 <script>
