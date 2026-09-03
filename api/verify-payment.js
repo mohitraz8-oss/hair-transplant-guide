@@ -1,6 +1,8 @@
 // Verifies the Razorpay signature using the SECRET key (never exposed to the
 // browser). Only a genuine, completed payment produces a matching signature.
-// On success we store a random access token in Supabase and return it.
+// The tier being unlocked comes from the row create-order.js already wrote
+// for this order_id — never from anything the browser sends here — so a
+// person can't claim a higher tier than what they actually paid for.
 const crypto = require('crypto');
 
 module.exports = async (req, res) => {
@@ -18,7 +20,6 @@ module.exports = async (req, res) => {
   if (!keySecret || !supaUrl || !supaKey) return res.status(500).json({ ok: false, error: 'not_configured' });
 
   const expected = crypto.createHmac('sha256', keySecret).update(orderId + '|' + paymentId).digest('hex');
-  // constant-time compare
   const a = Buffer.from(expected);
   const b = Buffer.from(signature);
   if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) {
@@ -27,20 +28,31 @@ module.exports = async (req, res) => {
 
   const token = crypto.randomBytes(24).toString('hex');
   try {
-    const r = await fetch(supaUrl + '/rest/v1/purchases', {
-      method: 'POST',
+    // Update the row that create-order.js already created for this order_id.
+    const r = await fetch(supaUrl + '/rest/v1/purchases?order_id=eq.' + encodeURIComponent(orderId), {
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         apikey: supaKey,
         Authorization: 'Bearer ' + supaKey,
-        Prefer: 'return=minimal',
+        Prefer: 'return=representation',
       },
-      body: JSON.stringify({ order_id: orderId, payment_id: paymentId, status: 'paid', access_token: token, amount: 29900 }),
+      body: JSON.stringify({ payment_id: paymentId, status: 'paid', access_token: token }),
     });
-    if (!r.ok) return res.status(500).json({ ok: false, error: 'store_failed' });
+    if (!r.ok) {
+      const errText = await r.text().catch(() => '(no body)');
+      console.error('verify-payment: Supabase PATCH failed', r.status, errText, 'orderId=', orderId);
+      return res.status(500).json({ ok: false, error: 'store_failed', detail: errText });
+    }
+    const rows = await r.json();
+    if (!Array.isArray(rows) || rows.length === 0) {
+      console.error('verify-payment: no matching row for orderId=', orderId);
+      return res.status(500).json({ ok: false, error: 'order_not_found' });
+    }
+    const tier = rows[0].tier || 'essential';
+    return res.status(200).json({ ok: true, token, tier });
   } catch (e) {
-    return res.status(500).json({ ok: false, error: 'store_failed' });
+    console.error('verify-payment: exception', e && e.message, e && e.stack);
+    return res.status(500).json({ ok: false, error: 'server_error', detail: String(e && e.message) });
   }
-
-  return res.status(200).json({ ok: true, token });
 };
