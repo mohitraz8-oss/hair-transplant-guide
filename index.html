@@ -737,6 +737,10 @@ const UI = {
     en: 'Payment didn’t go through. Nothing was charged — please try again.',
     hi: 'भुगतान पूरा नहीं हुआ। कोई पैसा नहीं कटा — कृपया दोबारा कोशिश करें।'
   },
+  verifyError: {
+    en: 'Your payment may have gone through, but we couldn’t confirm it automatically. Please don’t pay again — message us with your payment details and we’ll unlock your guide manually.',
+    hi: 'आपका भुगतान हो चुका होगा, लेकिन हम इसे अपने आप कन्फर्म नहीं कर सके। कृपया दोबारा भुगतान न करें — अपनी पेमेंट डिटेल्स के साथ हमें मैसेज करें, हम आपकी गाइड मैन्युअल रूप से अनलॉक कर देंगे।'
+  },
   testHint: {
     en: 'Test mode — use card 4111 1111 1111 1111, any future date & any CVV. No real money.',
     hi: 'टेस्ट मोड — कार्ड 4111 1111 1111 1111, कोई भी future date और कोई भी CVV डालें। असली पैसा नहीं लगेगा।'
@@ -2423,7 +2427,7 @@ function App() {
             }
           } catch (e) {
             setPayBusy(false);
-            setPayError(L(UI.payError, lang));
+            setPayError(L(UI.verifyError, lang));
           }
         },
         modal: {
