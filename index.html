@@ -572,7 +572,7 @@ const PREVIEW_SAMPLE = [{
 }];
 const TIERS = [{
   id: 'essential',
-  price: '₹299',
+  price: '₹1',
   name: {
     en: 'Essential',
     hi: 'एसेंशियल'
@@ -587,7 +587,7 @@ const TIERS = [{
   }
 }, {
   id: 'premium',
-  price: '₹699',
+  price: '₹2',
   popular: true,
   name: {
     en: 'Premium',
@@ -603,7 +603,7 @@ const TIERS = [{
   }
 }, {
   id: 'full',
-  price: '₹1,499',
+  price: '₹3',
   name: {
     en: 'Full',
     hi: 'फुल'
@@ -619,7 +619,7 @@ const TIERS = [{
 }];
 const ADDONS = [{
   id: 'clinic_check',
-  price: '₹499',
+  price: '₹4',
   name: {
     en: 'Clinic Check',
     hi: 'क्लिनिक चेक'
@@ -630,7 +630,7 @@ const ADDONS = [{
   }
 }, {
   id: 'video_call',
-  price: '₹999',
+  price: '₹5',
   name: {
     en: '1:1 Video Call',
     hi: '1:1 वीडियो कॉल'
@@ -646,7 +646,7 @@ const UI = {
     en: 'Hair Transplant Starter Guide',
     hi: 'हेयर ट्रांसप्लांट स्टार्टर गाइड'
   },
-  price: '₹299',
+  price: '₹1',
   oneTime: {
     en: 'One-time payment',
     hi: 'एक बार का भुगतान'
@@ -1761,7 +1761,7 @@ function Landing({
     className: "inline-flex items-center justify-center gap-2 rounded-xl border border-stone-300 bg-white px-6 py-3.5 text-base font-semibold text-stone-700 transition hover:border-stone-400"
   }, L(UI.viewPreview, lang))), !unlocked && React.createElement("p", {
     className: "mt-3 text-sm text-stone-400"
-  }, lang === 'hi' ? 'शुरुआत ₹299 से' : 'Starting at ₹299', " \xB7 ", L(UI.oneTime, lang))), React.createElement("section", {
+  }, lang === 'hi' ? 'शुरुआत ₹1 से' : 'Starting at ₹1', " \xB7 ", L(UI.oneTime, lang))), React.createElement("section", {
     className: "mb-8"
   }, React.createElement("img", {
     src: "/before-after.jpg",
@@ -2788,7 +2788,7 @@ function App() {
     onHome: () => go('guide')
   }), React.createElement("footer", {
     className: "border-t border-stone-200 py-6 text-center text-xs text-stone-400"
-  }, L(UI.brand, lang), " \xB7 ", lang === 'hi' ? 'शुरुआत ₹299 से' : 'From ₹299'));
+  }, L(UI.brand, lang), " \xB7 ", lang === 'hi' ? 'शुरुआत ₹1 से' : 'From ₹1'));
 }
 ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App, null));</script>
 <script>
