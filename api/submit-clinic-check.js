@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
   const phone  = (body.phone  || '').toString().slice(0, 20);
   const city   = (body.city   || '').toString().slice(0, 100);
   const clinic = (body.clinic || '').toString().slice(0, 200);
-  const quote  = (body.quote  || '').toString().slice(0, 100);
+  const clinic_link = (body.clinic_link || '').toString().slice(0, 300);
   const note   = (body.note   || '').toString().slice(0, 1000);
 
   const supaUrl = process.env.SUPABASE_URL;
@@ -31,7 +31,7 @@ module.exports = async (req, res) => {
     const insertRes = await fetch(supaUrl + '/rest/v1/clinic_checks', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', apikey: supaKey, Authorization: 'Bearer ' + supaKey, Prefer: 'return=minimal' },
-      body: JSON.stringify({ access_token: bookingToken, name, phone, city, clinic, quote, note, status: 'pending' }),
+      body: JSON.stringify({ access_token: bookingToken, name, phone, city, clinic, clinic_link, note, status: 'pending' }),
     });
     if (!insertRes.ok) return res.status(500).json({ error: 'store_failed' });
     return res.status(200).json({ ok: true, bookingToken });
