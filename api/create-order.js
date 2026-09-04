@@ -6,9 +6,11 @@
 // TEMPORARY TEST PRICES — ₹1 / ₹2 / ₹3 — for testing the full flow cheaply.
 // Real prices to restore later: essential 19900 (₹199), premium 49900 (₹499), full 99900 (₹999).
 const TIERS = {
-  essential: { amount: 100, label: 'Essential' },
-  premium:   { amount: 200, label: 'Premium' },
-  full:      { amount: 300, label: 'Full' },
+  essential: { amount: 29900, label: 'Essential' },
+  premium:   { amount: 69900, label: 'Premium' },
+  full:      { amount: 149900, label: 'Full' },
+  clinic_check: { amount: 49900, label: 'Clinic Check' },
+  video_call:   { amount: 99900, label: 'Video Call' },
 };
 
 module.exports = async (req, res) => {
