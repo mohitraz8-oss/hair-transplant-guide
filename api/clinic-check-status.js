@@ -18,9 +18,9 @@ module.exports = async (req, res) => {
       const pRes = await fetch(supaUrl + '/rest/v1/purchases?select=tier,status&access_token=eq.' + encodeURIComponent(tok), { headers });
       const pRows = await pRes.json();
       if (!Array.isArray(pRows) || pRows.length === 0 || pRows[0].status !== 'paid' || pRows[0].tier !== 'clinic_check') continue;
-      const r = await fetch(supaUrl + '/rest/v1/clinic_checks?select=clinic,city,clinic_link,note,status,admin_note,created_at&purchase_token=eq.' + encodeURIComponent(tok) + '&order=created_at.desc', { headers });
+      const r = await fetch(supaUrl + '/rest/v1/clinic_checks?select=access_token,clinic,city,clinic_link,note,status,admin_note,created_at&purchase_token=eq.' + encodeURIComponent(tok) + '&order=created_at.desc', { headers });
       const rows = await r.json();
-      if (Array.isArray(rows)) for (const row of rows) all.push(row);
+      if (Array.isArray(rows)) for (const row of rows) { const { access_token, ...rest } = row; all.push({ token: access_token, ...rest }); }
     }
     all.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
     return res.status(200).json({ ok: true, reviews: all });
