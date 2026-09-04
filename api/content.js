@@ -18,12 +18,16 @@ module.exports = async (req, res) => {
     const rows = await r.json();
     if (!Array.isArray(rows) || rows.length === 0) return res.status(403).json({ error: 'not_paid' });
     const row = rows[0];
-    return res.status(200).json({
+    const tier = row.tier || 'essential';
+    const payload = {
       sections: guide.sections,
-      tier: row.tier || 'essential',
+      tier,
       purchasedAt: row.created_at,
       callRequested: Boolean(row.call_requested),
-    });
+    };
+    // My Story (clinic, doctors, price) is a Premium+ unlock — never sent to Essential buyers.
+    if (tier === 'premium' || tier === 'full') payload.myStory = guide.myStory || null;
+    return res.status(200).json(payload);
   } catch (e) {
     return res.status(500).json({ error: 'server_error' });
   }
