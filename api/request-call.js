@@ -10,6 +10,7 @@ module.exports = async (req, res) => {
   const name = (body.name || '').toString().slice(0, 100);
   const phone = (body.phone || '').toString().slice(0, 20);
   const note = (body.note || '').toString().slice(0, 500);
+  const city = (body.city || '').toString().slice(0, 100);
   const supaUrl = process.env.SUPABASE_URL;
   const supaKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!token || !name || !phone) return res.status(400).json({ error: 'missing_fields' });
@@ -40,6 +41,7 @@ module.exports = async (req, res) => {
         call_requested_at: new Date().toISOString(),
         contact_name: name,
         contact_phone: phone,
+        contact_city: city,
       }),
     });
     if (!updateRes.ok) return res.status(500).json({ error: 'store_failed' });
