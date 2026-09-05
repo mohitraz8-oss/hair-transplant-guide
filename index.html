@@ -1898,12 +1898,13 @@ function VideoCallList({
   const load = React.useCallback(async () => {
     setErr(false);
     try {
-      const r = await fetch('/api/video-call-status', {
+      const r = await fetch('/api/video-call', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+          action: 'status',
           tokens
         })
       });
@@ -1923,12 +1924,13 @@ function VideoCallList({
     if (!bt) return;
     if (!window.confirm(lang === 'hi' ? 'यह कॉल हटाएँ?' : 'Remove this call?')) return;
     try {
-      const r = await fetch('/api/delete-video-call', {
+      const r = await fetch('/api/video-call', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+          action: 'delete',
           tokens,
           bookingToken: bt
         })
@@ -2001,12 +2003,13 @@ function ClinicReviews({
   const load = React.useCallback(async () => {
     setErr(false);
     try {
-      const r = await fetch('/api/clinic-check-status', {
+      const r = await fetch('/api/clinic-check', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+          action: 'status',
           tokens
         })
       });
@@ -2020,12 +2023,13 @@ function ClinicReviews({
     if (!bt) return;
     if (!window.confirm(lang === 'hi' ? 'यह रिव्यू हटाएँ?' : 'Remove this review?')) return;
     try {
-      const r = await fetch('/api/delete-clinic-check', {
+      const r = await fetch('/api/clinic-check', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+          action: 'delete',
           tokens,
           bookingToken: bt
         })
@@ -2925,14 +2929,16 @@ function AddonBooking({
     setBusy(true);
     setErr('');
     try {
-      const url = isCall ? '/api/submit-video-call' : '/api/submit-clinic-check';
+      const url = isCall ? '/api/video-call' : '/api/clinic-check';
       const payload = isCall ? {
+        action: 'submit',
         token,
         name,
         phone,
         preferred_time: when,
         note
       } : {
+        action: 'submit',
         token,
         name,
         phone,
