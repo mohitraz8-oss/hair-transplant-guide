@@ -17,7 +17,7 @@ module.exports = async (req, res) => {
       for (const tok of tokens) {
         const pRes = await fetch(supaUrl + '/rest/v1/purchases?select=tier,status&access_token=eq.' + encodeURIComponent(tok), { headers });
         const pRows = await pRes.json();
-        if (!Array.isArray(pRows) || !pRows.length || pRows[0].status !== 'paid' || pRows[0].tier !== 'clinic_check') continue;
+        if (!Array.isArray(pRows) || !pRows.length || pRows[0].status !== 'paid' || (pRows[0].tier !== 'clinic_check' && pRows[0].tier !== 'full')) continue;
         const r = await fetch(supaUrl + '/rest/v1/clinic_checks?select=access_token,clinic,city,clinic_link,note,status,admin_note,created_at&purchase_token=eq.' + encodeURIComponent(tok) + '&order=created_at.desc', { headers });
         const rows = await r.json();
         if (Array.isArray(rows)) for (const row of rows) { const { access_token, ...rest } = row; all.push({ token: access_token, ...rest }); }
@@ -55,7 +55,7 @@ module.exports = async (req, res) => {
     const checkRes = await fetch(supaUrl + '/rest/v1/purchases?select=tier,status&access_token=eq.' + encodeURIComponent(purchaseToken), { headers });
     const rows = await checkRes.json();
     if (!Array.isArray(rows) || !rows.length) return res.status(403).json({ error: 'not_found' });
-    if (rows[0].status !== 'paid' || rows[0].tier !== 'clinic_check') return res.status(403).json({ error: 'not_eligible' });
+    if (rows[0].status !== 'paid' || (rows[0].tier !== 'clinic_check' && rows[0].tier !== 'full')) return res.status(403).json({ error: 'not_eligible' });
     const bookingToken = crypto.randomBytes(24).toString('hex');
     const insertRes = await fetch(supaUrl + '/rest/v1/clinic_checks', { method: 'POST', headers: Object.assign({ 'Content-Type': 'application/json', Prefer: 'return=minimal' }, headers), body: JSON.stringify({ access_token: bookingToken, purchase_token: purchaseToken, name, phone, city, clinic, clinic_link, note, status: 'pending' }) });
     if (!insertRes.ok) return res.status(500).json({ error: 'store_failed' });
