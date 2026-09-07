@@ -1873,17 +1873,13 @@ function IncludedDropdown({
     size: 9
   })), f))));
 }
-function PlanComparison({
+function PlanCard({
   lang,
-  onGet,
+  tier,
   currentTier,
+  onGet,
   onUpgrade
 }) {
-  const RANK = {
-    essential: 1,
-    premium: 2,
-    full: 3
-  };
   const STAR = {
     essential: [0],
     premium: [1, 2],
@@ -1895,8 +1891,6 @@ function PlanComparison({
       name: 'text-white',
       sub: 'text-blue-50',
       price: 'text-white',
-      tab: 'bg-blue-600',
-      tabText: 'text-white',
       btn: 'bg-blue-700 hover:bg-blue-800 text-white',
       ring: 'ring-blue-500'
     },
@@ -1905,8 +1899,6 @@ function PlanComparison({
       name: 'text-stone-900',
       sub: 'text-amber-900',
       price: 'text-stone-900',
-      tab: 'bg-amber-400',
-      tabText: 'text-stone-900',
       btn: 'bg-amber-500 hover:bg-amber-600 text-stone-900',
       ring: 'ring-amber-400'
     },
@@ -1915,18 +1907,13 @@ function PlanComparison({
       name: 'text-white',
       sub: 'text-stone-300',
       price: 'text-amber-400',
-      tab: 'bg-stone-900',
-      tabText: 'text-white',
       btn: 'bg-stone-900 hover:bg-stone-800 text-white',
       ring: 'ring-stone-800'
     }
   };
-  const visible = currentTier ? TIERS.filter(t => RANK[t.id] >= RANK[currentTier]) : TIERS;
-  const [sel, setSel] = useState(currentTier ? (visible.find(t => t.id !== currentTier) || visible[0]).id : 'premium');
-  const t = TIERS.find(x => x.id === sel) || TIERS[0];
+  const t = TIERS.find(x => x.id === tier) || TIERS[0];
   const h = head[t.id];
   const feats = L(t.features, lang);
-  const stars = STAR[t.id] || [];
   const essTier = TIERS.find(x => x.id === 'essential');
   const premTier = TIERS.find(x => x.id === 'premium');
   let ownFeats, ownStars, inherited;
@@ -1964,27 +1951,14 @@ function PlanComparison({
       return React.createElement("button", {
         onClick: () => onUpgrade(t.id),
         className: `w-full rounded-xl px-4 py-3.5 text-sm font-bold transition ${h.btn}`
-      }, lang === 'hi' ? 'अपग्रेड करें' : 'Upgrade');
+      }, lang === 'hi' ? `${L(t.name, lang)} में अपग्रेड करें` : `Upgrade to ${L(t.name, lang)}`);
     }
     return React.createElement("button", {
       onClick: () => onGet(t.id),
       className: `w-full rounded-xl px-4 py-3.5 text-sm font-bold transition ${h.btn}`
     }, lang === 'hi' ? 'यह प्लान चुनें' : 'Choose this plan');
   };
-  return React.createElement("section", {
-    id: "pricing",
-    className: "mt-10"
-  }, !currentTier && React.createElement("h2", {
-    className: "mb-1 text-center font-serif text-2xl text-stone-900 sm:text-3xl"
-  }, L(UI.choosePlan, lang)), !currentTier && React.createElement("p", {
-    className: "mb-5 text-center text-sm text-stone-500"
-  }, L(UI.choosePlanSub, lang)), React.createElement("div", {
-    className: "mb-4 flex gap-1 rounded-full border border-stone-200 bg-white p-1"
-  }, visible.map(pt => React.createElement("button", {
-    key: pt.id,
-    onClick: () => setSel(pt.id),
-    className: `flex-1 rounded-full px-2 py-2 text-sm font-semibold transition ${sel === pt.id ? head[pt.id].tab + ' ' + head[pt.id].tabText + ' shadow-sm' : 'text-stone-500 hover:text-stone-800'}`
-  }, L(pt.name, lang)))), React.createElement("div", {
+  return React.createElement("div", {
     className: `flex min-h-[500px] flex-col overflow-hidden rounded-2xl bg-white ${t.popular ? 'shadow-lg ring-2 ' + h.ring : 'border border-stone-200 shadow-sm'}`
   }, React.createElement("div", {
     className: `${h.bg} px-5 py-4`
@@ -2026,7 +2000,55 @@ function PlanComparison({
     })), f);
   })), React.createElement("div", {
     className: "mt-auto pt-5"
-  }, btn()))));
+  }, btn())));
+}
+function PlanComparison({
+  lang,
+  onGet,
+  currentTier,
+  onUpgrade
+}) {
+  const RANK = {
+    essential: 1,
+    premium: 2,
+    full: 3
+  };
+  const head = {
+    essential: {
+      tab: 'bg-blue-600',
+      tabText: 'text-white'
+    },
+    premium: {
+      tab: 'bg-amber-400',
+      tabText: 'text-stone-900'
+    },
+    full: {
+      tab: 'bg-stone-900',
+      tabText: 'text-white'
+    }
+  };
+  const visible = currentTier ? TIERS.filter(t => RANK[t.id] >= RANK[currentTier]) : TIERS;
+  const [sel, setSel] = useState(currentTier ? (visible.find(t => t.id !== currentTier) || visible[0]).id : 'premium');
+  return React.createElement("section", {
+    id: "pricing",
+    className: "mt-10"
+  }, !currentTier && React.createElement("h2", {
+    className: "mb-1 text-center font-serif text-2xl text-stone-900 sm:text-3xl"
+  }, L(UI.choosePlan, lang)), !currentTier && React.createElement("p", {
+    className: "mb-5 text-center text-sm text-stone-500"
+  }, L(UI.choosePlanSub, lang)), React.createElement("div", {
+    className: "mb-4 flex gap-1 rounded-full border border-stone-200 bg-white p-1"
+  }, visible.map(pt => React.createElement("button", {
+    key: pt.id,
+    onClick: () => setSel(pt.id),
+    className: `flex-1 rounded-full px-2 py-2 text-sm font-semibold transition ${sel === pt.id ? head[pt.id].tab + ' ' + head[pt.id].tabText + ' shadow-sm' : 'text-stone-500 hover:text-stone-800'}`
+  }, L(pt.name, lang)))), React.createElement(PlanCard, {
+    lang: lang,
+    tier: sel,
+    currentTier: currentTier,
+    onGet: onGet,
+    onUpgrade: onUpgrade
+  }));
 }
 function VideoCallList({
   lang,
@@ -3415,12 +3437,7 @@ function TierTopCard({
       className: "text-amber-600"
     }), lang === 'hi' ? `${plan} अभी लॉक है — इसे अनलॉक करें!` : `${plan} is locked — unlock it!`), React.createElement("p", {
       className: "mt-1 text-[13px] leading-snug text-stone-700"
-    }, (lang === 'hi' ? 'पाएँ: ' : 'Get ') + benefit + (lang === 'hi' ? ' — सिर्फ अंतर की रकम देकर।' : ' — for just the difference.')), React.createElement("button", {
-      onClick: () => onUpgrade(tier),
-      className: "mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-stone-900 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-stone-800"
-    }, lang === 'hi' ? `${plan} में अपग्रेड करें` : `Upgrade to ${plan}`, React.createElement(ArrowRight, {
-      size: 15
-    })));
+    }, (lang === 'hi' ? 'पाएँ: ' : 'Get ') + benefit + (lang === 'hi' ? '।' : '.')));
   }
   const theme = tier === 'full' ? {
     bg: 'bg-stone-900',
@@ -3593,9 +3610,10 @@ function GuideHome({
     }), tb.label);
   }))), tab === 'essential' && React.createElement(React.Fragment, null, React.createElement(ProductsCard, {
     lang: lang
-  }), progressAndSections), tab === 'premium' && (RANK.premium > userRank ? React.createElement(LockedTierPreview, {
+  }), progressAndSections), tab === 'premium' && (RANK.premium > userRank ? React.createElement(PlanCard, {
     lang: lang,
     tier: "premium",
+    currentTier: purchase.tier,
     onUpgrade: onUpgrade
   }) : React.createElement(React.Fragment, null, React.createElement(MyStoryCard, {
     lang: lang,
@@ -3608,9 +3626,10 @@ function GuideHome({
     lang: lang,
     purchase: purchase,
     onCallRequested: onCallRequested
-  }))), tab === 'full' && (RANK.full > userRank ? React.createElement(LockedTierPreview, {
+  }))), tab === 'full' && (RANK.full > userRank ? React.createElement(PlanCard, {
     lang: lang,
     tier: "full",
+    currentTier: purchase.tier,
     onUpgrade: onUpgrade
   }) : React.createElement(FullPerksCard, {
     lang: lang,
