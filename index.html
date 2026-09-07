@@ -2419,7 +2419,7 @@ function Landing({
 }) {
   const hasClinic = clinicTokens && clinicTokens.length > 0;
   const hasVideo = videoTokens && videoTokens.length > 0;
-  const [vidPlaying, setVidPlaying] = useState(false);
+  const [vidStarted, setVidStarted] = useState(false);
   const STARIDX = {
     essential: [0],
     premium: [1, 2],
@@ -2455,11 +2455,9 @@ function Landing({
     controls: true,
     playsInline: true,
     preload: "metadata",
-    onPlay: () => setVidPlaying(true),
-    onPause: () => setVidPlaying(false),
-    onEnded: () => setVidPlaying(false),
-    className: `block w-full bg-black ${vidPlaying ? '' : 'h-[240px] object-cover object-top'}`
-  }), !vidPlaying && React.createElement("div", {
+    onPlay: () => setVidStarted(true),
+    className: `block w-full bg-black ${vidStarted ? '' : 'h-[240px] object-cover object-top'}`
+  }), !vidStarted && React.createElement("div", {
     className: "pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent px-3 pb-2.5 pt-8"
   }, React.createElement("p", {
     className: "flex items-center gap-1 text-xs font-semibold text-white"
@@ -3427,7 +3425,7 @@ function ProductsCard({
     en: 'Alternate day, morning',
     hi: 'हर दूसरे दिन, सुबह',
     img: '/med-finax.jpg',
-    buy: 'https://www.1mg.com/search/all?name=Finax%201mg'
+    buy: 'https://www.amazon.in/Finax-Strip-of-30-Tablets/dp/B085LZH2YM?tag=mohithits-21&linkCode=ll2&linkId=fb8d1df9e5a9aa0f0fa3931610a244ef'
   }, {
     name: 'Minoxidil 2.5mg (tablet)',
     en: 'Daily, morning',
@@ -3439,7 +3437,7 @@ function ProductsCard({
     en: 'At night, on hair-loss area',
     hi: 'रात में, बाल झड़ने वाली जगह पर',
     img: '/med-morr.jpg',
-    buy: 'https://www.1mg.com/search/all?name=Morr%20F%207.5'
+    buy: 'https://www.amazon.in/Morr-7-5-Bottle-60Ml-Solution/dp/B08K9VZZLY?tag=mohithits-21&linkCode=ll2&linkId=9586571570c590112023c3d0134c9c74'
   }, {
     name: 'HeHair',
     en: 'Alternate day, night',
@@ -3451,7 +3449,7 @@ function ProductsCard({
     en: '1 capsule every 2 weeks',
     hi: 'हर 2 हफ्ते में 1 कैप्सूल',
     img: '/med-d3.jpg',
-    buy: 'https://www.amazon.in/s?k=Vitamin+D3+60000+IU+capsule'
+    buy: 'https://www.amazon.in/Uprise-D3-60K-Strip-12-Capsules/dp/B0CTF75V5S?tag=mohithits-21&linkCode=ll2&linkId=7cc9bfcdbee0ded2b0a43830c0e7cb58'
   }];
   const products = [{
     name: 'Neck Pillow',
