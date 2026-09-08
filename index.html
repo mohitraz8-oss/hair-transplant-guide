@@ -1731,9 +1731,9 @@ function Topic({
   }
   if (topic.type === 'highlight') {
     return React.createElement("div", {
-      className: "rounded-xl bg-emerald-700 px-5 py-4 text-center"
+      className: "rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-center"
     }, React.createElement("p", {
-      className: "font-serif text-lg text-white"
+      className: "font-serif text-lg text-stone-900"
     }, L(topic.body, lang)));
   }
   return null;
