@@ -706,8 +706,8 @@ const ADDONS = [{
   id: 'clinic_check',
   price: '₹4',
   name: {
-    en: 'Clinic Review',
-    hi: 'क्लिनिक रिव्यू'
+    en: 'Get a clinic review',
+    hi: 'क्लिनिक रिव्यू पाएँ'
   },
   tagline: {
     en: 'Get your selected clinic reviewed by me — I tell you honestly if it is a good choice.',
@@ -2340,9 +2340,7 @@ function ResultsCarousel({
 function TestimonialsCarousel({
   lang
 }) {
-  const imgs = Array.from({
-    length: 6
-  }, (_, i) => `/testimonial-${i + 1}.jpg`);
+  const imgs = ['/testimonial-3.jpg', '/testimonial-1.jpg', '/testimonial-2.jpg', '/testimonial-4.jpg', '/testimonial-5.jpg', '/testimonial-6.jpg'];
   const [active, setActive] = useState(0);
   const [tx, setTx] = useState(null);
   const go = d => setActive(a => Math.max(0, Math.min(imgs.length - 1, a + d)));
@@ -2507,21 +2505,23 @@ function Landing({
     key: a.id,
     className: "overflow-hidden rounded-xl border border-stone-200 bg-white"
   }, React.createElement("div", {
-    className: "flex items-center justify-between bg-emerald-700 px-4 py-2.5"
+    className: "flex items-center justify-between border-b border-stone-100 bg-emerald-50 px-4 py-2.5"
   }, React.createElement("p", {
-    className: "font-serif text-base text-white"
+    className: "font-serif text-base text-stone-900"
   }, L(a.name, lang)), React.createElement("span", {
-    className: "font-serif text-lg font-semibold text-white"
+    className: "font-serif text-lg font-semibold text-emerald-700"
   }, a.price)), React.createElement("div", {
     className: "p-4"
   }, React.createElement("p", {
     className: "mb-3 text-[13px] leading-snug text-stone-600"
-  }, L(a.tagline, lang)), React.createElement("button", {
+  }, L(a.tagline, lang)), React.createElement("div", {
+    className: "flex justify-end"
+  }, React.createElement("button", {
     onClick: () => onGet(a.id),
     className: "inline-flex items-center gap-1.5 rounded-xl bg-emerald-700 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-emerald-800"
   }, lang === 'hi' ? 'बुक करें' : 'Book', React.createElement(ArrowRight, {
     size: 15
-  })))))), !unlocked && React.createElement(ResultsCarousel, {
+  }))))))), !unlocked && React.createElement(ResultsCarousel, {
     lang: lang
   }), !unlocked && React.createElement(TestimonialsCarousel, {
     lang: lang
@@ -3607,13 +3607,12 @@ function ProductsCard({
     className: "inline-flex shrink-0 items-center gap-1 rounded-lg bg-emerald-700 px-3 py-2 text-xs font-semibold text-white transition hover:bg-emerald-800"
   }, lang === 'hi' ? 'खरीदें' : 'Buy', React.createElement(ArrowRight, {
     size: 13
-  }))))), React.createElement("p", {
-    className: "mt-5 rounded-lg bg-stone-100 px-3 py-2 text-xs leading-relaxed text-stone-600"
-  }, lang === 'hi' ? 'ये वो चीज़ें हैं जो मेरे डॉक्टर ने मुझे बताई हैं / मैं खुद इस्तेमाल करता हूँ — आपके लिए सलाह नहीं। कुछ भी शुरू करने से पहले अपने डॉक्टर से सलाह ज़रूर लें।' : 'These are what my doctor prescribed / I personally use — not advice for you. Please consult your own doctor before starting anything.'), React.createElement("div", {
-    className: "mt-4"
-  }, React.createElement(Disclaimer, {
-    lang: lang
-  })));
+  }))))), React.createElement("div", {
+    className: "mt-5 flex gap-2.5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-xs leading-relaxed text-red-700"
+  }, React.createElement(Info, {
+    size: 15,
+    className: "mt-0.5 shrink-0"
+  }), React.createElement("p", null, lang === 'hi' ? 'ये वो चीज़ें हैं जो मैं खुद इस्तेमाल करता हूँ — आपके लिए मेडिकल सलाह नहीं। कुछ भी शुरू करने से पहले अपने डॉक्टर से सलाह ज़रूर लें।' : 'These are what I personally use — not medical advice for you. Please consult your own doctor before starting anything.')));
 }
 function CollapsibleSection({
   label,
