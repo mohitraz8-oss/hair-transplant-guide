@@ -3202,7 +3202,8 @@ function PerkInput(props) {
 }
 function FullCallPerk({
   lang,
-  token
+  token,
+  onBookPaid
 }) {
   const [calls, setCalls] = useState([]);
   const [open, setOpen] = useState(false);
@@ -3276,12 +3277,12 @@ function FullCallPerk({
     className: "font-semibold text-stone-900"
   }, lang === 'hi' ? '1:1 वीडियो कॉल' : '1:1 Video call')), React.createElement("p", {
     className: "mt-1 text-xs text-stone-500"
-  }, lang === 'hi' ? 'फुल में शामिल — कोई भुगतान नहीं।' : 'Included in Full — no payment needed.'), active.map((c, i) => React.createElement("div", {
+  }, lang === 'hi' ? 'फुल में शामिल — कोई भुगतान नहीं।' : 'Included in Full — no payment needed.'), calls.map((c, i) => React.createElement("div", {
     key: i,
     className: "mt-2.5 rounded-lg bg-emerald-50 p-2.5"
   }, React.createElement("p", {
     className: "text-sm font-medium text-emerald-800"
-  }, c.status === 'scheduled' || c.meet_link ? lang === 'hi' ? 'शेड्यूल हो गई' : 'Scheduled' : lang === 'hi' ? 'अनुरोध मिला — मैं जल्द शेड्यूल करूँगा' : "Requested — I'll schedule it soon"), c.preferred_time && React.createElement("p", {
+  }, c.status === 'done' ? (lang === 'hi' ? 'पूरी हो गई' : 'Completed') : c.status === 'scheduled' || c.meet_link ? (lang === 'hi' ? 'शेड्यूल हो गई' : 'Scheduled') : (lang === 'hi' ? 'अनुरोध मिला — मैं जल्द शेड्यूल करूँगा' : "Requested — I'll schedule it soon")), c.preferred_time && React.createElement("p", {
     className: "text-xs text-stone-500"
   }, c.preferred_time), c.meet_link && React.createElement("a", {
     href: c.meet_link,
@@ -3311,15 +3312,16 @@ function FullCallPerk({
     disabled: busy,
     className: "w-full rounded-lg bg-emerald-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-800 disabled:opacity-70"
   }, busy ? lang === 'hi' ? 'भेज रहे…' : 'Sending…' : lang === 'hi' ? 'कॉल बुक करें' : 'Book call')) : React.createElement("button", {
-    onClick: () => setOpen(true),
+    onClick: calls.length ? onBookPaid : () => setOpen(true),
     className: "mt-3 inline-flex items-center gap-1.5 rounded-lg bg-emerald-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-800"
-  }, calls.length ? lang === 'hi' ? 'दूसरी कॉल बुक करें' : 'Book another' : lang === 'hi' ? 'वीडियो कॉल बुक करें' : 'Book video call', React.createElement(ArrowRight, {
+  }, calls.length ? (lang === 'hi' ? 'दूसरी कॉल बुक करें (₹999)' : 'Book another (₹999)') : (lang === 'hi' ? 'वीडियो कॉल बुक करें' : 'Book video call'), React.createElement(ArrowRight, {
     size: 14
   }))));
 }
 function FullReviewPerk({
   lang,
-  token
+  token,
+  onReviewPaid
 }) {
   const [reviews, setReviews] = useState([]);
   const [open, setOpen] = useState(false);
@@ -3435,9 +3437,9 @@ function FullReviewPerk({
     disabled: busy,
     className: "w-full rounded-lg bg-emerald-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-800 disabled:opacity-70"
   }, busy ? lang === 'hi' ? 'भेज रहे…' : 'Sending…' : lang === 'hi' ? 'रिव्यू के लिए भेजें' : 'Send for review')) : React.createElement("button", {
-    onClick: () => setOpen(true),
+    onClick: reviews.length ? onReviewPaid : () => setOpen(true),
     className: "mt-3 inline-flex items-center gap-1.5 rounded-lg bg-emerald-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-800"
-  }, reviews.length ? lang === 'hi' ? 'दूसरा क्लिनिक जांचें' : 'Review another' : lang === 'hi' ? 'क्लिनिक रिव्यू कराएँ' : 'Get clinic reviewed', React.createElement(ArrowRight, {
+  }, reviews.length ? (lang === 'hi' ? 'दूसरा क्लिनिक जांचें (₹499)' : 'Review another (₹499)') : (lang === 'hi' ? 'क्लिनिक रिव्यू कराएँ' : 'Get clinic reviewed'), React.createElement(ArrowRight, {
     size: 14
   }))));
 }
@@ -3523,7 +3525,9 @@ function FullDiscountPerk({
 function FullPerksCard({
   lang,
   purchase,
-  onCallRequested
+  onCallRequested,
+  onBookPaid,
+  onReviewPaid
 }) {
   if (!purchase || purchase.tier !== 'full') return null;
   const [token, setToken] = useState('');
@@ -3543,10 +3547,12 @@ function FullPerksCard({
     className: "space-y-3"
   }, React.createElement(FullCallPerk, {
     lang: lang,
-    token: token
+    token: token,
+    onBookPaid: onBookPaid
   }), React.createElement(FullReviewPerk, {
     lang: lang,
-    token: token
+    token: token,
+    onReviewPaid: onReviewPaid
   }), React.createElement(FullDiscountPerk, {
     lang: lang,
     token: token
@@ -3943,7 +3949,9 @@ function GuideHome({
   }) : React.createElement(FullPerksCard, {
     lang: lang,
     purchase: purchase,
-    onCallRequested: onCallRequested
+    onCallRequested: onCallRequested,
+    onBookPaid: () => pickPlan('video_call'),
+    onReviewPaid: () => pickPlan('clinic_check')
   })), pop && (isEssential || isPremium) && React.createElement("div", {
     className: "fixed inset-0 z-50 flex items-end justify-center bg-black/50",
     onClick: () => setPop(false)
