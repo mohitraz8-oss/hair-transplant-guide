@@ -51,13 +51,12 @@ module.exports = async (req, res) => {
         Prefer: 'return=minimal',
       },
       body: JSON.stringify(Object.assign({
-        call_requested: true,
         call_note: note,
         call_requested_at: new Date().toISOString(),
         contact_name: name,
         contact_phone: phone,
         contact_city: city,
-      }, note && note.toLowerCase().indexOf('discount') !== -1 ? { discount_requested: true } : {})),
+      }, note && note.toLowerCase().indexOf('discount') !== -1 ? { discount_requested: true } : { call_requested: true })),
     });
     if (!updateRes.ok) return res.status(500).json({ error: 'store_failed' });
     return res.status(200).json({ ok: true });
