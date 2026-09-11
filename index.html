@@ -1933,7 +1933,6 @@ function PlanCard({
   onGet,
   onUpgrade
 }) {
-  const [showSections, setShowSections] = useState(false);
   const head = {
     essential: {
       bg: 'bg-emerald-700',
@@ -1976,33 +1975,7 @@ function PlanCard({
   };
   return React.createElement("div", {
     className: `flex min-h-[500px] flex-col overflow-hidden rounded-xl bg-white ${t.popular ? 'shadow-sm ring-2 ' + h.ring : 'border border-stone-200 shadow-sm'}`
-  }, showSections && React.createElement("div", {
-    className: "fixed inset-0 z-[60] flex items-center justify-center bg-stone-900/60 p-4 backdrop-blur-sm",
-    onClick: () => setShowSections(false)
   }, React.createElement("div", {
-    className: "relative flex max-h-[82vh] w-full max-w-[300px] flex-col overflow-hidden rounded-[28px] bg-white shadow-2xl",
-    onClick: e => e.stopPropagation()
-  }, React.createElement("div", {
-    className: "flex items-center justify-between gap-3 px-5 pb-2 pt-5"
-  }, React.createElement("h3", {
-    className: "text-[12px] font-semibold uppercase tracking-[0.12em] text-emerald-700"
-  }, lang === 'hi' ? '10 सेक्शन में क्या है' : "What's inside"), React.createElement("button", {
-    onClick: () => setShowSections(false),
-    "aria-label": "Close",
-    className: "grid h-7 w-7 shrink-0 place-items-center rounded-full bg-stone-100 text-[13px] text-stone-500 transition hover:bg-stone-200"
-  }, "✕")), React.createElement("div", {
-    className: "overflow-y-auto px-3 pb-2"
-  }, SECTIONS_META.map(sec => React.createElement("div", {
-    key: sec.id,
-    className: "flex items-center gap-3 rounded-2xl px-2.5 py-2 transition hover:bg-emerald-50"
-  }, React.createElement("span", {
-    className: "grid h-[26px] w-[26px] shrink-0 place-items-center rounded-full bg-emerald-50 font-serif text-[13px] font-semibold text-emerald-700"
-  }, String(sec.id)), React.createElement("span", {
-    className: "text-[12.5px] font-medium leading-snug text-stone-700"
-  }, L(sec.title, lang))))), React.createElement("button", {
-    onClick: () => setShowSections(false),
-    className: "mx-3 mb-4 mt-3 rounded-2xl bg-emerald-700 py-3 text-[13px] font-bold text-white transition hover:bg-emerald-800 active:scale-[0.98]"
-  }, lang === 'hi' ? 'ठीक है' : "Got it"))), React.createElement("div", {
     className: `${h.bg} px-5 py-4`
   }, React.createElement("div", {
     className: "flex items-center justify-between gap-3"
@@ -2033,11 +2006,7 @@ function PlanCard({
       size: 11
     })), React.createElement("span", {
       className: inc ? '' : 'line-through'
-    }, L(o, lang)), o.info && React.createElement("button", {
-      onClick: e => { e.stopPropagation(); setShowSections(true); },
-      className: "ml-1 inline-flex shrink-0 text-emerald-700 transition hover:text-emerald-800",
-      "aria-label": "See all 10 sections"
-    }, React.createElement(Info, { size: 16 }))), o.price && React.createElement("span", {
+    }, L(o, lang))), o.price && React.createElement("span", {
       className: `shrink-0 rounded-full px-2 py-0.5 text-[11px] font-bold ${inc ? 'bg-teal-100 text-teal-700' : 'bg-stone-100 text-stone-400'}`
     }, o.price));
   })), React.createElement("div", {
