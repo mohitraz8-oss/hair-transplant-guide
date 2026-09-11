@@ -3263,6 +3263,7 @@ function FullCallPerk({
     }
     setBusy(false);
   }
+  const active = calls.filter(c => c && c.status !== 'done');
   return React.createElement("div", {
     className: "rounded-xl border border-stone-200 bg-white p-4"
   }, React.createElement("div", {
@@ -3275,7 +3276,7 @@ function FullCallPerk({
     className: "font-semibold text-stone-900"
   }, lang === 'hi' ? '1:1 वीडियो कॉल' : '1:1 Video call')), React.createElement("p", {
     className: "mt-1 text-xs text-stone-500"
-  }, lang === 'hi' ? 'फुल में शामिल — कोई भुगतान नहीं।' : 'Included in Full — no payment needed.'), calls.map((c, i) => React.createElement("div", {
+  }, lang === 'hi' ? 'फुल में शामिल — कोई भुगतान नहीं।' : 'Included in Full — no payment needed.'), active.map((c, i) => React.createElement("div", {
     key: i,
     className: "mt-2.5 rounded-lg bg-emerald-50 p-2.5"
   }, React.createElement("p", {
@@ -3289,7 +3290,7 @@ function FullCallPerk({
     className: "mt-1 inline-flex items-center gap-1 text-sm font-semibold text-emerald-700"
   }, lang === 'hi' ? 'कॉल जॉइन करें' : 'Join call', React.createElement(ArrowRight, {
     size: 13
-  })))), open ? React.createElement("div", {
+  })))), active.length === 0 && (open ? React.createElement("div", {
     className: "mt-3 space-y-2"
   }, React.createElement(PerkInput, {
     placeholder: lang === 'hi' ? 'नाम' : 'Name',
@@ -3314,7 +3315,7 @@ function FullCallPerk({
     className: "mt-3 inline-flex items-center gap-1.5 rounded-lg bg-emerald-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-800"
   }, calls.length ? lang === 'hi' ? 'दूसरी कॉल बुक करें' : 'Book another' : lang === 'hi' ? 'वीडियो कॉल बुक करें' : 'Book video call', React.createElement(ArrowRight, {
     size: 14
-  })));
+  }))));
 }
 function FullReviewPerk({
   lang,
@@ -3385,6 +3386,7 @@ function FullReviewPerk({
     }
     setBusy(false);
   }
+  const pending = reviews.filter(c => c && c.status !== 'reviewed');
   return React.createElement("div", {
     className: "rounded-xl border border-stone-200 bg-white p-4"
   }, React.createElement("div", {
@@ -3404,7 +3406,7 @@ function FullReviewPerk({
     className: "text-sm font-medium text-emerald-800"
   }, c.clinic || (lang === 'hi' ? 'आपका क्लिनिक' : 'Your clinic'), " \u2014 ", c.status === 'reviewed' || c.admin_note ? lang === 'hi' ? 'जांच पूरी' : 'Reviewed' : lang === 'hi' ? 'जांच बाकी' : 'Pending'), c.admin_note && React.createElement("p", {
     className: "mt-1 text-sm text-stone-700"
-  }, c.admin_note))), open ? React.createElement("div", {
+  }, c.admin_note))), pending.length === 0 && (open ? React.createElement("div", {
     className: "mt-3 space-y-2"
   }, React.createElement(PerkInput, {
     placeholder: lang === 'hi' ? 'नाम' : 'Name',
@@ -3437,7 +3439,7 @@ function FullReviewPerk({
     className: "mt-3 inline-flex items-center gap-1.5 rounded-lg bg-emerald-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-800"
   }, reviews.length ? lang === 'hi' ? 'दूसरा क्लिनिक जांचें' : 'Review another' : lang === 'hi' ? 'क्लिनिक रिव्यू कराएँ' : 'Get clinic reviewed', React.createElement(ArrowRight, {
     size: 14
-  })));
+  }))));
 }
 function FullDiscountPerk({
   lang,
