@@ -661,8 +661,8 @@ const TIERS = [{
     hi: 'प्रीमियम'
   },
   tagline: {
-    en: 'How many grafts you need.',
-    hi: 'आपको कितने ग्राफ्ट चाहिए।'
+    en: 'Want my clinic, my doctors & how many grafts you need — before you decide?',
+    hi: 'मेरा क्लिनिक, मेरे डॉक्टर और आपको कितने ग्राफ्ट चाहिए — खरीदने से पहले जानें।'
   },
   hero: {
     en: 'My Story — my exact clinic, doctors & what I paid',
@@ -2894,6 +2894,28 @@ function fileToBase64(file) {
     reader.readAsDataURL(file);
   });
 }
+function resizeImage(file, maxDim, quality) {
+  maxDim = maxDim || 1600; quality = quality || 0.82;
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      let w = img.naturalWidth, h = img.naturalHeight;
+      if (w > maxDim || h > maxDim) {
+        if (w >= h) { h = Math.round(h * maxDim / w); w = maxDim; }
+        else { w = Math.round(w * maxDim / h); h = maxDim; }
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      const durl = canvas.toDataURL('image/jpeg', quality);
+      resolve(durl.slice(durl.indexOf(',') + 1));
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('image load failed')); };
+    img.src = url;
+  });
+}
 function GraftEstimateCard({
   lang,
   purchase
@@ -2945,8 +2967,8 @@ function GraftEstimateCard({
     try {
       const purchaseToken = window.localStorage.getItem('ht_token');
       const photoPayload = await Promise.all(photos.map(async p => ({
-        data: await fileToBase64(p.file),
-        mimeType: p.file.type
+        data: await resizeImage(p.file),
+        mimeType: 'image/jpeg'
       })));
       const r = await fetch('/api/submit-estimate', {
         method: 'POST',
