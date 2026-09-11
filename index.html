@@ -3471,6 +3471,21 @@ function FullDiscountPerk({
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(() => { try { return window.localStorage.getItem('ht_discount_done_' + token) === '1'; } catch (e) { return false; } });
   const [open, setOpen] = useState(false);
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      try {
+        const r = await fetch('/api/request-call', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'status', token })
+        });
+        const d = await r.json();
+        if (alive && d && d.ok && d.requested) setDone(true);
+      } catch (e) {}
+    })();
+    return () => { alive = false; };
+  }, [token]);
   async function submit() {
     if (!name || !phone) return;
     setBusy(true);
