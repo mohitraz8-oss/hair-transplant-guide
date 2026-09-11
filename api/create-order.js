@@ -15,11 +15,11 @@
 // When ready for real launch, tell Claude "switch to real prices" (server
 // amounts here + the display prices in app-source.jsx get flipped back).
 const TIERS = {
-  essential: { amount: 29900, label: 'Essential' },
-  premium:   { amount: 69900, label: 'Premium' },
-  full:      { amount: 149900, label: 'Full' },
-  clinic_check: { amount: 49900, label: 'Clinic Check' },
-  video_call:   { amount: 99900, label: 'Video Call' },
+  essential: { amount: 100, label: 'Essential' },
+  premium:   { amount: 200, label: 'Premium' },
+  full:      { amount: 300, label: 'Full' },
+  clinic_check: { amount: 400, label: 'Clinic Check' },
+  video_call:   { amount: 500, label: 'Video Call' },
 };
 
 module.exports = async (req, res) => {
