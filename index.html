@@ -2990,7 +2990,9 @@ function GraftEstimateCard({
           status: 'pending'
         });
       } else {
-        throw new Error('failed');
+        setError((lang === 'hi' ? 'त्रुटि' : 'Error') + ': ' + (d && d.error ? d.error : ('HTTP ' + r.status)));
+        setBusy(false);
+        return;
       }
     } catch (e) {
       setError(lang === 'hi' ? 'कुछ गलत हो गया, दोबारा कोशिश करें।' : 'Something went wrong — please try again.');
@@ -3467,7 +3469,7 @@ function FullDiscountPerk({
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [busy, setBusy] = useState(false);
-  const [done, setDone] = useState(false);
+  const [done, setDone] = useState(() => { try { return window.localStorage.getItem('ht_discount_done_' + token) === '1'; } catch (e) { return false; } });
   const [open, setOpen] = useState(false);
   async function submit() {
     if (!name || !phone) return;
@@ -3486,6 +3488,7 @@ function FullDiscountPerk({
         })
       });
       setDone(true);
+      try { window.localStorage.setItem('ht_discount_done_' + token, '1'); } catch (e) {}
     } catch (_) {}
     setBusy(false);
   }
@@ -3503,7 +3506,7 @@ function FullDiscountPerk({
     className: "mt-1 text-xs text-stone-500"
   }, lang === 'hi' ? 'मैं अपने क्लिनिक से बात करके आपके लिए सबसे अच्छा डिस्काउंट दिलाता हूँ।' : "I'll speak to my clinic and get you the best discount."), done ? React.createElement("p", {
     className: "mt-3 rounded-lg bg-emerald-50 p-2.5 text-sm font-medium text-emerald-800"
-  }, lang === 'hi' ? 'मिल गया! मैं क्लिनिक से बात करके आपसे संपर्क करूँगा।' : "Got it! I'll speak to the clinic and get back to you.") : open ? React.createElement("div", {
+  }, lang === 'hi' ? 'रिक्वेस्ट सबमिट हो गई — कॉल का इंतजार करें। मैं क्लिनिक से बात करके आपसे संपर्क करूँगा।' : "Request already submitted — wait for my call. I'll speak to the clinic and get back to you.") : open ? React.createElement("div", {
     className: "mt-3 space-y-2"
   }, React.createElement(PerkInput, {
     placeholder: lang === 'hi' ? 'नाम' : 'Name',
