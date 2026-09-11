@@ -1977,26 +1977,28 @@ function PlanCard({
   return React.createElement("div", {
     className: `flex min-h-[500px] flex-col overflow-hidden rounded-xl bg-white ${t.popular ? 'shadow-sm ring-2 ' + h.ring : 'border border-stone-200 shadow-sm'}`
   }, showSections && React.createElement("div", {
-    className: "fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4",
+    className: "fixed inset-0 z-[60] flex items-center justify-center bg-stone-900/60 p-4 backdrop-blur-sm",
     onClick: () => setShowSections(false)
   }, React.createElement("div", {
-    className: "max-h-[82vh] w-full max-w-md overflow-y-auto rounded-2xl bg-white p-5 shadow-2xl",
+    className: "flex max-h-[78vh] w-full max-w-[290px] flex-col overflow-hidden rounded-[26px] bg-white shadow-2xl",
     onClick: e => e.stopPropagation()
   }, React.createElement("div", {
-    className: "mb-3 flex items-center justify-between gap-3"
+    className: "flex items-center justify-between gap-3 px-4 pb-1.5 pt-3.5"
   }, React.createElement("h3", {
-    className: "font-serif text-lg text-stone-900"
-  }, lang === 'hi' ? 'गाइड में क्या है — 10 सेक्शन' : "What's inside — all 10 sections"), React.createElement("button", {
+    className: "text-[12px] font-semibold uppercase tracking-[0.08em] text-emerald-700"
+  }, lang === 'hi' ? '10 सेक्शन में क्या है' : "What's inside"), React.createElement("button", {
     onClick: () => setShowSections(false),
-    className: "grid h-8 w-8 shrink-0 place-items-center rounded-full text-stone-500 hover:bg-stone-100"
-  }, "✕")), React.createElement("ol", {
-    className: "space-y-2.5"
-  }, SECTIONS_META.map(sec => React.createElement("li", {
+    className: "grid h-6 w-6 shrink-0 place-items-center rounded-full bg-stone-100 text-[13px] text-stone-500 transition hover:bg-stone-200"
+  }, "✕")), React.createElement("div", {
+    className: "overflow-y-auto px-2.5 pb-3"
+  }, SECTIONS_META.map(sec => React.createElement("div", {
     key: sec.id,
-    className: "flex gap-3 text-[14px] leading-snug text-stone-700"
+    className: "flex items-center gap-2.5 rounded-xl px-2 py-1.5 transition hover:bg-emerald-50"
   }, React.createElement("span", {
-    className: "font-bold text-emerald-700"
-  }, sec.num), React.createElement("span", null, L(sec.title, lang))))))), React.createElement("div", {
+    className: "grid h-[22px] w-[22px] shrink-0 place-items-center rounded-full bg-emerald-700 text-[10.5px] font-bold text-white"
+  }, String(sec.id)), React.createElement("span", {
+    className: "text-[12px] font-medium leading-snug text-stone-700"
+  }, L(sec.title, lang))))))), React.createElement("div", {
     className: `${h.bg} px-5 py-4`
   }, React.createElement("div", {
     className: "flex items-center justify-between gap-3"
@@ -3469,7 +3471,7 @@ function FullDiscountPerk({
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [busy, setBusy] = useState(false);
-  const [done, setDone] = useState(() => { try { return window.localStorage.getItem('ht_discount_done_' + token) === '1'; } catch (e) { return false; } });
+  const [done, setDone] = useState(false);
   const [open, setOpen] = useState(false);
   useEffect(() => {
     let alive = true;
@@ -3503,7 +3505,6 @@ function FullDiscountPerk({
         })
       });
       setDone(true);
-      try { window.localStorage.setItem('ht_discount_done_' + token, '1'); } catch (e) {}
     } catch (_) {}
     setBusy(false);
   }
