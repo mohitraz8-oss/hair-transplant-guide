@@ -13,8 +13,23 @@ module.exports = async (req, res) => {
   const city = (body.city || '').toString().slice(0, 100);
   const supaUrl = process.env.SUPABASE_URL;
   const supaKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!token || !name || !phone) return res.status(400).json({ error: 'missing_fields' });
   if (!supaUrl || !supaKey) return res.status(500).json({ error: 'not_configured' });
+
+  // STATUS check — has this buyer already requested the clinic discount?
+  if (body.action === 'status') {
+    if (!token) return res.status(400).json({ error: 'missing_fields' });
+    try {
+      const sUrl = supaUrl + '/rest/v1/purchases?select=call_requested,call_note&access_token=eq.' + encodeURIComponent(token);
+      const sRes = await fetch(sUrl, { headers: { apikey: supaKey, Authorization: 'Bearer ' + supaKey } });
+      const sRows = await sRes.json();
+      const sp = Array.isArray(sRows) && sRows[0] ? sRows[0] : null;
+      return res.status(200).json({ ok: true, requested: !!(sp && sp.call_requested), note: sp ? (sp.call_note || '') : '' });
+    } catch (e) {
+      return res.status(500).json({ error: 'server_error' });
+    }
+  }
+
+  if (!token || !name || !phone) return res.status(400).json({ error: 'missing_fields' });
 
   try {
     // Only Premium/Full, paid purchases can submit — not Essential.
