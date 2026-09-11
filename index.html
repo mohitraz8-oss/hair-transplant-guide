@@ -1781,7 +1781,7 @@ function PricingTable({
     className: "grid gap-4 sm:grid-cols-3"
   }, TIERS.map(tier => React.createElement("div", {
     key: tier.id,
-    className: `relative flex flex-col rounded-xl border bg-white p-5 ${tier.id === 'essential' ? 'border-emerald-600 shadow-md sm:scale-105' : 'border-stone-200'}`
+    className: `relative flex flex-col rounded-xl border bg-white p-5 ${tier.popular ? 'border-emerald-600 shadow-md sm:scale-105' : 'border-stone-200'}`
   }, tier.popular && React.createElement("span", {
     className: "absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-sage-600 px-3 py-1 text-[10px] font-bold tracking-wide text-stone-900"
   }, L(UI.mostPopular, lang)), React.createElement("p", {
@@ -1800,7 +1800,7 @@ function PricingTable({
     className: "mt-0.5 shrink-0 text-emerald-600"
   }), f))), React.createElement("button", {
     onClick: () => onGet(tier.id),
-    className: `inline-flex items-center justify-center gap-1.5 rounded-xl px-4 py-3 text-sm font-semibold transition ${tier.id === 'essential' ? 'bg-emerald-700 text-white hover:bg-emerald-800' : 'border border-stone-300 text-stone-700 hover:border-stone-400'}`
+    className: `inline-flex items-center justify-center gap-1.5 rounded-xl px-4 py-3 text-sm font-semibold transition ${tier.popular ? 'bg-emerald-700 text-white hover:bg-emerald-800' : 'border border-stone-300 text-stone-700 hover:border-stone-400'}`
   }, L(UI.getThisPlan, lang))))));
 }
 const COMPARE = [{
@@ -1973,7 +1973,7 @@ function PlanCard({
     }, lang === 'hi' ? 'यह प्लान लें' : 'Get this plan');
   };
   return React.createElement("div", {
-    className: `flex min-h-[500px] flex-col overflow-hidden rounded-xl bg-white ${t.id === 'essential' ? 'shadow-sm ring-2 ' + h.ring : 'border border-stone-200 shadow-sm'}`
+    className: `flex min-h-[500px] flex-col overflow-hidden rounded-xl bg-white ${t.popular ? 'shadow-sm ring-2 ' + h.ring : 'border border-stone-200 shadow-sm'}`
   }, React.createElement("div", {
     className: `${h.bg} px-5 py-4`
   }, React.createElement("div", {
@@ -2038,7 +2038,7 @@ function PlanComparison({
     }
   };
   const visible = currentTier ? TIERS.filter(t => RANK[t.id] >= RANK[currentTier]) : TIERS;
-  const [sel, setSel] = useState(currentTier ? (visible.find(t => t.id !== currentTier) || visible[0]).id : 'premium');
+  const [sel, setSel] = useState(currentTier ? (visible.find(t => t.id !== currentTier) || visible[0]).id : 'essential');
   return React.createElement("section", {
     id: "pricing",
     className: "mt-6"
