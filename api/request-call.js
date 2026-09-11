@@ -19,11 +19,11 @@ module.exports = async (req, res) => {
   if (body.action === 'status') {
     if (!token) return res.status(400).json({ error: 'missing_fields' });
     try {
-      const sUrl = supaUrl + '/rest/v1/purchases?select=call_requested,call_note&access_token=eq.' + encodeURIComponent(token);
+      const sUrl = supaUrl + '/rest/v1/purchases?select=discount_requested&access_token=eq.' + encodeURIComponent(token);
       const sRes = await fetch(sUrl, { headers: { apikey: supaKey, Authorization: 'Bearer ' + supaKey } });
       const sRows = await sRes.json();
       const sp = Array.isArray(sRows) && sRows[0] ? sRows[0] : null;
-      return res.status(200).json({ ok: true, requested: !!(sp && sp.call_requested), note: sp ? (sp.call_note || '') : '' });
+      return res.status(200).json({ ok: true, requested: !!(sp && sp.discount_requested) });
     } catch (e) {
       return res.status(500).json({ error: 'server_error' });
     }
@@ -50,14 +50,14 @@ module.exports = async (req, res) => {
         Authorization: 'Bearer ' + supaKey,
         Prefer: 'return=minimal',
       },
-      body: JSON.stringify({
+      body: JSON.stringify(Object.assign({
         call_requested: true,
         call_note: note,
         call_requested_at: new Date().toISOString(),
         contact_name: name,
         contact_phone: phone,
         contact_city: city,
-      }),
+      }, note && note.toLowerCase().indexOf('discount') !== -1 ? { discount_requested: true } : {})),
     });
     if (!updateRes.ok) return res.status(500).json({ error: 'store_failed' });
     return res.status(200).json({ ok: true });
