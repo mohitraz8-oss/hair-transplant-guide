@@ -582,10 +582,6 @@ const PREVIEW_SAMPLE = [{
   }
 }];
 const OFFERINGS = [{
-  en: 'Full 10-section guide',
-  hi: 'पूरी 10-सेक्शन गाइड',
-  tiers: ['essential', 'premium', 'full']
-}, {
   en: 'The products I use',
   hi: 'मैं जो प्रोडक्ट्स इस्तेमाल करता हूँ',
   tiers: ['essential', 'premium', 'full']
@@ -598,9 +594,14 @@ const OFFERINGS = [{
   hi: 'ट्रांसप्लांट की असली कीमत',
   tiers: ['essential', 'premium', 'full']
 }, {
-  en: 'Candidate self-check',
-  hi: 'कैंडिडेट सेल्फ-चेक',
+  en: 'Am I a good candidate?',
+  hi: 'क्या मैं सही कैंडिडेट हूँ?',
   tiers: ['essential', 'premium', 'full']
+}, {
+  en: 'Full 10-section guide',
+  hi: 'पूरी 10-सेक्शन गाइड',
+  tiers: ['essential', 'premium', 'full'],
+  info: true
 }, {
   en: 'My clinic, doctors & price',
   hi: 'मेरा क्लिनिक, डॉक्टर और कीमत',
@@ -621,12 +622,12 @@ const OFFERINGS = [{
   en: '1:1 video call with me',
   hi: 'मेरे साथ 1:1 वीडियो कॉल',
   tiers: ['full'],
-  price: '₹999'
+  price: '₹5'
 }, {
   en: 'Clinic review by me',
   hi: 'मैं आपके क्लिनिक की जांच करूँ',
   tiers: ['full'],
-  price: '₹499'
+  price: '₹4'
 }, {
   en: 'Discount at my clinic',
   hi: 'मेरे क्लिनिक पर डिस्काउंट',
@@ -634,7 +635,7 @@ const OFFERINGS = [{
 }];
 const TIERS = [{
   id: 'essential',
-  price: '₹299',
+  price: '₹1',
   name: {
     en: 'Essential',
     hi: 'एसेंशियल'
@@ -653,7 +654,7 @@ const TIERS = [{
   }
 }, {
   id: 'premium',
-  price: '₹699',
+  price: '₹2',
   popular: true,
   name: {
     en: 'Premium',
@@ -673,7 +674,7 @@ const TIERS = [{
   }
 }, {
   id: 'full',
-  price: '₹1,499',
+  price: '₹3',
   name: {
     en: 'Full',
     hi: 'फुल'
@@ -693,7 +694,7 @@ const TIERS = [{
 }];
 const ADDONS = [{
   id: 'video_call',
-  price: '₹999',
+  price: '₹5',
   name: {
     en: '1:1 Video Call',
     hi: '1:1 वीडियो कॉल'
@@ -704,7 +705,7 @@ const ADDONS = [{
   }
 }, {
   id: 'clinic_check',
-  price: '₹499',
+  price: '₹4',
   name: {
     en: 'Get a clinic review',
     hi: 'क्लिनिक रिव्यू पाएँ'
@@ -720,7 +721,7 @@ const UI = {
     en: 'Hair Transplant Guide',
     hi: 'हेयर ट्रांसप्लांट गाइड'
   },
-  price: '₹299',
+  price: '₹1',
   oneTime: {
     en: 'One-time payment',
     hi: 'एक बार का भुगतान'
@@ -1932,6 +1933,7 @@ function PlanCard({
   onGet,
   onUpgrade
 }) {
+  const [showSections, setShowSections] = useState(false);
   const head = {
     essential: {
       bg: 'bg-emerald-700',
@@ -1974,7 +1976,27 @@ function PlanCard({
   };
   return React.createElement("div", {
     className: `flex min-h-[500px] flex-col overflow-hidden rounded-xl bg-white ${t.popular ? 'shadow-sm ring-2 ' + h.ring : 'border border-stone-200 shadow-sm'}`
+  }, showSections && React.createElement("div", {
+    className: "fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4",
+    onClick: () => setShowSections(false)
   }, React.createElement("div", {
+    className: "max-h-[82vh] w-full max-w-md overflow-y-auto rounded-2xl bg-white p-5 shadow-2xl",
+    onClick: e => e.stopPropagation()
+  }, React.createElement("div", {
+    className: "mb-3 flex items-center justify-between gap-3"
+  }, React.createElement("h3", {
+    className: "font-serif text-lg text-stone-900"
+  }, lang === 'hi' ? 'गाइड में क्या है — 10 सेक्शन' : "What's inside — all 10 sections"), React.createElement("button", {
+    onClick: () => setShowSections(false),
+    className: "grid h-8 w-8 shrink-0 place-items-center rounded-full text-stone-500 hover:bg-stone-100"
+  }, "✕")), React.createElement("ol", {
+    className: "space-y-2.5"
+  }, SECTIONS_META.map(sec => React.createElement("li", {
+    key: sec.id,
+    className: "flex gap-3 text-[14px] leading-snug text-stone-700"
+  }, React.createElement("span", {
+    className: "font-bold text-amber-700"
+  }, sec.num), React.createElement("span", null, L(sec.title, lang))))))), React.createElement("div", {
     className: `${h.bg} px-5 py-4`
   }, React.createElement("div", {
     className: "flex items-center justify-between gap-3"
@@ -2005,7 +2027,11 @@ function PlanCard({
       size: 11
     })), React.createElement("span", {
       className: inc ? '' : 'line-through'
-    }, L(o, lang))), o.price && React.createElement("span", {
+    }, L(o, lang)), o.info && React.createElement("button", {
+      onClick: e => { e.stopPropagation(); setShowSections(true); },
+      className: "ml-1 grid h-[18px] w-[18px] shrink-0 place-items-center rounded-full border border-stone-300 text-[11px] font-bold leading-none text-stone-500 hover:border-stone-400 hover:text-stone-700",
+      "aria-label": "See all 10 sections"
+    }, "i")), o.price && React.createElement("span", {
       className: `shrink-0 rounded-full px-2 py-0.5 text-[11px] font-bold ${inc ? 'bg-teal-100 text-teal-700' : 'bg-stone-100 text-stone-400'}`
     }, o.price));
   })), React.createElement("div", {
@@ -2156,12 +2182,10 @@ function VideoCallList({
   }, c.admin_note), React.createElement("button", {
     onClick: () => remove(c.token),
     className: "mt-3 block text-xs font-medium text-stone-400 hover:text-red-600"
-  }, lang === 'hi' ? 'हटाएँ' : 'Remove'))), items && items.length === 0 && React.createElement("p", {
-    className: "text-sm text-stone-500"
-  }, lang === 'hi' ? 'अभी कोई कॉल बुक नहीं की।' : 'No call booked yet.')), React.createElement("button", {
+  }, lang === 'hi' ? 'हटाएँ' : 'Remove')))), React.createElement("button", {
     onClick: onBookAnother,
     className: "mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-emerald-800"
-  }, lang === 'hi' ? 'दूसरी कॉल बुक करें' : 'Book another call', React.createElement(ArrowRight, {
+  }, items && items.length > 0 ? (lang === 'hi' ? 'एक और कॉल बुक करें' : 'Book Another Call') : (lang === 'hi' ? 'वीडियो कॉल बुक करें' : 'Book A Video Call'), React.createElement(ArrowRight, {
     size: 16
   })));
 }
@@ -2259,12 +2283,10 @@ function ClinicReviews({
   }, lang === 'hi' ? 'मैं इसे देख रहा हूँ और WhatsApp पर आपसे संपर्क करूँगा।' : "I'm reviewing this and will contact you on WhatsApp."), React.createElement("button", {
     onClick: () => remove(c.token),
     className: "mt-3 text-xs font-medium text-stone-400 hover:text-red-600"
-  }, lang === 'hi' ? 'हटाएँ' : 'Remove'))), reviews && reviews.length === 0 && React.createElement("p", {
-    className: "text-sm text-stone-500"
-  }, lang === 'hi' ? 'अभी तक कोई क्लिनिक जमा नहीं किया।' : 'No clinic submitted yet.')), React.createElement("button", {
+  }, lang === 'hi' ? 'हटाएँ' : 'Remove')))), React.createElement("button", {
     onClick: onReviewAnother,
     className: "mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-emerald-800"
-  }, lang === 'hi' ? 'दूसरा क्लिनिक रिव्यू कराएँ' : 'Review another clinic', React.createElement(ArrowRight, {
+  }, reviews && reviews.length > 0 ? (lang === 'hi' ? 'एक और क्लिनिक रिव्यू कराएँ' : 'Get Another Clinic Review') : (lang === 'hi' ? 'क्लिनिक रिव्यू कराएँ' : 'Get A Clinic Review'), React.createElement(ArrowRight, {
     size: 16
   })));
 }
