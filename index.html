@@ -1995,7 +1995,7 @@ function PlanCard({
     key: sec.id,
     className: "flex gap-3 text-[14px] leading-snug text-stone-700"
   }, React.createElement("span", {
-    className: "font-bold text-amber-700"
+    className: "font-bold text-emerald-700"
   }, sec.num), React.createElement("span", null, L(sec.title, lang))))))), React.createElement("div", {
     className: `${h.bg} px-5 py-4`
   }, React.createElement("div", {
@@ -2029,9 +2029,9 @@ function PlanCard({
       className: inc ? '' : 'line-through'
     }, L(o, lang)), o.info && React.createElement("button", {
       onClick: e => { e.stopPropagation(); setShowSections(true); },
-      className: "ml-1 grid h-[18px] w-[18px] shrink-0 place-items-center rounded-full border border-stone-300 text-[11px] font-bold leading-none text-stone-500 hover:border-stone-400 hover:text-stone-700",
+      className: "ml-1 inline-flex shrink-0 text-emerald-700 transition hover:text-emerald-800",
       "aria-label": "See all 10 sections"
-    }, "i")), o.price && React.createElement("span", {
+    }, React.createElement(Info, { size: 16 }))), o.price && React.createElement("span", {
       className: `shrink-0 rounded-full px-2 py-0.5 text-[11px] font-bold ${inc ? 'bg-teal-100 text-teal-700' : 'bg-stone-100 text-stone-400'}`
     }, o.price));
   })), React.createElement("div", {
