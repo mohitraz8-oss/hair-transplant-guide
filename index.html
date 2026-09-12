@@ -1793,7 +1793,8 @@ function PricingTable({
   }, L(tier.name, lang)), React.createElement("p", {
     className: "mt-2 text-center font-serif text-3xl text-stone-900"
   }, tier.compareAt && React.createElement("span", {
-    className: "mr-3 text-lg font-sans text-stone-400 line-through"
+    className: "text-lg font-sans text-stone-400 line-through",
+    style: { marginRight: "8px", color: "#B45309" }
   }, tier.compareAt), tier.price), React.createElement("p", {
     className: "mb-4 text-center text-xs text-stone-400"
   }, L(UI.oneTime, lang)), React.createElement("ul", {
@@ -1995,7 +1996,8 @@ function PlanCard({
   }, lang === 'hi' ? "1-हफ़्ते ट्रायल" : "1-week trial")), React.createElement("p", {
     className: `shrink-0 font-serif text-3xl ${h.price}`
   }, t.compareAt && React.createElement("span", {
-    className: "mr-3 text-lg font-sans text-stone-400 line-through"
+    className: "text-lg font-sans text-stone-400 line-through",
+    style: { marginRight: "8px", color: "#FCD34D" }
   }, t.compareAt), t.price))), React.createElement("div", {
     className: "flex flex-1 flex-col p-5"
   }, React.createElement("ul", {
@@ -3293,14 +3295,16 @@ function FullCallPerk({
     className: "text-sm font-medium text-emerald-800"
   }, c.status === 'done' ? (lang === 'hi' ? 'पूरी हो गई' : 'Completed') : c.status === 'scheduled' || c.meet_link ? (lang === 'hi' ? 'शेड्यूल हो गई' : 'Scheduled') : (lang === 'hi' ? 'अनुरोध मिला — मैं जल्द शेड्यूल करूँगा' : "Requested — I'll schedule it soon")), c.preferred_time && React.createElement("p", {
     className: "text-xs text-stone-500"
-  }, c.preferred_time), c.meet_link && React.createElement("a", {
+  }, c.preferred_time), c.meet_link && (c.status === 'done' ? React.createElement("span", {
+    className: "mt-1 inline-flex items-center gap-1 text-sm font-semibold text-stone-400 cursor-not-allowed"
+  }, lang === 'hi' ? 'कॉल जॉइन करें' : 'Join call') : React.createElement("a", {
     href: c.meet_link,
     target: "_blank",
     rel: "noreferrer",
     className: "mt-1 inline-flex items-center gap-1 text-sm font-semibold text-emerald-700"
   }, lang === 'hi' ? 'कॉल जॉइन करें' : 'Join call', React.createElement(ArrowRight, {
     size: 13
-  })))), calls.length === 0 && (open ? React.createElement("div", {
+  }))))), calls.length === 0 && (open ? React.createElement("div", {
     className: "mt-3 space-y-2"
   }, React.createElement(PerkInput, {
     placeholder: lang === 'hi' ? 'नाम' : 'Name',
@@ -3506,7 +3510,7 @@ function FullDiscountPerk({
     size: 14
   })), React.createElement("p", {
     className: "font-semibold text-stone-900"
-  }, lang === 'hi' ? 'क्लिनिक डिस्काउंट' : 'Clinic discount')), React.createElement("p", {
+  }, lang === 'hi' ? 'क्लिनिक स्पेशल डिस्काउंट' : 'Clinic special discount')), React.createElement("p", {
     className: "mt-1 text-xs text-stone-500"
   }, lang === 'hi' ? 'मैं अपने क्लिनिक से बात करके आपके लिए सबसे अच्छा डिस्काउंट दिलाता हूँ।' : "I'll speak to my clinic and get you the best discount."), done ? React.createElement("p", {
     className: "mt-3 rounded-lg bg-emerald-50 p-2.5 text-sm font-medium text-emerald-800"
