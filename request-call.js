@@ -13,8 +13,23 @@ module.exports = async (req, res) => {
   const city = (body.city || '').toString().slice(0, 100);
   const supaUrl = process.env.SUPABASE_URL;
   const supaKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!token || !name || !phone) return res.status(400).json({ error: 'missing_fields' });
   if (!supaUrl || !supaKey) return res.status(500).json({ error: 'not_configured' });
+
+  // STATUS check — has this buyer already requested the clinic discount?
+  if (body.action === 'status') {
+    if (!token) return res.status(400).json({ error: 'missing_fields' });
+    try {
+      const sUrl = supaUrl + '/rest/v1/purchases?select=discount_requested&access_token=eq.' + encodeURIComponent(token);
+      const sRes = await fetch(sUrl, { headers: { apikey: supaKey, Authorization: 'Bearer ' + supaKey } });
+      const sRows = await sRes.json();
+      const sp = Array.isArray(sRows) && sRows[0] ? sRows[0] : null;
+      return res.status(200).json({ ok: true, requested: !!(sp && sp.discount_requested) });
+    } catch (e) {
+      return res.status(500).json({ error: 'server_error' });
+    }
+  }
+
+  if (!token || !name || !phone) return res.status(400).json({ error: 'missing_fields' });
 
   try {
     // Only Premium/Full, paid purchases can submit — not Essential.
@@ -35,14 +50,13 @@ module.exports = async (req, res) => {
         Authorization: 'Bearer ' + supaKey,
         Prefer: 'return=minimal',
       },
-      body: JSON.stringify({
-        call_requested: true,
+      body: JSON.stringify(Object.assign({
         call_note: note,
         call_requested_at: new Date().toISOString(),
         contact_name: name,
         contact_phone: phone,
         contact_city: city,
-      }),
+      }, body.kind === 'discount' ? { discount_requested: true } : { call_requested: true })),
     });
     if (!updateRes.ok) return res.status(500).json({ error: 'store_failed' });
     return res.status(200).json({ ok: true });
