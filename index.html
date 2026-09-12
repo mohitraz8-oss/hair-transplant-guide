@@ -2168,9 +2168,7 @@ function VideoCallList({
   }, c.admin_note), React.createElement("button", {
     onClick: () => remove(c.token),
     className: "mt-3 block text-xs font-medium text-stone-400 hover:text-red-600"
-  }, lang === 'hi' ? 'हटाएँ' : 'Remove')))), items && items.length > 0 && React.createElement("p", {
-    className: "mt-4 rounded-xl bg-white/70 px-4 py-3 text-center text-sm text-stone-500"
-  }, lang === 'hi' ? 'एक समय में एक कॉल — यह पूरी होने पर दूसरी बुक कर सकेंगे।' : "One call at a time — you can book another once this one is done."), items && items.length === 0 && React.createElement("button", {
+  }, lang === 'hi' ? 'हटाएँ' : 'Remove')))), React.createElement("button", {
     onClick: onBookAnother,
     className: "mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-emerald-800"
   }, items && items.length > 0 ? (lang === 'hi' ? 'एक और कॉल बुक करें' : 'Book Another Call') : (lang === 'hi' ? 'वीडियो कॉल बुक करें' : 'Book A Video Call'), React.createElement(ArrowRight, {
@@ -2271,9 +2269,7 @@ function ClinicReviews({
   }, lang === 'hi' ? 'मैं इसे देख रहा हूँ और WhatsApp पर आपसे संपर्क करूँगा।' : "I'm reviewing this and will contact you on WhatsApp."), React.createElement("button", {
     onClick: () => remove(c.token),
     className: "mt-3 text-xs font-medium text-stone-400 hover:text-red-600"
-  }, lang === 'hi' ? 'हटाएँ' : 'Remove')))), reviews && reviews.some(r => r && r.status !== 'reviewed') ? React.createElement("p", {
-    className: "mt-4 rounded-xl bg-white/70 px-4 py-3 text-center text-sm text-stone-500"
-  }, lang === 'hi' ? 'एक समय में एक रिव्यू — यह पूरा होने पर दूसरा करा सकेंगे।' : "One review at a time — you can request another once this one is reviewed.") : React.createElement("button", {
+  }, lang === 'hi' ? 'हटाएँ' : 'Remove')))), React.createElement("button", {
     onClick: onReviewAnother,
     className: "mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-emerald-800"
   }, reviews && reviews.length > 0 ? (lang === 'hi' ? 'एक और क्लिनिक रिव्यू कराएँ' : 'Get Another Clinic Review') : (lang === 'hi' ? 'क्लिनिक रिव्यू कराएँ' : 'Get A Clinic Review'), React.createElement(ArrowRight, {
