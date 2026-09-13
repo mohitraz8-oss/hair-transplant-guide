@@ -3211,7 +3211,6 @@ function PerkInput(props) {
 function FullCallPerk({
   lang,
   token,
-  tier,
   onBookPaid
 }) {
   const [calls, setCalls] = useState([]);
@@ -3241,7 +3240,6 @@ function FullCallPerk({
     } catch (_) {}
   }
   async function submit() {
-    if (tier !== 'full') { onBookPaid && onBookPaid(); return; }
     if (!name || !phone) {
       setErr(lang === 'hi' ? 'नाम और फ़ोन ज़रूरी है।' : 'Name and phone required.');
       return;
@@ -3333,7 +3331,6 @@ function FullCallPerk({
 function FullReviewPerk({
   lang,
   token,
-  tier,
   onReviewPaid
 }) {
   const [reviews, setReviews] = useState([]);
@@ -3365,7 +3362,6 @@ function FullReviewPerk({
     } catch (_) {}
   }
   async function submit() {
-    if (tier !== 'full') { onReviewPaid && onReviewPaid(); return; }
     if (!name || !phone || !clinic) {
       setErr(lang === 'hi' ? 'नाम, फ़ोन और क्लिनिक ज़रूरी है।' : 'Name, phone and clinic required.');
       return;
@@ -3544,7 +3540,7 @@ function FullPerksCard({
   onBookPaid,
   onReviewPaid
 }) {
-  if (!purchase) return null;
+  if (!purchase || purchase.tier !== 'full') return null;
   const [token, setToken] = useState('');
   useEffect(() => {
     try {
@@ -3563,14 +3559,12 @@ function FullPerksCard({
   }, React.createElement(FullCallPerk, {
     lang: lang,
     token: token,
-    tier: purchase.tier,
     onBookPaid: onBookPaid
   }), React.createElement(FullReviewPerk, {
     lang: lang,
     token: token,
-    tier: purchase.tier,
     onReviewPaid: onReviewPaid
-  }), purchase.tier === 'full' && React.createElement(FullDiscountPerk, {
+  }), React.createElement(FullDiscountPerk, {
     lang: lang,
     token: token
   })));
