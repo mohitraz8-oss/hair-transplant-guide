@@ -622,12 +622,12 @@ const OFFERINGS = [{
   en: '1:1 video call with me',
   hi: 'मेरे साथ 1:1 वीडियो कॉल',
   tiers: ['full'],
-  price: '₹999'
+  price: '₹5'
 }, {
   en: 'Clinic review by me',
   hi: 'मैं आपके क्लिनिक की जांच करूँ',
   tiers: ['full'],
-  price: '₹499'
+  price: '₹4'
 }, {
   en: 'Discount at my clinic',
   hi: 'मेरे क्लिनिक पर डिस्काउंट',
@@ -635,8 +635,8 @@ const OFFERINGS = [{
 }];
 const TIERS = [{
   id: 'essential',
-  price: '₹49',
-  compareAt: '₹299',
+  price: '₹1',
+  compareAt: '₹2',
   name: {
     en: 'Essential',
     hi: 'एसेंशियल'
@@ -655,7 +655,7 @@ const TIERS = [{
   }
 }, {
   id: 'premium',
-  price: '₹699',
+  price: '₹2',
   popular: true,
   name: {
     en: 'Premium',
@@ -675,7 +675,7 @@ const TIERS = [{
   }
 }, {
   id: 'full',
-  price: '₹1,499',
+  price: '₹3',
   name: {
     en: 'Full',
     hi: 'फुल'
@@ -695,7 +695,7 @@ const TIERS = [{
 }];
 const ADDONS = [{
   id: 'clinic_check',
-  price: '₹499',
+  price: '₹4',
   name: {
     en: 'Get a clinic review',
     hi: 'क्लिनिक रिव्यू पाएँ'
@@ -706,7 +706,7 @@ const ADDONS = [{
   }
 }, {
   id: 'video_call',
-  price: '₹999',
+  price: '₹5',
   name: {
     en: '1:1 Video Call',
     hi: '1:1 वीडियो कॉल'
@@ -722,7 +722,7 @@ const UI = {
     en: 'Hair Transplant Guide',
     hi: 'हेयर ट्रांसप्लांट गाइड'
   },
-  price: '₹49',
+  price: '₹1',
   oneTime: {
     en: 'One-time payment',
     hi: 'एक बार का भुगतान'
@@ -2419,6 +2419,7 @@ function Landing({
   lang,
   unlocked,
   onGet,
+  onAddon,
   onPreview,
   clinicTokens,
   onReviewAnother,
@@ -2566,7 +2567,7 @@ function Landing({
   }, L(a.tagline, lang)), React.createElement("div", {
     className: "flex justify-end"
   }, React.createElement("button", {
-    onClick: () => onGet(a.id),
+    onClick: () => onAddon(a.id),
     className: "inline-flex items-center gap-1.5 rounded-xl bg-emerald-700 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-emerald-800"
   }, lang === 'hi' ? 'बुक करें' : 'Book', React.createElement(ArrowRight, {
     size: 15
@@ -4766,6 +4767,7 @@ function App() {
     lang: lang,
     unlocked: unlocked,
     onGet: unlocked ? () => go('guide') : pickPlan,
+    onAddon: pickPlan,
     onPreview: () => go('preview'),
     clinicTokens: clinicTokens,
     onReviewAnother: () => pickPlan('clinic_check'),
