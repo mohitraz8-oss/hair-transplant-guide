@@ -2540,7 +2540,7 @@ function Landing({
   }, o.price, lang === 'hi' ? ' अलग से' : ' value'))))), !unlocked && React.createElement(PlanComparison, {
     lang: lang,
     onGet: onGet
-  }), !unlocked && React.createElement("section", {
+  }), React.createElement("section", {
     className: "mt-6 space-y-3"
   }, hasClinic && React.createElement(ClinicReviews, {
     lang: lang,
@@ -3965,23 +3965,7 @@ function GuideHome({
     onCallRequested: onCallRequested,
     onBookPaid: onBookPaid,
     onReviewPaid: onReviewPaid
-  })), React.createElement("section", {
-    className: "mt-6 rounded-xl border border-stone-200 bg-white p-5"
-  }, React.createElement("h3", {
-    className: "font-serif text-lg text-emerald-800"
-  }, lang === 'hi' ? "ऐड-ऑन सेवाएँ" : "Add-on services"), React.createElement("p", {
-    className: "mt-1 mb-4 text-sm text-stone-500"
-  }, lang === 'hi' ? "1:1 मदद — कभी भी लें।" : "Extra 1:1 help — available anytime."), React.createElement("button", {
-    onClick: onReviewPaid,
-    className: "mb-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-emerald-800"
-  }, lang === 'hi' ? "क्लिनिक रिव्यू — ₹499" : "Get a Clinic Review — ₹499", React.createElement(ArrowRight, {
-    size: 16
-  })), React.createElement("button", {
-    onClick: onBookPaid,
-    className: "inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-emerald-800"
-  }, lang === 'hi' ? "वीडियो कॉल — ₹999" : "Book a Video Call — ₹999", React.createElement(ArrowRight, {
-    size: 16
-  }))), pop && (isEssential || isPremium) && React.createElement("div", {
+  })), pop && (isEssential || isPremium) && React.createElement("div", {
     className: "fixed inset-0 z-50 flex items-end justify-center bg-black/50",
     onClick: () => setPop(false)
   }, React.createElement("div", {
