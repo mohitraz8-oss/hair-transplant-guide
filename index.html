@@ -17,6 +17,10 @@
 .swg-wrap{max-width:372px;margin:0 auto;background:#F4F1EA;border:1px solid #E7E4DD;border-radius:24px;padding:14px 12px 12px}
 .swg-head{display:flex;justify-content:flex-end;padding:2px 6px 10px}
 .swg-count{font-size:12px;font-weight:600;color:#92400E;background:#FBE7CC;border-radius:999px;padding:3px 10px}
+.swg-titlepill{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#7C3A00;background:#F0CE96;border-radius:999px;padding:4px 11px}
+.plan-dots{display:flex;justify-content:center;gap:7px;margin-bottom:14px}
+.plan-dot{width:7px;height:7px;border-radius:50%;background:#D6D1C7;border:none;padding:0;cursor:pointer;transition:all .2s}
+.plan-dot.on{background:#B45309;width:20px;border-radius:999px}
 .swg-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .swg-track::-webkit-scrollbar{display:none}
 .swg-card{flex:0 0 100%;scroll-snap-align:center;box-sizing:border-box;background:#fff;border:1px solid #E7E4DD;border-radius:18px;padding:22px 20px 20px}
@@ -1743,7 +1747,7 @@ function SwSvg({ n, size, cls }) {
   if (!inner) return null;
   return React.createElement("svg", { className: cls, width: size || 24, height: size || 24, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", dangerouslySetInnerHTML: { __html: inner } });
 }
-function SwipeGallery({ cards, lang, locked }) {
+function SwipeGallery({ cards, lang, locked, title }) {
   const trackRef = React.useRef(null);
   const [idx, setIdx] = React.useState(0);
   const shown = locked ? cards.slice(0, 2) : cards;
@@ -1754,7 +1758,7 @@ function SwipeGallery({ cards, lang, locked }) {
   const cardEl = (c, ci) => (locked && ci === 1) ? React.createElement("div", { key: ci, className: "swg-card swg-lockcard" }, React.createElement("div", { className: "swg-blur" }, body(c)), React.createElement("div", { className: "swg-lockover" }, React.createElement(SwSvg, { n: "lock", size: 26 }), React.createElement("span", null, lang === "hi" ? "\u090f\u0938\u0947\u0902\u0936\u093f\u092f\u0932 \u092e\u0947\u0902 \u0905\u0928\u0932\u0949\u0915 \u0915\u0930\u0947\u0902" : "Unlock in Essential"))) : React.createElement("div", { key: ci, className: "swg-card" }, body(c));
   const go = i => { const ni = Math.max(0, Math.min(n - 1, i)); setIdx(ni); const tr = trackRef.current; if (tr) tr.scrollTo({ left: ni * tr.clientWidth, behavior: "smooth" }); };
   const onScroll = () => { const tr = trackRef.current; if (!tr) return; const ni = Math.round(tr.scrollLeft / tr.clientWidth); if (ni !== idx) setIdx(ni); };
-  return React.createElement("div", { className: "swg-wrap" }, locked ? React.createElement("div", { className: "swg-head", style: { justifyContent: "space-between" } }, React.createElement("span", { className: "swg-pvtag" }, React.createElement(SwSvg, { n: "lock", size: 13 }), lang === "hi" ? "\u092b\u094d\u0930\u0940 \u092a\u094d\u0930\u0940\u0935\u094d\u092f\u0942" : "Free preview"), React.createElement("span", { className: "swg-count" }, pad(idx + 1) + " / " + pad(n))) : React.createElement("div", { className: "swg-head" }, React.createElement("span", { className: "swg-count" }, pad(idx + 1) + " / " + pad(n))), React.createElement("div", { className: "swg-track", ref: trackRef, onScroll: onScroll }, shown.map((c, ci) => cardEl(c, ci))), React.createElement("div", { className: "swg-dots" }, shown.map((c, di) => React.createElement("button", { key: di, className: "swg-dotb" + (di === idx ? " on" : ""), onClick: () => go(di), "aria-label": "Card " + (di + 1) }))), React.createElement("div", { className: "swg-nav" }, React.createElement("button", { className: "swg-btn", onClick: () => go(idx - 1), "aria-label": "Previous" }, React.createElement(SwSvg, { n: "arrow-left", size: 19 })), React.createElement("span", { className: "swg-hint" }, lang === "hi" ? "\u0938\u094d\u0935\u093e\u0907\u092a \u0915\u0930\u0947\u0902" : "Swipe to explore"), React.createElement("button", { className: "swg-btn", onClick: () => go(idx + 1), "aria-label": "Next" }, React.createElement(SwSvg, { n: "arrow-right", size: 19 }))));
+  return React.createElement("div", { className: "swg-wrap" }, locked ? React.createElement("div", { className: "swg-head", style: { justifyContent: "space-between" } }, React.createElement("span", { className: "swg-pvtag" }, React.createElement(SwSvg, { n: "lock", size: 13 }), lang === "hi" ? "\u092b\u094d\u0930\u0940 \u092a\u094d\u0930\u0940\u0935\u094d\u092f\u0942" : "Free preview"), React.createElement("span", { className: "swg-count" }, pad(idx + 1) + " / " + pad(n))) : React.createElement("div", { className: "swg-head", style: title ? { justifyContent: "space-between" } : null }, title ? React.createElement("span", { className: "swg-titlepill" }, L(title, lang)) : null, React.createElement("span", { className: "swg-count" }, pad(idx + 1) + " / " + pad(n))), React.createElement("div", { className: "swg-track", ref: trackRef, onScroll: onScroll }, shown.map((c, ci) => cardEl(c, ci))), React.createElement("div", { className: "swg-dots" }, shown.map((c, di) => React.createElement("button", { key: di, className: "swg-dotb" + (di === idx ? " on" : ""), onClick: () => go(di), "aria-label": "Card " + (di + 1) }))), React.createElement("div", { className: "swg-nav" }, React.createElement("button", { className: "swg-btn", onClick: () => go(idx - 1), "aria-label": "Previous" }, React.createElement(SwSvg, { n: "arrow-left", size: 19 })), React.createElement("span", { className: "swg-hint" }, lang === "hi" ? "\u0938\u094d\u0935\u093e\u0907\u092a \u0915\u0930\u0947\u0902" : "Swipe to explore"), React.createElement("button", { className: "swg-btn", onClick: () => go(idx + 1), "aria-label": "Next" }, React.createElement(SwSvg, { n: "arrow-right", size: 19 }))));
 }
 function Topic({
   topic,
@@ -2029,7 +2033,8 @@ function PlanCard({
   tier,
   currentTier,
   onGet,
-  onUpgrade
+  onUpgrade,
+  pager
 }) {
   const head = {
     essential: {
@@ -2115,7 +2120,7 @@ function PlanCard({
     }, o.price));
   })), React.createElement("div", {
     className: "mt-auto pt-5"
-  }, btn())));
+  }, pager && pager.n > 1 ? React.createElement("div", { className: "plan-dots" }, Array.from({ length: pager.n }).map((_, di) => React.createElement("button", { key: di, className: "plan-dot" + (di === pager.i ? " on" : ""), onClick: () => pager.onDot(di), "aria-label": "Plan " + (di + 1) }))) : null, btn())));
 }
 function PlanComparison({
   lang,
@@ -2144,6 +2149,8 @@ function PlanComparison({
   };
   const visible = currentTier ? TIERS.filter(t => RANK[t.id] >= RANK[currentTier]) : TIERS;
   const [sel, setSel] = useState(currentTier ? (visible.find(t => t.id !== currentTier) || visible[0]).id : 'essential');
+  const startX = React.useRef(0);
+  const selIdx = visible.findIndex(t => t.id === sel);
   return React.createElement("section", {
     id: "pricing",
     className: "mt-6"
@@ -2157,13 +2164,17 @@ function PlanComparison({
     key: pt.id,
     onClick: () => setSel(pt.id),
     className: `flex-1 rounded-full px-2 py-2 text-sm font-semibold transition ${sel === pt.id ? head[pt.id].tab + ' ' + head[pt.id].tabText + ' shadow-sm' : 'text-stone-500 hover:text-stone-800'}`
-  }, L(pt.name, lang)))), React.createElement(PlanCard, {
+  }, L(pt.name, lang)))), React.createElement("div", {
+    onTouchStart: e => { startX.current = e.touches[0].clientX; },
+    onTouchEnd: e => { const dx = e.changedTouches[0].clientX - startX.current; if (Math.abs(dx) > 40) { const ni = selIdx + (dx < 0 ? 1 : -1); if (ni >= 0 && ni < visible.length) setSel(visible[ni].id); } }
+  }, React.createElement(PlanCard, {
     lang: lang,
     tier: sel,
     currentTier: currentTier,
     onGet: onGet,
-    onUpgrade: onUpgrade
-  }));
+    onUpgrade: onUpgrade,
+    pager: { n: visible.length, i: selIdx, onDot: di => setSel(visible[di].id) }
+  })));
 }
 function VideoCallList({
   lang,
@@ -3935,7 +3946,7 @@ function LockedTierPreview({
 }
 function FeaturedSwipe({ section, lang }) {
   if (!section) return null;
-  return React.createElement("section", { className: "mb-6" }, React.createElement("h2", { className: "mb-3 font-serif text-xl text-emerald-800" }, L(section.title, lang)), React.createElement(SwipeGallery, { cards: section.cards, lang: lang }));
+  return React.createElement("section", { className: "mb-6" }, React.createElement(SwipeGallery, { cards: section.cards, lang: lang, title: section.title }));
 }
 const DIET_DAYS = [{"d": {"en": "Day 1", "hi": "दिन 1"}, "t": {"en": "Soft & gentle", "hi": "नरम व हल्का"}, "meals": [{"ic": "🌅", "m": {"en": "Breakfast", "hi": "नाश्ता"}, "s": ["🍥", "Idli + sambar"], "n": ["🥣", "Veg daliya"]}, {"ic": "☀️", "m": {"en": "Lunch", "hi": "दोपहर का खाना"}, "s": ["🍚", "Curd rice + moong dal"], "n": ["🍲", "Moong dal khichdi"]}, {"ic": "🌙", "m": {"en": "Dinner", "hi": "रात का खाना"}, "s": ["🥘", "Rasam + soft rice"], "n": ["🥘", "Dal + soft rice"]}]}, {"d": {"en": "Day 2", "hi": "दिन 2"}, "t": {"en": "Easy protein", "hi": "आसान प्रोटीन"}, "meals": [{"ic": "🌅", "m": {"en": "Breakfast", "hi": "नाश्ता"}, "s": ["🍲", "Ven pongal"], "n": ["🥣", "Veg poha / oats"]}, {"ic": "☀️", "m": {"en": "Lunch", "hi": "दोपहर का खाना"}, "s": ["🍚", "Sambar rice + boiled veg"], "n": ["🫓", "Dal + soft roti + curd"]}, {"ic": "🌙", "m": {"en": "Dinner", "hi": "रात का खाना"}, "s": ["🍚", "Curd rice + steamed veg"], "n": ["🥘", "Palak dal + rice"]}]}, {"d": {"en": "Day 3", "hi": "दिन 3"}, "t": {"en": "Building up", "hi": "धीरे-धीरे बढ़ाना"}, "meals": [{"ic": "🌅", "m": {"en": "Breakfast", "hi": "नाश्ता"}, "s": ["🥞", "Dosa + chutney"], "n": ["🫓", "Paneer paratha + curd"]}, {"ic": "☀️", "m": {"en": "Lunch", "hi": "दोपहर का खाना"}, "s": ["🥘", "Veg sambar + rice + curd"], "n": ["🍛", "Rajma / chana + rice"]}, {"ic": "🌙", "m": {"en": "Dinner", "hi": "रात का खाना"}, "s": ["🍚", "Lemon rice + dal"], "n": ["🫓", "Mixed veg + roti + dal"]}]}, {"d": {"en": "Day 4", "hi": "दिन 4"}, "t": {"en": "Protein & iron", "hi": "प्रोटीन व आयरन"}, "meals": [{"ic": "🌅", "m": {"en": "Breakfast", "hi": "नाश्ता"}, "s": ["🥞", "Uttapam + sambar"], "n": ["🥞", "Besan chilla + curd"]}, {"ic": "☀️", "m": {"en": "Lunch", "hi": "दोपहर का खाना"}, "s": ["🐟", "Fish curry + rice"], "n": ["🍗", "Chicken / dal + roti + salad"]}, {"ic": "🌙", "m": {"en": "Dinner", "hi": "रात का खाना"}, "s": ["🥬", "Curd rice + spinach poriyal"], "n": ["🧀", "Palak paneer + roti"]}]}, {"d": {"en": "Day 5", "hi": "दिन 5"}, "t": {"en": "Full recovery", "hi": "पूरी रिकवरी"}, "meals": [{"ic": "🌅", "m": {"en": "Breakfast", "hi": "नाश्ता"}, "s": ["🍥", "Idli / dosa + sambar"], "n": ["🫓", "Paratha + curd + fruit"]}, {"ic": "☀️", "m": {"en": "Lunch", "hi": "दोपहर का खाना"}, "s": ["🍚", "Rice + rasam + veg + curd"], "n": ["🫓", "Dal + roti + sabzi + salad"]}, {"ic": "🌙", "m": {"en": "Dinner", "hi": "रात का खाना"}, "s": ["🍲", "Vegetable khichdi"], "n": ["🥘", "Dal + rice + veg"]}]}];
 function DietPlan({ lang, locked }) {
@@ -3950,7 +3961,7 @@ function DietPlan({ lang, locked }) {
   const cardEl = (day, di) => (locked && di === 1) ? React.createElement("div", { key: di, className: "dp-card swg-lockcard" }, React.createElement("div", { className: "swg-blur" }, dhead(day), day.meals.map((ml, mi) => meal(ml, mi))), React.createElement("div", { className: "swg-lockover" }, React.createElement(SwSvg, { n: "lock", size: 26 }), React.createElement("span", null, lang === "hi" ? ("\u0938\u092d\u0940 " + DIET_DAYS.length + " \u0926\u093f\u0928 \u090f\u0938\u0947\u0902\u0936\u093f\u092f\u0932 \u092e\u0947\u0902") : ("See all " + DIET_DAYS.length + " days in Essential")))) : React.createElement("div", { key: di, className: "dp-card" }, dhead(day), day.meals.map((ml, mi) => meal(ml, mi)));
   const go = i => { const ni = Math.max(0, Math.min(n - 1, i)); setIdx(ni); const tr = trackRef.current; if (tr) tr.scrollTo({ left: ni * tr.clientWidth, behavior: "smooth" }); };
   const onScroll = () => { const tr = trackRef.current; if (!tr) return; const ni = Math.round(tr.scrollLeft / tr.clientWidth); if (ni !== idx) setIdx(ni); };
-  return React.createElement("div", { className: "dp-wrap" }, locked ? React.createElement("div", { className: "dp-head", style: { justifyContent: "space-between" } }, React.createElement("span", { className: "swg-pvtag" }, React.createElement(SwSvg, { n: "lock", size: 13 }), lang === "hi" ? "\u092b\u094d\u0930\u0940 \u092a\u094d\u0930\u0940\u0935\u094d\u092f\u0942" : "Free preview"), React.createElement("span", { className: "dp-count" }, pad(idx + 1) + " / " + pad(n))) : React.createElement("div", { className: "dp-head" }, React.createElement("span", { className: "dp-eyebrow" }, lang === "hi" ? "5-\u0926\u093f\u0928 \u0930\u093f\u0915\u0935\u0930\u0940 \u0921\u093e\u0907\u091f" : "5-Day Recovery Diet"), React.createElement("span", { className: "dp-count" }, (lang === "hi" ? "\u0926\u093f\u0928 " : "Day ") + (idx + 1) + " / " + n)), React.createElement("div", { className: "dp-track", ref: trackRef, onScroll: onScroll }, shown.map((day, di) => cardEl(day, di))), React.createElement("div", { className: "dp-dots" }, shown.map((day, di) => React.createElement("button", { key: di, className: "dp-dot" + (di === idx ? " on" : ""), onClick: () => go(di), "aria-label": "Day " + (di + 1) }))), React.createElement("div", { className: "dp-nav" }, React.createElement("button", { className: "dp-btn", onClick: () => go(idx - 1), "aria-label": "Previous" }, "\u2039"), React.createElement("span", { className: "dp-hint" }, lang === "hi" ? "\u0926\u093f\u0928 \u0915\u0947 \u0939\u093f\u0938\u093e\u092c \u0938\u0947 \u0938\u094d\u0935\u093e\u0907\u092a \u0915\u0930\u0947\u0902" : "Swipe by day"), React.createElement("button", { className: "dp-btn", onClick: () => go(idx + 1), "aria-label": "Next" }, "\u203a")));
+  return React.createElement("div", { className: "dp-wrap" }, locked ? React.createElement("div", { className: "dp-head", style: { justifyContent: "space-between" } }, React.createElement("span", { className: "swg-pvtag" }, React.createElement(SwSvg, { n: "lock", size: 13 }), lang === "hi" ? "\u092b\u094d\u0930\u0940 \u092a\u094d\u0930\u0940\u0935\u094d\u092f\u0942" : "Free preview"), React.createElement("span", { className: "dp-count" }, pad(idx + 1) + " / " + pad(n))) : React.createElement("div", { className: "dp-head" }, React.createElement("span", { className: "swg-titlepill" }, lang === "hi" ? "5-\u0926\u093f\u0928 \u0930\u093f\u0915\u0935\u0930\u0940 \u0921\u093e\u0907\u091f" : "5-Day Recovery Diet"), React.createElement("span", { className: "dp-count" }, (lang === "hi" ? "\u0926\u093f\u0928 " : "Day ") + (idx + 1) + " / " + n)), React.createElement("div", { className: "dp-track", ref: trackRef, onScroll: onScroll }, shown.map((day, di) => cardEl(day, di))), React.createElement("div", { className: "dp-dots" }, shown.map((day, di) => React.createElement("button", { key: di, className: "dp-dot" + (di === idx ? " on" : ""), onClick: () => go(di), "aria-label": "Day " + (di + 1) }))), React.createElement("div", { className: "dp-nav" }, React.createElement("button", { className: "dp-btn", onClick: () => go(idx - 1), "aria-label": "Previous" }, "\u2039"), React.createElement("span", { className: "dp-hint" }, lang === "hi" ? "\u0926\u093f\u0928 \u0915\u0947 \u0939\u093f\u0938\u093e\u092c \u0938\u0947 \u0938\u094d\u0935\u093e\u0907\u092a \u0915\u0930\u0947\u0902" : "Swipe by day"), React.createElement("button", { className: "dp-btn", onClick: () => go(idx + 1), "aria-label": "Next" }, "\u203a")));
 }
 function GuideHome({
   lang,
@@ -4975,5 +4986,7 @@ if ('serviceWorker' in navigator) {
   });
 }
 </script>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
