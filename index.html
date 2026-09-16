@@ -467,47 +467,8 @@ const CircleDot = p => React.createElement(Ic, p, React.createElement('circle', 
 const PartyPopper = p => React.createElement(Ic, p, P('M5.8 11.3 2 22l10.7-3.79'), P('M4 3h.01M22 8h.01M15 2h.01M22 20h.01'), P('M11 13c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z'), P('m22 2-2.2.7a2.9 2.9 0 0 0-2 3.1c.1.9-.6 1.6-1.4 1.6h-.4c-.9 0-1.6.6-1.8 1.4L14 10'));
 const SECTIONS_META = [
   {
-    "id": 11,
-    "num": "01",
-    "illustration": "recovery-photo",
-    "title": {
-      "en": "Post-Transplant Care",
-      "hi": "ट्रांसप्लांट के बाद देखभाल"
-    },
-    "desc": {
-      "en": "Washing, sleeping, swelling, diet and what to avoid — swipe through the key steps.",
-      "hi": "बाल धोना, सोना, सूजन, डाइट और क्या न करें — मुख्य बातें स्वाइप करके देखें।"
-    }
-  },
-  {
-    "id": 12,
-    "num": "02",
-    "illustration": "cost-infographic",
-    "title": {
-      "en": "Cost in India",
-      "hi": "भारत में खर्च"
-    },
-    "desc": {
-      "en": "How pricing works, cost by technique, typical totals and what's included.",
-      "hi": "कीमत कैसे तय होती है, तकनीक के हिसाब से खर्च, और क्या शामिल है।"
-    }
-  },
-  {
-    "id": 13,
-    "num": "03",
-    "illustration": "clinic-checklist",
-    "title": {
-      "en": "Questions to Ask a Clinic",
-      "hi": "क्लिनिक से पूछने के सवाल"
-    },
-    "desc": {
-      "en": "Seven must-ask questions — and the red flags to watch for.",
-      "hi": "सात ज़रूरी सवाल — और किन बातों से सावधान रहें।"
-    }
-  },
-  {
     "id": 1,
-    "num": "04",
+    "num": "01",
     "illustration": "candidate-photo",
     "title": {
       "en": "Should I Get a Hair Transplant?",
@@ -520,7 +481,7 @@ const SECTIONS_META = [
   },
   {
     "id": 2,
-    "num": "05",
+    "num": "02",
     "illustration": "graft-photo",
     "title": {
       "en": "Understanding Grafts & How Many You Need",
@@ -533,7 +494,7 @@ const SECTIONS_META = [
   },
   {
     "id": 3,
-    "num": "06",
+    "num": "03",
     "illustration": "donor-photo",
     "title": {
       "en": "Your Donor Area: The Real Limit",
@@ -546,7 +507,7 @@ const SECTIONS_META = [
   },
   {
     "id": 4,
-    "num": "07",
+    "num": "04",
     "illustration": "technique-photo",
     "title": {
       "en": "FUE vs FUT: Understanding the Techniques",
@@ -559,7 +520,7 @@ const SECTIONS_META = [
   },
   {
     "id": 5,
-    "num": "08",
+    "num": "05",
     "illustration": "natural-hairline-photo",
     "title": {
       "en": "Designing a Natural Hairline",
@@ -572,7 +533,7 @@ const SECTIONS_META = [
   },
   {
     "id": 6,
-    "num": "09",
+    "num": "06",
     "illustration": "clinic-checklist",
     "title": {
       "en": "Before Choosing a Clinic",
@@ -585,7 +546,7 @@ const SECTIONS_META = [
   },
   {
     "id": 7,
-    "num": "10",
+    "num": "07",
     "illustration": "cost-infographic",
     "title": {
       "en": "Understanding the Real Cost",
@@ -598,7 +559,7 @@ const SECTIONS_META = [
   },
   {
     "id": 8,
-    "num": "11",
+    "num": "08",
     "illustration": "surgery-day-photo",
     "title": {
       "en": "Before & During Surgery",
@@ -611,7 +572,7 @@ const SECTIONS_META = [
   },
   {
     "id": 9,
-    "num": "12",
+    "num": "09",
     "illustration": "recovery-photo",
     "title": {
       "en": "Pain, Recovery & Day-by-Day Aftercare",
@@ -624,7 +585,7 @@ const SECTIONS_META = [
   },
   {
     "id": 10,
-    "num": "13",
+    "num": "10",
     "illustration": "medication-photo",
     "title": {
       "en": "Long-Term Planning: Your Remaining Hair",
@@ -3929,6 +3890,20 @@ function LockedTierPreview({
     size: 16
   })));
 }
+const FEATURED_SWIPE = [{
+  id: '11',
+  title: { en: 'Post-Transplant Care', hi: 'ट्रांसप्लांट के बाद देखभाल' }
+}, {
+  id: '12',
+  title: { en: 'Cost in India', hi: 'भारत में खर्च' }
+}, {
+  id: '13',
+  title: { en: 'Questions to Ask a Clinic', hi: 'क्लिनिक से पूछने के सवाल' }
+}];
+function FeaturedSwipe({ f, sc, lang }) {
+  if (!sc || !sc.topics) return null;
+  return React.createElement("section", { className: "mb-6" }, React.createElement("h2", { className: "mb-3 font-serif text-xl text-emerald-800" }, L(f.title, lang)), sc.topics.map((t, i) => React.createElement(Topic, { key: i, topic: t, lang: lang })));
+}
 function GuideHome({
   lang,
   readSet,
@@ -3940,7 +3915,8 @@ function GuideHome({
   onBookPaid,
   onReviewPaid,
   guideTab,
-  setGuideTab
+  setGuideTab,
+  guideContent
 }) {
   const count = readSet.size;
   const pct = Math.round(count / SECTIONS_META.length * 100);
@@ -4050,7 +4026,14 @@ function GuideHome({
     }), tb.label);
   }))), tab === 'essential' && React.createElement(React.Fragment, null, React.createElement(ProductsCard, {
     lang: lang
-  }), progressAndSections), tab === 'premium' && (RANK.premium > userRank ? React.createElement(PlanCard, {
+  }), guideContent && FEATURED_SWIPE.map(f => React.createElement(FeaturedSwipe, {
+    key: f.id,
+    f: f,
+    sc: guideContent[f.id],
+    lang: lang
+  })), React.createElement("h2", {
+    className: "mb-3 mt-4 font-serif text-xl text-emerald-800"
+  }, lang === 'hi' ? 'पूरी 10-सेक्शन गाइड' : 'The full 10-section guide'), progressAndSections), tab === 'premium' && (RANK.premium > userRank ? React.createElement(PlanCard, {
     lang: lang,
     tier: "premium",
     currentTier: purchase.tier,
@@ -4918,6 +4901,7 @@ function App() {
     onReviewPaid: () => pickPlan('clinic_check'),
     guideTab: guideTab,
     setGuideTab: setGuideTab,
+    guideContent: guideContent,
     onCallRequested: () => setPurchase(p => ({
       ...p,
       callRequested: true
