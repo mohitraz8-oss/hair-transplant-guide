@@ -465,145 +465,177 @@ const CircleDot = p => React.createElement(Ic, p, React.createElement('circle', 
   stroke: 'none'
 }));
 const PartyPopper = p => React.createElement(Ic, p, P('M5.8 11.3 2 22l10.7-3.79'), P('M4 3h.01M22 8h.01M15 2h.01M22 20h.01'), P('M11 13c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z'), P('m22 2-2.2.7a2.9 2.9 0 0 0-2 3.1c.1.9-.6 1.6-1.4 1.6h-.4c-.9 0-1.6.6-1.8 1.4L14 10'));
-const SECTIONS_META = [{
-  "id": 1,
-  "num": "01",
-  "illustration": "candidate-photo",
-  "title": {
-    "en": "Should I Get a Hair Transplant?",
-    "hi": "क्या मुझे हेयर ट्रांसप्लांट कराना चाहिए?"
+const SECTIONS_META = [
+  {
+    "id": 11,
+    "num": "01",
+    "illustration": "recovery-photo",
+    "title": {
+      "en": "Post-Transplant Care",
+      "hi": "ट्रांसप्लांट के बाद देखभाल"
+    },
+    "desc": {
+      "en": "Washing, sleeping, swelling, diet and what to avoid — swipe through the key steps.",
+      "hi": "बाल धोना, सोना, सूजन, डाइट और क्या न करें — मुख्य बातें स्वाइप करके देखें।"
+    }
   },
-  "desc": {
-    "en": "When a transplant makes sense, who is a candidate, and how it compares to medicines, PRP & GFC.",
-    "hi": "ट्रांसप्लांट कब सही है, कौन कैंडिडेट है, और दवाइयों / PRP / GFC से तुलना।"
-  }
-}, {
-  "id": 2,
-  "num": "02",
-  "illustration": "graft-photo",
-  "title": {
-    "en": "Understanding Grafts & How Many You Need",
-    "hi": "ग्राफ्ट्स को समझें और कितने चाहिए"
+  {
+    "id": 12,
+    "num": "02",
+    "illustration": "cost-infographic",
+    "title": {
+      "en": "Cost in India",
+      "hi": "भारत में खर्च"
+    },
+    "desc": {
+      "en": "How pricing works, cost by technique, typical totals and what's included.",
+      "hi": "कीमत कैसे तय होती है, तकनीक के हिसाब से खर्च, और क्या शामिल है।"
+    }
   },
-  "desc": {
-    "en": "What a graft actually is, what determines the count you need, and how a doctor really calculates it.",
-    "hi": "ग्राफ्ट असल में क्या है, कितने चाहिए यह किस पर निर्भर करता है, और डॉक्टर इसे असल में कैसे तय करते हैं।"
-  }
-}, {
-  "id": 3,
-  "num": "03",
-  "illustration": "donor-photo",
-  "title": {
-    "en": "Your Donor Area: The Real Limit",
-    "hi": "आपका डोनर एरिया: असली सीमा"
+  {
+    "id": 13,
+    "num": "03",
+    "illustration": "clinic-checklist",
+    "title": {
+      "en": "Questions to Ask a Clinic",
+      "hi": "क्लिनिक से पूछने के सवाल"
+    },
+    "desc": {
+      "en": "Seven must-ask questions — and the red flags to watch for.",
+      "hi": "सात ज़रूरी सवाल — और किन बातों से सावधान रहें।"
+    }
   },
-  "desc": {
-    "en": "Where your donor hair comes from, what makes it good or weak, and why overharvesting is permanent.",
-    "hi": "डोनर बाल कहाँ से आते हैं, अच्छा या कमज़ोर डोनर एरिया कैसा होता है, और ओवरहार्वेस्टिंग स्थायी क्यों है।"
-  }
-}, {
-  "id": 4,
-  "num": "04",
-  "illustration": "technique-photo",
-  "title": {
-    "en": "FUE vs FUT: Understanding the Techniques",
-    "hi": "FUE बनाम FUT: तकनीकों को समझें"
+  {
+    "id": 1,
+    "num": "04",
+    "illustration": "candidate-photo",
+    "title": {
+      "en": "Should I Get a Hair Transplant?",
+      "hi": "क्या मुझे हेयर ट्रांसप्लांट कराना चाहिए?"
+    },
+    "desc": {
+      "en": "When a transplant makes sense, who is a candidate, and how it compares to medicines, PRP & GFC.",
+      "hi": "ट्रांसप्लांट कब सही है, कौन कैंडिडेट है, और दवाइयों / PRP / GFC से तुलना।"
+    }
   },
-  "desc": {
-    "en": "FUE, FUT and DHI explained side by side, and why the technique name matters less than execution.",
-    "hi": "FUE, FUT और DHI की आसान तुलना, और क्यों तकनीक के नाम से ज़्यादा एक्ज़ीक्यूशन मायने रखता है।"
-  }
-}, {
-  "id": 5,
-  "num": "05",
-  "illustration": "natural-hairline-photo",
-  "title": {
-    "en": "Designing a Natural Hairline",
-    "hi": "नैचुरल हेयरलाइन डिज़ाइन करना"
+  {
+    "id": 2,
+    "num": "05",
+    "illustration": "graft-photo",
+    "title": {
+      "en": "Understanding Grafts & How Many You Need",
+      "hi": "ग्राफ्ट्स को समझें और कितने चाहिए"
+    },
+    "desc": {
+      "en": "What a graft actually is, what determines the count you need, and how a doctor really calculates it.",
+      "hi": "ग्राफ्ट असल में क्या है, कितने चाहिए यह किस पर निर्भर करता है, और डॉक्टर इसे असल में कैसे तय करते हैं।"
+    }
   },
-  "desc": {
-    "en": "What actually makes a hairline look natural, and what should shape its design.",
-    "hi": "असल में हेयरलाइन को नैचुरल क्या बनाता है, और इसका डिज़ाइन किन बातों पर तय होना चाहिए।"
-  }
-}, {
-  "id": 6,
-  "num": "06",
-  "illustration": "clinic-checklist",
-  "title": {
-    "en": "Before Choosing a Clinic",
-    "hi": "क्लिनिक चुनने से पहले"
+  {
+    "id": 3,
+    "num": "06",
+    "illustration": "donor-photo",
+    "title": {
+      "en": "Your Donor Area: The Real Limit",
+      "hi": "आपका डोनर एरिया: असली सीमा"
+    },
+    "desc": {
+      "en": "Where your donor hair comes from, what makes it good or weak, and why overharvesting is permanent.",
+      "hi": "डोनर बाल कहाँ से आते हैं, अच्छा या कमज़ोर डोनर एरिया कैसा होता है, और ओवरहार्वेस्टिंग स्थायी क्यों है।"
+    }
   },
-  "desc": {
-    "en": "How to choose a doctor and clinic, what to check, and 10 key questions to ask before you commit.",
-    "hi": "डॉक्टर और क्लिनिक कैसे चुनें, क्या जाँचें, और तय करने से पहले पूछने के 10 ज़रूरी सवाल।"
-  }
-}, {
-  "id": 7,
-  "num": "07",
-  "illustration": "cost-infographic",
-  "title": {
-    "en": "Understanding the Real Cost",
-    "hi": "असल कीमत को समझें"
+  {
+    "id": 4,
+    "num": "07",
+    "illustration": "technique-photo",
+    "title": {
+      "en": "FUE vs FUT: Understanding the Techniques",
+      "hi": "FUE बनाम FUT: तकनीकों को समझें"
+    },
+    "desc": {
+      "en": "FUE, FUT and DHI explained side by side, and why the technique name matters less than execution.",
+      "hi": "FUE, FUT और DHI की आसान तुलना, और क्यों तकनीक के नाम से ज़्यादा एक्ज़ीक्यूशन मायने रखता है।"
+    }
   },
-  "desc": {
-    "en": "Why there is no fixed price, a realistic per-graft range, and how to compare two quotes fairly.",
-    "hi": "कोई तय कीमत क्यों नहीं होती, एक यथार्थवादी प्रति-ग्राफ्ट रेंज, और दो कोटेशन की सही तुलना कैसे करें।"
-  }
-}, {
-  "id": 8,
-  "num": "08",
-  "illustration": "surgery-day-photo",
-  "title": {
-    "en": "Before & During Surgery",
-    "hi": "सर्जरी से पहले और उसके दौरान"
+  {
+    "id": 5,
+    "num": "08",
+    "illustration": "natural-hairline-photo",
+    "title": {
+      "en": "Designing a Natural Hairline",
+      "hi": "नैचुरल हेयरलाइन डिज़ाइन करना"
+    },
+    "desc": {
+      "en": "What actually makes a hairline look natural, and what should shape its design.",
+      "hi": "असल में हेयरलाइन को नैचुरल क्या बनाता है, और इसका डिज़ाइन किन बातों पर तय होना चाहिए।"
+    }
   },
-  "desc": {
-    "en": "What to do in the 7 days before, what to carry, surgery-day prep, and what actually happens step by step.",
-    "hi": "7 दिन पहले क्या करें, क्या साथ ले जाएँ, सर्जरी वाले दिन की तैयारी, और कदम-दर-कदम क्या होता है।"
-  }
-}, {
-  "id": 9,
-  "num": "09",
-  "illustration": "recovery-photo",
-  "title": {
-    "en": "Pain, Recovery & Day-by-Day Aftercare",
-    "hi": "दर्द, रिकवरी और दिन-प्रतिदिन देखभाल"
+  {
+    "id": 6,
+    "num": "09",
+    "illustration": "clinic-checklist",
+    "title": {
+      "en": "Before Choosing a Clinic",
+      "hi": "क्लिनिक चुनने से पहले"
+    },
+    "desc": {
+      "en": "How to choose a doctor and clinic, what to check, and 10 key questions to ask before you commit.",
+      "hi": "डॉक्टर और क्लिनिक कैसे चुनें, क्या जाँचें, और तय करने से पहले पूछने के 10 ज़रूरी सवाल।"
+    }
   },
-  "desc": {
-    "en": "Honest pain expectations, and a day-by-day recovery timeline through month 3.",
-    "hi": "दर्द को लेकर ईमानदार उम्मीदें, और महीना 3 तक की दिन-प्रतिदिन रिकवरी टाइमलाइन।"
-  }
-}, {
-  "id": 10,
-  "num": "10",
-  "illustration": "medication-photo",
-  "title": {
-    "en": "Long-Term Planning: Your Remaining Hair",
-    "hi": "लंबी अवधि की प्लानिंग: आपके बाकी बाल"
+  {
+    "id": 7,
+    "num": "10",
+    "illustration": "cost-infographic",
+    "title": {
+      "en": "Understanding the Real Cost",
+      "hi": "असल कीमत को समझें"
+    },
+    "desc": {
+      "en": "Why there is no fixed price, a realistic per-graft range, and how to compare two quotes fairly.",
+      "hi": "कोई तय कीमत क्यों नहीं होती, एक यथार्थवादी प्रति-ग्राफ्ट रेंज, और दो कोटेशन की सही तुलना कैसे करें।"
+    }
   },
-  "desc": {
-    "en": "A transplant doesn’t stop future native hair loss — how to plan for it, and when to judge your final result.",
-    "hi": "ट्रांसप्लांट भविष्य में मौजूदा बालों का झड़ना नहीं रोकता — इसकी प्लानिंग कैसे करें, और फाइनल रिज़ल्ट कब आंकें।"
+  {
+    "id": 8,
+    "num": "11",
+    "illustration": "surgery-day-photo",
+    "title": {
+      "en": "Before & During Surgery",
+      "hi": "सर्जरी से पहले और उसके दौरान"
+    },
+    "desc": {
+      "en": "What to do in the 7 days before, what to carry, surgery-day prep, and what actually happens step by step.",
+      "hi": "7 दिन पहले क्या करें, क्या साथ ले जाएँ, सर्जरी वाले दिन की तैयारी, और कदम-दर-कदम क्या होता है।"
+    }
+  },
+  {
+    "id": 9,
+    "num": "12",
+    "illustration": "recovery-photo",
+    "title": {
+      "en": "Pain, Recovery & Day-by-Day Aftercare",
+      "hi": "दर्द, रिकवरी और दिन-प्रतिदिन देखभाल"
+    },
+    "desc": {
+      "en": "Honest pain expectations, and a day-by-day recovery timeline through month 3.",
+      "hi": "दर्द को लेकर ईमानदार उम्मीदें, और महीना 3 तक की दिन-प्रतिदिन रिकवरी टाइमलाइन।"
+    }
+  },
+  {
+    "id": 10,
+    "num": "13",
+    "illustration": "medication-photo",
+    "title": {
+      "en": "Long-Term Planning: Your Remaining Hair",
+      "hi": "लंबी अवधि की प्लानिंग: आपके बाकी बाल"
+    },
+    "desc": {
+      "en": "A transplant doesn’t stop future native hair loss — how to plan for it, and when to judge your final result.",
+      "hi": "ट्रांसप्लांट भविष्य में मौजूदा बालों का झड़ना नहीं रोकता — इसकी प्लानिंग कैसे करें, और फाइनल रिज़ल्ट कब आंकें।"
+    }
   }
-}, {
-  "id": 11,
-  "num": "11",
-  "illustration": "recovery-photo",
-  "title": { "en": "Post-Transplant Care", "hi": "\u091f\u094d\u0930\u093e\u0902\u0938\u092a\u094d\u0932\u093e\u0902\u091f \u0915\u0947 \u092c\u093e\u0926 \u0926\u0947\u0916\u092d\u093e\u0932" },
-  "desc": { "en": "Washing, sleeping, swelling, diet and what to avoid \u2014 swipe through the key steps.", "hi": "\u092c\u093e\u0932 \u0927\u094b\u0928\u093e, \u0938\u094b\u0928\u093e, \u0938\u0942\u091c\u0928, \u0921\u093e\u0907\u091f \u0914\u0930 \u0915\u094d\u092f\u093e \u0928 \u0915\u0930\u0947\u0902 \u2014 \u092e\u0941\u0916\u094d\u092f \u092c\u093e\u0924\u0947\u0902 \u0938\u094d\u0935\u093e\u0907\u092a \u0915\u0930\u0915\u0947 \u0926\u0947\u0916\u0947\u0902\u0964" }
-}, {
-  "id": 12,
-  "num": "12",
-  "illustration": "cost-infographic",
-  "title": { "en": "Cost in India", "hi": "\u092d\u093e\u0930\u0924 \u092e\u0947\u0902 \u0916\u0930\u094d\u091a" },
-  "desc": { "en": "How pricing works, cost by technique, typical totals and what's included.", "hi": "\u0915\u0940\u092e\u0924 \u0915\u0948\u0938\u0947 \u0924\u092f \u0939\u094b\u0924\u0940 \u0939\u0948, \u0924\u0915\u0928\u0940\u0915 \u0915\u0947 \u0939\u093f\u0938\u093e\u092c \u0938\u0947 \u0916\u0930\u094d\u091a, \u0914\u0930 \u0915\u094d\u092f\u093e \u0936\u093e\u092e\u093f\u0932 \u0939\u0948\u0964" }
-}, {
-  "id": 13,
-  "num": "13",
-  "illustration": "clinic-checklist",
-  "title": { "en": "Questions to Ask a Clinic", "hi": "\u0915\u094d\u0932\u093f\u0928\u093f\u0915 \u0938\u0947 \u092a\u0942\u091b\u0928\u0947 \u0915\u0947 \u0938\u0935\u093e\u0932" },
-  "desc": { "en": "Seven must-ask questions \u2014 and the red flags to watch for.", "hi": "\u0938\u093e\u0924 \u091c\u093c\u0930\u0942\u0930\u0940 \u0938\u0935\u093e\u0932 \u2014 \u0914\u0930 \u0915\u093f\u0928 \u092c\u093e\u0924\u094b\u0902 \u0938\u0947 \u0938\u093e\u0935\u0927\u093e\u0928 \u0930\u0939\u0947\u0902\u0964" }
-}];
+];
 const PREVIEW_SAMPLE = [{
   "type": "text",
   "heading": {
