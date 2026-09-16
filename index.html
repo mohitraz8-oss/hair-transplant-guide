@@ -36,6 +36,10 @@
 .swg-btn{width:38px;height:38px;border-radius:50%;background:#fff;border:1px solid #E0DCD3;color:#57534E;display:flex;align-items:center;justify-content:center;cursor:pointer}
 .swg-btn svg{display:block}
 .swg-hint{font-size:12px;color:#A8A29E;display:flex;align-items:center;gap:5px}
+.swg-lockcard{position:relative}
+.swg-blur{filter:blur(3.5px);opacity:.5;pointer-events:none;user-select:none}
+.swg-lockover{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#92400E;font-weight:700;font-size:14px;text-align:center;padding:0 24px}
+.swg-lockover svg{color:#B45309}
 .dp-wrap{max-width:380px;margin:0 auto;background:#F4F1EA;border:1px solid #E7E4DD;border-radius:24px;padding:16px 14px 14px}
 .dp-head{display:flex;align-items:center;justify-content:space-between;padding:2px 6px 12px}
 .dp-eyebrow{font-size:11px;letter-spacing:.10em;text-transform:uppercase;color:#A8A29E;font-weight:500}
@@ -1742,19 +1746,15 @@ function SwSvg({ n, size, cls }) {
 function SwipeGallery({ cards, lang, locked }) {
   const trackRef = React.useRef(null);
   const [idx, setIdx] = React.useState(0);
-  const n = cards.length;
+  const shown = locked ? cards.slice(0, 2) : cards;
+  const n = shown.length;
   const pad = x => (x < 10 ? "0" : "") + x;
   const bullet = k => k === "flag" ? React.createElement(SwSvg, { n: "alert-triangle", size: 17, cls: "swg-flag" }) : React.createElement("span", { className: "swg-bd", "aria-hidden": "true" });
-  const points = c => React.createElement("ul", { className: "swg-list" }, c.points.map((p, pi) => React.createElement("li", { key: pi }, bullet(p.k), React.createElement("span", null, L(p.t, lang)))));
-  const cico = c => React.createElement("div", { className: "swg-icon" }, React.createElement(SwSvg, { n: c.icon.slice(3), size: 30 }));
-  const card = (c, ci) => React.createElement("div", { key: ci, className: "swg-card" }, cico(c), React.createElement("div", { className: "swg-title" }, L(c.title, lang)), points(c));
-  if (locked) {
-    const c0 = cards[0];
-    return React.createElement("div", { className: "swg-wrap" }, React.createElement("div", { className: "swg-track", style: { overflow: "hidden" } }, React.createElement("div", { className: "swg-card" }, React.createElement("div", { className: "swg-pvtop" }, React.createElement("span", { className: "swg-pvtag" }, React.createElement(SwSvg, { n: "lock", size: 13 }), lang === "hi" ? "\u092b\u094d\u0930\u0940 \u092a\u094d\u0930\u0940\u0935\u094d\u092f\u0942" : "Free preview"), React.createElement("span", { className: "swg-pvnum" }, "01 / " + pad(n))), cico(c0), React.createElement("div", { className: "swg-title" }, L(c0.title, lang)), points(c0))), React.createElement("div", { className: "swg-dots" }, cards.map((c, di) => React.createElement("span", { key: di, className: "swg-dotb" + (di === 0 ? " on" : "") }))), React.createElement("div", { className: "swg-pvnote" }, React.createElement(SwSvg, { n: "lock", size: 14 }), lang === "hi" ? ("\u0938\u092d\u0940 " + n + " \u0915\u093e\u0930\u094d\u0921 \u090f\u0938\u0947\u0902\u0936\u093f\u092f\u0932 \u092a\u094d\u0932\u093e\u0928 \u092e\u0947\u0902") : ("See all " + n + " cards in Essential")));
-  }
+  const body = c => [React.createElement("div", { key: "i", className: "swg-icon" }, React.createElement(SwSvg, { n: c.icon.slice(3), size: 30 })), React.createElement("div", { key: "t", className: "swg-title" }, L(c.title, lang)), React.createElement("ul", { key: "l", className: "swg-list" }, c.points.map((p, pi) => React.createElement("li", { key: pi }, bullet(p.k), React.createElement("span", null, L(p.t, lang)))))];
+  const cardEl = (c, ci) => (locked && ci === 1) ? React.createElement("div", { key: ci, className: "swg-card swg-lockcard" }, React.createElement("div", { className: "swg-blur" }, body(c)), React.createElement("div", { className: "swg-lockover" }, React.createElement(SwSvg, { n: "lock", size: 26 }), React.createElement("span", null, lang === "hi" ? "\u090f\u0938\u0947\u0902\u0936\u093f\u092f\u0932 \u092e\u0947\u0902 \u0905\u0928\u0932\u0949\u0915 \u0915\u0930\u0947\u0902" : "Unlock in Essential"))) : React.createElement("div", { key: ci, className: "swg-card" }, body(c));
   const go = i => { const ni = Math.max(0, Math.min(n - 1, i)); setIdx(ni); const tr = trackRef.current; if (tr) tr.scrollTo({ left: ni * tr.clientWidth, behavior: "smooth" }); };
   const onScroll = () => { const tr = trackRef.current; if (!tr) return; const ni = Math.round(tr.scrollLeft / tr.clientWidth); if (ni !== idx) setIdx(ni); };
-  return React.createElement("div", { className: "swg-wrap" }, React.createElement("div", { className: "swg-head" }, React.createElement("span", { className: "swg-count" }, pad(idx + 1) + " / " + pad(n))), React.createElement("div", { className: "swg-track", ref: trackRef, onScroll: onScroll }, cards.map((c, ci) => card(c, ci))), React.createElement("div", { className: "swg-dots" }, cards.map((c, di) => React.createElement("button", { key: di, className: "swg-dotb" + (di === idx ? " on" : ""), onClick: () => go(di), "aria-label": "Card " + (di + 1) }))), React.createElement("div", { className: "swg-nav" }, React.createElement("button", { className: "swg-btn", onClick: () => go(idx - 1), "aria-label": "Previous" }, React.createElement(SwSvg, { n: "arrow-left", size: 19 })), React.createElement("span", { className: "swg-hint" }, lang === "hi" ? "\u0938\u094d\u0935\u093e\u0907\u092a \u0915\u0930\u0947\u0902" : "Swipe to explore"), React.createElement("button", { className: "swg-btn", onClick: () => go(idx + 1), "aria-label": "Next" }, React.createElement(SwSvg, { n: "arrow-right", size: 19 }))));
+  return React.createElement("div", { className: "swg-wrap" }, locked ? React.createElement("div", { className: "swg-head", style: { justifyContent: "space-between" } }, React.createElement("span", { className: "swg-pvtag" }, React.createElement(SwSvg, { n: "lock", size: 13 }), lang === "hi" ? "\u092b\u094d\u0930\u0940 \u092a\u094d\u0930\u0940\u0935\u094d\u092f\u0942" : "Free preview"), React.createElement("span", { className: "swg-count" }, pad(idx + 1) + " / " + pad(n))) : React.createElement("div", { className: "swg-head" }, React.createElement("span", { className: "swg-count" }, pad(idx + 1) + " / " + pad(n))), React.createElement("div", { className: "swg-track", ref: trackRef, onScroll: onScroll }, shown.map((c, ci) => cardEl(c, ci))), React.createElement("div", { className: "swg-dots" }, shown.map((c, di) => React.createElement("button", { key: di, className: "swg-dotb" + (di === idx ? " on" : ""), onClick: () => go(di), "aria-label": "Card " + (di + 1) }))), React.createElement("div", { className: "swg-nav" }, React.createElement("button", { className: "swg-btn", onClick: () => go(idx - 1), "aria-label": "Previous" }, React.createElement(SwSvg, { n: "arrow-left", size: 19 })), React.createElement("span", { className: "swg-hint" }, lang === "hi" ? "\u0938\u094d\u0935\u093e\u0907\u092a \u0915\u0930\u0947\u0902" : "Swipe to explore"), React.createElement("button", { className: "swg-btn", onClick: () => go(idx + 1), "aria-label": "Next" }, React.createElement(SwSvg, { n: "arrow-right", size: 19 }))));
 }
 function Topic({
   topic,
@@ -2033,23 +2033,23 @@ function PlanCard({
 }) {
   const head = {
     essential: {
-      bg: 'bg-emerald-700',
-      name: 'text-white',
-      price: 'text-white',
+      bg: 'bg-emerald-50',
+      name: 'text-emerald-900',
+      price: 'text-emerald-900',
       btn: 'bg-emerald-700 hover:bg-emerald-800 text-white',
       ring: 'ring-emerald-700'
     },
     premium: {
-      bg: 'bg-emerald-800',
-      name: 'text-white',
-      price: 'text-white',
+      bg: 'bg-emerald-50',
+      name: 'text-emerald-900',
+      price: 'text-emerald-900',
       btn: 'bg-emerald-700 hover:bg-emerald-800 text-white',
       ring: 'ring-emerald-800'
     },
     full: {
-      bg: 'bg-emerald-900',
-      name: 'text-white',
-      price: 'text-white',
+      bg: 'bg-emerald-50',
+      name: 'text-emerald-900',
+      price: 'text-emerald-900',
       btn: 'bg-emerald-700 hover:bg-emerald-800 text-white',
       ring: 'ring-emerald-900'
     }
@@ -3941,18 +3941,16 @@ const DIET_DAYS = [{"d": {"en": "Day 1", "hi": "दिन 1"}, "t": {"en": "Soft
 function DietPlan({ lang, locked }) {
   const trackRef = React.useRef(null);
   const [idx, setIdx] = React.useState(0);
-  const n = DIET_DAYS.length;
+  const shown = locked ? DIET_DAYS.slice(0, 2) : DIET_DAYS;
+  const n = shown.length;
+  const pad = x => (x < 10 ? "0" : "") + x;
   const opt = (reg, o) => React.createElement("div", { className: "dp-opt" }, React.createElement("span", { className: "dp-reg" }, reg), React.createElement("span", { className: "dp-pic" }, o[0]), React.createElement("span", null, o[1]));
   const meal = (ml, mi) => React.createElement("div", { key: mi, className: "dp-meal" }, React.createElement("div", { className: "dp-mh" }, ml.ic + " " + L(ml.m, lang)), opt(lang === "hi" ? "\u0938\u093e\u0909\u0925" : "SOUTH", ml.s), opt(lang === "hi" ? "\u0928\u0949\u0930\u094d\u0925" : "NORTH", ml.n));
   const dhead = day => React.createElement("div", { className: "dp-dtop" }, React.createElement("span", { className: "dp-day" }, L(day.d, lang)), React.createElement("span", { className: "dp-sub" }, L(day.t, lang)));
-  if (locked) {
-    const d0 = DIET_DAYS[0];
-    return React.createElement("div", { className: "dp-wrap" }, React.createElement("div", { className: "dp-track", style: { overflow: "hidden" } }, React.createElement("div", { className: "dp-card" }, React.createElement("div", { className: "swg-pvtop" }, React.createElement("span", { className: "swg-pvtag" }, React.createElement(SwSvg, { n: "lock", size: 13 }), lang === "hi" ? "\u092b\u094d\u0930\u0940 \u092a\u094d\u0930\u0940\u0935\u094d\u092f\u0942" : "Free preview"), React.createElement("span", { className: "swg-pvnum" }, (lang === "hi" ? "\u0926\u093f\u0928 " : "Day ") + "1 / " + n)), dhead(d0), d0.meals.map((ml, mi) => meal(ml, mi)))), React.createElement("div", { className: "dp-dots" }, DIET_DAYS.map((day, di) => React.createElement("span", { key: di, className: "dp-dot" + (di === 0 ? " on" : "") }))), React.createElement("div", { className: "swg-pvnote" }, React.createElement(SwSvg, { n: "lock", size: 14 }), lang === "hi" ? ("\u0938\u092d\u0940 " + n + " \u0926\u093f\u0928 \u090f\u0938\u0947\u0902\u0936\u093f\u092f\u0932 \u092a\u094d\u0932\u093e\u0928 \u092e\u0947\u0902") : ("See all " + n + " days in Essential")));
-  }
+  const cardEl = (day, di) => (locked && di === 1) ? React.createElement("div", { key: di, className: "dp-card swg-lockcard" }, React.createElement("div", { className: "swg-blur" }, dhead(day), day.meals.map((ml, mi) => meal(ml, mi))), React.createElement("div", { className: "swg-lockover" }, React.createElement(SwSvg, { n: "lock", size: 26 }), React.createElement("span", null, lang === "hi" ? ("\u0938\u092d\u0940 " + DIET_DAYS.length + " \u0926\u093f\u0928 \u090f\u0938\u0947\u0902\u0936\u093f\u092f\u0932 \u092e\u0947\u0902") : ("See all " + DIET_DAYS.length + " days in Essential")))) : React.createElement("div", { key: di, className: "dp-card" }, dhead(day), day.meals.map((ml, mi) => meal(ml, mi)));
   const go = i => { const ni = Math.max(0, Math.min(n - 1, i)); setIdx(ni); const tr = trackRef.current; if (tr) tr.scrollTo({ left: ni * tr.clientWidth, behavior: "smooth" }); };
   const onScroll = () => { const tr = trackRef.current; if (!tr) return; const ni = Math.round(tr.scrollLeft / tr.clientWidth); if (ni !== idx) setIdx(ni); };
-  const dayCard = (day, di) => React.createElement("div", { key: di, className: "dp-card" }, dhead(day), day.meals.map((ml, mi) => meal(ml, mi)));
-  return React.createElement("div", { className: "dp-wrap" }, React.createElement("div", { className: "dp-head" }, React.createElement("span", { className: "dp-eyebrow" }, lang === "hi" ? "5-\u0926\u093f\u0928 \u0930\u093f\u0915\u0935\u0930\u0940 \u0921\u093e\u0907\u091f" : "5-Day Recovery Diet"), React.createElement("span", { className: "dp-count" }, (lang === "hi" ? "\u0926\u093f\u0928 " : "Day ") + (idx + 1) + " / " + n)), React.createElement("div", { className: "dp-track", ref: trackRef, onScroll: onScroll }, DIET_DAYS.map((day, di) => dayCard(day, di))), React.createElement("div", { className: "dp-dots" }, DIET_DAYS.map((day, di) => React.createElement("button", { key: di, className: "dp-dot" + (di === idx ? " on" : ""), onClick: () => go(di), "aria-label": "Day " + (di + 1) }))), React.createElement("div", { className: "dp-nav" }, React.createElement("button", { className: "dp-btn", onClick: () => go(idx - 1), "aria-label": "Previous" }, "\u2039"), React.createElement("span", { className: "dp-hint" }, lang === "hi" ? "\u0926\u093f\u0928 \u0915\u0947 \u0939\u093f\u0938\u093e\u092c \u0938\u0947 \u0938\u094d\u0935\u093e\u0907\u092a \u0915\u0930\u0947\u0902" : "Swipe by day"), React.createElement("button", { className: "dp-btn", onClick: () => go(idx + 1), "aria-label": "Next" }, "\u203a")));
+  return React.createElement("div", { className: "dp-wrap" }, locked ? React.createElement("div", { className: "dp-head", style: { justifyContent: "space-between" } }, React.createElement("span", { className: "swg-pvtag" }, React.createElement(SwSvg, { n: "lock", size: 13 }), lang === "hi" ? "\u092b\u094d\u0930\u0940 \u092a\u094d\u0930\u0940\u0935\u094d\u092f\u0942" : "Free preview"), React.createElement("span", { className: "dp-count" }, pad(idx + 1) + " / " + pad(n))) : React.createElement("div", { className: "dp-head" }, React.createElement("span", { className: "dp-eyebrow" }, lang === "hi" ? "5-\u0926\u093f\u0928 \u0930\u093f\u0915\u0935\u0930\u0940 \u0921\u093e\u0907\u091f" : "5-Day Recovery Diet"), React.createElement("span", { className: "dp-count" }, (lang === "hi" ? "\u0926\u093f\u0928 " : "Day ") + (idx + 1) + " / " + n)), React.createElement("div", { className: "dp-track", ref: trackRef, onScroll: onScroll }, shown.map((day, di) => cardEl(day, di))), React.createElement("div", { className: "dp-dots" }, shown.map((day, di) => React.createElement("button", { key: di, className: "dp-dot" + (di === idx ? " on" : ""), onClick: () => go(di), "aria-label": "Day " + (di + 1) }))), React.createElement("div", { className: "dp-nav" }, React.createElement("button", { className: "dp-btn", onClick: () => go(idx - 1), "aria-label": "Previous" }, "\u2039"), React.createElement("span", { className: "dp-hint" }, lang === "hi" ? "\u0926\u093f\u0928 \u0915\u0947 \u0939\u093f\u0938\u093e\u092c \u0938\u0947 \u0938\u094d\u0935\u093e\u0907\u092a \u0915\u0930\u0947\u0902" : "Swipe by day"), React.createElement("button", { className: "dp-btn", onClick: () => go(idx + 1), "aria-label": "Next" }, "\u203a")));
 }
 function GuideHome({
   lang,
