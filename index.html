@@ -36,6 +36,28 @@
 .swg-btn{width:38px;height:38px;border-radius:50%;background:#fff;border:1px solid #E0DCD3;color:#57534E;display:flex;align-items:center;justify-content:center;cursor:pointer}
 .swg-btn svg{display:block}
 .swg-hint{font-size:12px;color:#A8A29E;display:flex;align-items:center;gap:5px}
+.dp-wrap{max-width:380px;margin:0 auto;background:#F4F1EA;border:1px solid #E7E4DD;border-radius:24px;padding:16px 14px 14px}
+.dp-head{display:flex;align-items:center;justify-content:space-between;padding:2px 6px 12px}
+.dp-eyebrow{font-size:11px;letter-spacing:.10em;text-transform:uppercase;color:#A8A29E;font-weight:500}
+.dp-count{font-size:12px;font-weight:600;color:#92400E;background:#FBE7CC;border-radius:999px;padding:3px 10px}
+.dp-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.dp-track::-webkit-scrollbar{display:none}
+.dp-card{flex:0 0 100%;scroll-snap-align:center;box-sizing:border-box;background:#fff;border:1px solid #E7E4DD;border-radius:18px;padding:18px 16px 16px}
+.dp-dtop{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid #F1EEE8}
+.dp-day{font-family:'Fraunces',Georgia,serif;font-size:22px;font-weight:600;color:#1C2B24}
+.dp-sub{font-size:12px;color:#B45309;font-weight:600}
+.dp-meal{margin-bottom:12px}
+.dp-meal:last-child{margin-bottom:0}
+.dp-mh{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#047857;margin-bottom:6px}
+.dp-opt{display:flex;align-items:flex-start;gap:8px;font-size:13.5px;color:#44403C;line-height:1.45;padding:3px 0}
+.dp-pic{font-size:17px;line-height:1.2;flex:none}
+.dp-reg{display:inline-block;min-width:42px;font-size:10.5px;font-weight:700;letter-spacing:.04em;color:#B45309;flex:none;margin-top:2px}
+.dp-dots{display:flex;justify-content:center;gap:7px;padding:14px 0 6px}
+.dp-dot{width:7px;height:7px;border-radius:50%;background:#D6D1C7;border:none;padding:0;cursor:pointer;transition:all .2s}
+.dp-dot.on{background:#B45309;width:20px;border-radius:999px}
+.dp-nav{display:flex;align-items:center;justify-content:space-between;padding:2px 4px 0}
+.dp-btn{width:38px;height:38px;border-radius:50%;background:#fff;border:1px solid #E0DCD3;color:#57534E;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px}
+.dp-hint{font-size:12px;color:#A8A29E}
 .swg-pvtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .swg-pvtag{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:#92400E}
 .swg-pvnum{font-size:12px;font-weight:600;color:#92400E;background:#FBE7CC;border-radius:999px;padding:3px 10px}
@@ -600,661 +622,7 @@ const SECTIONS_META = [
     }
   }
 ];
-const SWIPE_SECTIONS = [
-  {
-    "id": "11",
-    "title": {
-      "en": "Post-Transplant Care",
-      "hi": "ट्रांसप्लांट के बाद देखभाल"
-    },
-    "cards": [
-      {
-        "icon": "ti-droplet",
-        "title": {
-          "en": "Washing Your Hair",
-          "hi": "बाल धोना"
-        },
-        "points": [
-          {
-            "t": {
-              "en": "First wash from Day 5",
-              "hi": "पहली वॉश दिन 5 से"
-            },
-            "k": "ok"
-          },
-          {
-            "t": {
-              "en": "Pour water with a cup — no direct shower",
-              "hi": "कप से पानी डालें — सीधे शॉवर नहीं"
-            },
-            "k": "ok"
-          },
-          {
-            "t": {
-              "en": "Fingertips only, never rub or scratch",
-              "hi": "सिर्फ उंगलियों से, रगड़ें या खुजाएं नहीं"
-            },
-            "k": "ok"
-          },
-          {
-            "t": {
-              "en": "Pat dry, wash once a day",
-              "hi": "थपथपाकर सुखाएं, दिन में एक बार धोएं"
-            },
-            "k": "ok"
-          }
-        ]
-      },
-      {
-        "icon": "ti-bed",
-        "title": {
-          "en": "Sleeping",
-          "hi": "सोना"
-        },
-        "points": [
-          {
-            "t": {
-              "en": "On your back, head raised 30–45°",
-              "hi": "पीठ के बल, सिर 30–45° ऊँचा"
-            },
-            "k": "ok"
-          },
-          {
-            "t": {
-              "en": "Use a U-shaped travel pillow",
-              "hi": "U-शेप ट्रैवल तकिया लगाएं"
-            },
-            "k": "ok"
-          },
-          {
-            "t": {
-              "en": "Keep grafts off the pillow",
-              "hi": "ग्राफ्ट्स तकिये से दूर रखें"
-            },
-            "k": "ok"
-          },
-          {
-            "t": {
-              "en": "For the first 7–10 days",
-              "hi": "पहले 7–10 दिन तक"
-            },
-            "k": "ok"
-          }
-        ]
-      },
-      {
-        "icon": "ti-snowflake",
-        "title": {
-          "en": "Swelling",
-          "hi": "सूजन"
-        },
-        "points": [
-          {
-            "t": {
-              "en": "Keep head elevated, day and night",
-              "hi": "सिर दिन-रात ऊँचा रखें"
-            },
-            "k": "ok"
-          },
-          {
-            "t": {
-              "en": "Cold compress on the forehead only",
-              "hi": "ठंडी सिकाई सिर्फ माथे पर"
-            },
-            "k": "ok"
-          },
-          {
-            "t": {
-              "en": "Never on the transplanted area",
-              "hi": "ट्रांसप्लांट वाले हिस्से पर कभी नहीं"
-            },
-            "k": "flag"
-          },
-          {
-            "t": {
-              "en": "Peaks Day 3–4, gone in a week",
-              "hi": "दिन 3–4 में ज़्यादा, एक हफ्ते में ठीक"
-            },
-            "k": "ok"
-          }
-        ]
-      },
-      {
-        "icon": "ti-salad",
-        "title": {
-          "en": "Eating Right",
-          "hi": "सही खाना"
-        },
-        "points": [
-          {
-            "t": {
-              "en": "Protein: eggs, dal, paneer, fish",
-              "hi": "प्रोटीन: अंडे, दाल, पनीर, मछली"
-            },
-            "k": "ok"
-          },
-          {
-            "t": {
-              "en": "Vitamin C: amla, orange, capsicum",
-              "hi": "विटामिन C: आंवला, संतरा, शिमला मिर्च"
-            },
-            "k": "ok"
-          },
-          {
-            "t": {
-              "en": "Iron & zinc: spinach, seeds, nuts",
-              "hi": "आयरन-ज़िंक: पालक, बीज, मेवे"
-            },
-            "k": "ok"
-          },
-          {
-            "t": {
-              "en": "Water: 3–4 litres a day",
-              "hi": "पानी: रोज़ 3–4 लीटर"
-            },
-            "k": "ok"
-          }
-        ]
-      },
-      {
-        "icon": "ti-ban",
-        "title": {
-          "en": "What to Avoid",
-          "hi": "क्या न करें"
-        },
-        "points": [
-          {
-            "t": {
-              "en": "No smoking — the biggest risk",
-              "hi": "धूम्रपान नहीं — सबसे बड़ा जोखिम"
-            },
-            "k": "flag"
-          },
-          {
-            "t": {
-              "en": "No alcohol for 2 weeks",
-              "hi": "2 हफ्ते शराब नहीं"
-            },
-            "k": "flag"
-          },
-          {
-            "t": {
-              "en": "Less salt, sugar, fried food",
-              "hi": "नमक, चीनी, तला कम"
-            },
-            "k": "flag"
-          },
-          {
-            "t": {
-              "en": "No heavy gym for 45 days",
-              "hi": "45 दिन तक भारी जिम नहीं"
-            },
-            "k": "flag"
-          }
-        ]
-      },
-      {
-        "icon": "ti-plant-2",
-        "title": {
-          "en": "Be Patient",
-          "hi": "धैर्य रखें"
-        },
-        "points": [
-          {
-            "t": {
-              "en": "Shedding at weeks 2–6 is normal",
-              "hi": "2–6 हफ्ते में झड़ना सामान्य है"
-            },
-            "k": "ok"
-          },
-          {
-            "t": {
-              "en": "New growth around month 4–5",
-              "hi": "नई ग्रोथ लगभग 4–5 महीने में"
-            },
-            "k": "ok"
-          },
-          {
-            "t": {
-              "en": "Real density by 7–10 months",
-              "hi": "असली घनापन 7–10 महीने में"
-            },
-            "k": "ok"
-          },
-          {
-            "t": {
-              "en": "Final result around 12–14 months",
-              "hi": "फाइनल रिज़ल्ट लगभग 12–14 महीने में"
-            },
-            "k": "ok"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "12",
-    "title": {
-      "en": "Cost in India",
-      "hi": "भारत में खर्च"
-    },
-    "cards": [
-      {
-        "icon": "ti-calculator",
-        "title": {
-          "en": "How Pricing Works",
-          "hi": "कीमत कैसे तय होती है"
-        },
-        "points": [
-          {
-            "t": {
-              "en": "Clinics charge per graft (or a package)",
-              "hi": "क्लिनिक प्रति ग्राफ्ट (या पैकेज) चार्ज करते हैं"
-            },
-            "k": "dot"
-          },
-          {
-            "t": {
-              "en": "Total = grafts needed × price per graft",
-              "hi": "कुल = ज़रूरी ग्राफ्ट × प्रति-ग्राफ्ट कीमत"
-            },
-            "k": "dot"
-          },
-          {
-            "t": {
-              "en": "More area to cover = higher cost",
-              "hi": "ज़्यादा हिस्सा = ज़्यादा खर्च"
-            },
-            "k": "dot"
-          }
-        ]
-      },
-      {
-        "icon": "ti-versions",
-        "title": {
-          "en": "Cost by Technique",
-          "hi": "तकनीक के हिसाब से खर्च"
-        },
-        "points": [
-          {
-            "t": {
-              "en": "FUT (strip): ₹25–₹50 / graft",
-              "hi": "FUT (स्ट्रिप): ₹25–₹50 / ग्राफ्ट"
-            },
-            "k": "dot"
-          },
-          {
-            "t": {
-              "en": "FUE (most common): ₹30–₹80 / graft",
-              "hi": "FUE (सबसे आम): ₹30–₹80 / ग्राफ्ट"
-            },
-            "k": "dot"
-          },
-          {
-            "t": {
-              "en": "DHI (premium): ₹40–₹120 / graft",
-              "hi": "DHI (प्रीमियम): ₹40–₹120 / ग्राफ्ट"
-            },
-            "k": "dot"
-          }
-        ]
-      },
-      {
-        "icon": "ti-coins",
-        "title": {
-          "en": "Typical Total Cost",
-          "hi": "आम तौर पर कुल खर्च"
-        },
-        "points": [
-          {
-            "t": {
-              "en": "~1,500 grafts: ₹45,000 – ₹1,20,000",
-              "hi": "~1,500 ग्राफ्ट: ₹45,000 – ₹1,20,000"
-            },
-            "k": "dot"
-          },
-          {
-            "t": {
-              "en": "~2,000 grafts: ₹60,000 – ₹1,60,000",
-              "hi": "~2,000 ग्राफ्ट: ₹60,000 – ₹1,60,000"
-            },
-            "k": "dot"
-          },
-          {
-            "t": {
-              "en": "~3,000 grafts: ₹90,000 – ₹2,40,000",
-              "hi": "~3,000 ग्राफ्ट: ₹90,000 – ₹2,40,000"
-            },
-            "k": "dot"
-          }
-        ]
-      },
-      {
-        "icon": "ti-hash",
-        "title": {
-          "en": "How Many Grafts?",
-          "hi": "कितने ग्राफ्ट चाहिए"
-        },
-        "points": [
-          {
-            "t": {
-              "en": "Receding hairline: ~1,000–2,000",
-              "hi": "बढ़ता माथा: ~1,000–2,000"
-            },
-            "k": "dot"
-          },
-          {
-            "t": {
-              "en": "Crown / mid-scalp: ~2,000–3,500",
-              "hi": "क्राउन/बीच का हिस्सा: ~2,000–3,500"
-            },
-            "k": "dot"
-          },
-          {
-            "t": {
-              "en": "Extensive baldness: ~3,500–5,000+",
-              "hi": "ज़्यादा गंजापन: ~3,500–5,000+"
-            },
-            "k": "dot"
-          },
-          {
-            "t": {
-              "en": "Exact count after a scalp check",
-              "hi": "सही गिनती स्कैल्प जांच के बाद"
-            },
-            "k": "dot"
-          }
-        ]
-      },
-      {
-        "icon": "ti-adjustments-horizontal",
-        "title": {
-          "en": "What Changes the Price",
-          "hi": "कीमत किन बातों पर निर्भर"
-        },
-        "points": [
-          {
-            "t": {
-              "en": "Number of grafts (the biggest factor)",
-              "hi": "ग्राफ्ट की संख्या (सबसे बड़ा कारण)"
-            },
-            "k": "dot"
-          },
-          {
-            "t": {
-              "en": "Technique: FUT < FUE < DHI",
-              "hi": "तकनीक: FUT < FUE < DHI"
-            },
-            "k": "dot"
-          },
-          {
-            "t": {
-              "en": "Surgeon's experience & the clinic",
-              "hi": "सर्जन का अनुभव और क्लिनिक"
-            },
-            "k": "dot"
-          },
-          {
-            "t": {
-              "en": "City — metros usually cost more",
-              "hi": "शहर — बड़े शहर आमतौर पर महँगे"
-            },
-            "k": "dot"
-          }
-        ]
-      },
-      {
-        "icon": "ti-clipboard-list",
-        "title": {
-          "en": "What's Included?",
-          "hi": "इसमें क्या शामिल है"
-        },
-        "points": [
-          {
-            "t": {
-              "en": "Ask: consultation, meds, PRP, follow-ups?",
-              "hi": "पूछें: कंसल्ट, दवा, PRP, फॉलो-अप?"
-            },
-            "k": "dot"
-          },
-          {
-            "t": {
-              "en": "Is GST (18%) extra, or already included?",
-              "hi": "GST (18%) अलग है या शामिल?"
-            },
-            "k": "dot"
-          },
-          {
-            "t": {
-              "en": "Very cheap (₹10–20/graft) can mean poor results",
-              "hi": "बहुत सस्ता (₹10–20/ग्राफ्ट) = खराब रिज़ल्ट हो सकता है"
-            },
-            "k": "flag"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "13",
-    "title": {
-      "en": "Questions to Ask a Clinic",
-      "hi": "क्लिनिक से पूछने के सवाल"
-    },
-    "cards": [
-      {
-        "icon": "ti-stethoscope",
-        "title": {
-          "en": "Who Will Operate?",
-          "hi": "सर्जरी कौन करेगा?"
-        },
-        "points": [
-          {
-            "t": {
-              "en": "Will the doctor personally make the cuts and hairline?",
-              "hi": "क्या डॉक्टर खुद कट और हेयरलाइन करेंगे?"
-            },
-            "k": "ok"
-          },
-          {
-            "t": {
-              "en": "Which steps: the doctor vs technicians?",
-              "hi": "कौन से चरण: डॉक्टर या टेक्नीशियन?"
-            },
-            "k": "ok"
-          },
-          {
-            "t": {
-              "en": "Red flag: you meet the doctor once, never on surgery day",
-              "hi": "रेड फ्लैग: डॉक्टर एक बार मिले, सर्जरी वाले दिन नहीं"
-            },
-            "k": "flag"
-          }
-        ]
-      },
-      {
-        "icon": "ti-certificate",
-        "title": {
-          "en": "Their Qualifications",
-          "hi": "डॉक्टर की योग्यता"
-        },
-        "points": [
-          {
-            "t": {
-              "en": "MBBS + MCI/NMC registration — can I see proof?",
-              "hi": "MBBS + MCI/NMC रजिस्ट्रेशन — प्रमाण देख सकता हूँ?"
-            },
-            "k": "ok"
-          },
-          {
-            "t": {
-              "en": "How many transplants have you personally done?",
-              "hi": "आपने खुद कितने ट्रांसप्लांट किए हैं?"
-            },
-            "k": "ok"
-          },
-          {
-            "t": {
-              "en": "Red flag: experience they can't show",
-              "hi": "रेड फ्लैग: अनुभव जो दिखा न सकें"
-            },
-            "k": "flag"
-          }
-        ]
-      },
-      {
-        "icon": "ti-photo",
-        "title": {
-          "en": "Real Results",
-          "hi": "असली रिज़ल्ट"
-        },
-        "points": [
-          {
-            "t": {
-              "en": "Before/after of your patients with hair loss like mine",
-              "hi": "मुझ जैसे मरीज़ों की before/after फोटो"
-            },
-            "k": "ok"
-          },
-          {
-            "t": {
-              "en": "Can I speak to one of your past patients?",
-              "hi": "क्या मैं आपके पुराने मरीज़ से बात कर सकता हूँ?"
-            },
-            "k": "ok"
-          },
-          {
-            "t": {
-              "en": "Red flag: only polished, generic stock photos",
-              "hi": "रेड फ्लैग: सिर्फ जनरल स्टॉक फोटो"
-            },
-            "k": "flag"
-          }
-        ]
-      },
-      {
-        "icon": "ti-clipboard-check",
-        "title": {
-          "en": "Am I Ready?",
-          "hi": "क्या मैं अभी तैयार हूँ?"
-        },
-        "points": [
-          {
-            "t": {
-              "en": "Has my hair loss stabilised? (key if under 30)",
-              "hi": "क्या मेरा झड़ना रुक गया है? (30 से कम पर अहम)"
-            },
-            "k": "ok"
-          },
-          {
-            "t": {
-              "en": "How many grafts — is my donor area enough?",
-              "hi": "कितने ग्राफ्ट — मेरा डोनर एरिया काफी है?"
-            },
-            "k": "ok"
-          },
-          {
-            "t": {
-              "en": "Will you plan for my future hair loss too?",
-              "hi": "भविष्य के झड़ने की प्लानिंग भी करेंगे?"
-            },
-            "k": "ok"
-          }
-        ]
-      },
-      {
-        "icon": "ti-tools",
-        "title": {
-          "en": "Technique & Plan",
-          "hi": "तकनीक और प्लान"
-        },
-        "points": [
-          {
-            "t": {
-              "en": "FUE or FUT — and why for my case?",
-              "hi": "FUE या FUT — मेरे केस के लिए क्यों?"
-            },
-            "k": "ok"
-          },
-          {
-            "t": {
-              "en": "Can I approve the hairline design before we start?",
-              "hi": "शुरू करने से पहले हेयरलाइन देख/मंज़ूर कर सकता हूँ?"
-            },
-            "k": "ok"
-          },
-          {
-            "t": {
-              "en": "What graft survival rate do you get?",
-              "hi": "आपका ग्राफ्ट सर्वाइवल रेट क्या है?"
-            },
-            "k": "ok"
-          }
-        ]
-      },
-      {
-        "icon": "ti-currency-rupee",
-        "title": {
-          "en": "The Real Cost",
-          "hi": "असली खर्च"
-        },
-        "points": [
-          {
-            "t": {
-              "en": "A written quote — per graft or full package?",
-              "hi": "लिखित कोटेशन — प्रति ग्राफ्ट या पूरा पैकेज?"
-            },
-            "k": "ok"
-          },
-          {
-            "t": {
-              "en": "What's included: meds, PRP, follow-ups, aftercare?",
-              "hi": "शामिल क्या है: दवा, PRP, फॉलो-अप, आफ्टरकेयर?"
-            },
-            "k": "ok"
-          },
-          {
-            "t": {
-              "en": "Red flag: pressure to pay today, vague pricing",
-              "hi": "रेड फ्लैग: आज ही पैसे भरने का दबाव, अस्पष्ट कीमत"
-            },
-            "k": "flag"
-          }
-        ]
-      },
-      {
-        "icon": "ti-users",
-        "title": {
-          "en": "Quality, Not Quantity",
-          "hi": "क्वालिटी, न कि गिनती"
-        },
-        "points": [
-          {
-            "t": {
-              "en": "How many patients do you do per day?",
-              "hi": "आप दिन में कितने मरीज़ करते हैं?"
-            },
-            "k": "ok"
-          },
-          {
-            "t": {
-              "en": "Red flag: 5–10 a day is a \"factory line\"",
-              "hi": "रेड फ्लैग: दिन में 5–10 = \"फैक्ट्री लाइन\""
-            },
-            "k": "flag"
-          },
-          {
-            "t": {
-              "en": "Who do I contact after surgery if there's a problem?",
-              "hi": "सर्जरी के बाद दिक्कत हो तो किससे संपर्क करूँ?"
-            },
-            "k": "ok"
-          }
-        ]
-      }
-    ]
-  }
-];
+const SWIPE_SECTIONS = [{"id": "12", "title": {"en": "Cost in India", "hi": "भारत में खर्च"}, "cards": [{"icon": "ti-calculator", "title": {"en": "How Pricing Works", "hi": "कीमत कैसे तय होती है"}, "points": [{"t": {"en": "Clinics charge per graft (or a package)", "hi": "क्लिनिक प्रति ग्राफ्ट (या पैकेज) चार्ज करते हैं"}, "k": "dot"}, {"t": {"en": "Total = grafts needed × price per graft", "hi": "कुल = ज़रूरी ग्राफ्ट × प्रति-ग्राफ्ट कीमत"}, "k": "dot"}, {"t": {"en": "More area to cover = higher cost", "hi": "ज़्यादा हिस्सा = ज़्यादा खर्च"}, "k": "dot"}]}, {"icon": "ti-versions", "title": {"en": "Cost by Technique", "hi": "तकनीक के हिसाब से खर्च"}, "points": [{"t": {"en": "FUT (strip): ₹25–₹50 / graft", "hi": "FUT (स्ट्रिप): ₹25–₹50 / ग्राफ्ट"}, "k": "dot"}, {"t": {"en": "FUE (most common): ₹30–₹80 / graft", "hi": "FUE (सबसे आम): ₹30–₹80 / ग्राफ्ट"}, "k": "dot"}, {"t": {"en": "DHI (premium): ₹40–₹120 / graft", "hi": "DHI (प्रीमियम): ₹40–₹120 / ग्राफ्ट"}, "k": "dot"}]}, {"icon": "ti-coins", "title": {"en": "Typical Total Cost", "hi": "आम तौर पर कुल खर्च"}, "points": [{"t": {"en": "~1,500 grafts: ₹45,000 – ₹1,20,000", "hi": "~1,500 ग्राफ्ट: ₹45,000 – ₹1,20,000"}, "k": "dot"}, {"t": {"en": "~2,000 grafts: ₹60,000 – ₹1,60,000", "hi": "~2,000 ग्राफ्ट: ₹60,000 – ₹1,60,000"}, "k": "dot"}, {"t": {"en": "~3,000 grafts: ₹90,000 – ₹2,40,000", "hi": "~3,000 ग्राफ्ट: ₹90,000 – ₹2,40,000"}, "k": "dot"}]}, {"icon": "ti-hash", "title": {"en": "How Many Grafts?", "hi": "कितने ग्राफ्ट चाहिए"}, "points": [{"t": {"en": "Receding hairline: ~1,000–2,000", "hi": "बढ़ता माथा: ~1,000–2,000"}, "k": "dot"}, {"t": {"en": "Crown / mid-scalp: ~2,000–3,500", "hi": "क्राउन/बीच का हिस्सा: ~2,000–3,500"}, "k": "dot"}, {"t": {"en": "Extensive baldness: ~3,500–5,000+", "hi": "ज़्यादा गंजापन: ~3,500–5,000+"}, "k": "dot"}, {"t": {"en": "Exact count after a scalp check", "hi": "सही गिनती स्कैल्प जांच के बाद"}, "k": "dot"}]}, {"icon": "ti-adjustments-horizontal", "title": {"en": "What Changes the Price", "hi": "कीमत किन बातों पर निर्भर"}, "points": [{"t": {"en": "Number of grafts (the biggest factor)", "hi": "ग्राफ्ट की संख्या (सबसे बड़ा कारण)"}, "k": "dot"}, {"t": {"en": "Technique: FUT < FUE < DHI", "hi": "तकनीक: FUT < FUE < DHI"}, "k": "dot"}, {"t": {"en": "Surgeon's experience & the clinic", "hi": "सर्जन का अनुभव और क्लिनिक"}, "k": "dot"}, {"t": {"en": "City — metros usually cost more", "hi": "शहर — बड़े शहर आमतौर पर महँगे"}, "k": "dot"}]}, {"icon": "ti-clipboard-list", "title": {"en": "What's Included?", "hi": "इसमें क्या शामिल है"}, "points": [{"t": {"en": "Ask: consultation, meds, PRP, follow-ups?", "hi": "पूछें: कंसल्ट, दवा, PRP, फॉलो-अप?"}, "k": "dot"}, {"t": {"en": "Is GST (18%) extra, or already included?", "hi": "GST (18%) अलग है या शामिल?"}, "k": "dot"}, {"t": {"en": "Very cheap (₹10–20/graft) can mean poor results", "hi": "बहुत सस्ता (₹10–20/ग्राफ्ट) = खराब रिज़ल्ट हो सकता है"}, "k": "flag"}]}]}, {"id": "11", "title": {"en": "Post-Transplant Care", "hi": "ट्रांसप्लांट के बाद देखभाल"}, "cards": [{"icon": "ti-droplet", "title": {"en": "Washing Your Hair", "hi": "बाल धोना"}, "points": [{"t": {"en": "First wash from Day 5", "hi": "पहली वॉश दिन 5 से"}, "k": "ok"}, {"t": {"en": "Pour water with a cup — no direct shower", "hi": "कप से पानी डालें — सीधे शॉवर नहीं"}, "k": "ok"}, {"t": {"en": "Fingertips only, never rub or scratch", "hi": "सिर्फ उंगलियों से, रगड़ें या खुजाएं नहीं"}, "k": "ok"}, {"t": {"en": "Pat dry, wash once a day", "hi": "थपथपाकर सुखाएं, दिन में एक बार धोएं"}, "k": "ok"}]}, {"icon": "ti-bed", "title": {"en": "Sleeping", "hi": "सोना"}, "points": [{"t": {"en": "On your back, head raised 30–45°", "hi": "पीठ के बल, सिर 30–45° ऊँचा"}, "k": "ok"}, {"t": {"en": "Use a U-shaped travel pillow", "hi": "U-शेप ट्रैवल तकिया लगाएं"}, "k": "ok"}, {"t": {"en": "Keep grafts off the pillow", "hi": "ग्राफ्ट्स तकिये से दूर रखें"}, "k": "ok"}, {"t": {"en": "For the first 7–10 days", "hi": "पहले 7–10 दिन तक"}, "k": "ok"}]}, {"icon": "ti-snowflake", "title": {"en": "Swelling", "hi": "सूजन"}, "points": [{"t": {"en": "Keep head elevated, day and night", "hi": "सिर दिन-रात ऊँचा रखें"}, "k": "ok"}, {"t": {"en": "Cold compress on the forehead only", "hi": "ठंडी सिकाई सिर्फ माथे पर"}, "k": "ok"}, {"t": {"en": "Never on the transplanted area", "hi": "ट्रांसप्लांट वाले हिस्से पर कभी नहीं"}, "k": "flag"}, {"t": {"en": "Peaks Day 3–4, gone in a week", "hi": "दिन 3–4 में ज़्यादा, एक हफ्ते में ठीक"}, "k": "ok"}]}, {"icon": "ti-salad", "title": {"en": "Eating Right", "hi": "सही खाना"}, "points": [{"t": {"en": "Protein: eggs, dal, paneer, fish", "hi": "प्रोटीन: अंडे, दाल, पनीर, मछली"}, "k": "ok"}, {"t": {"en": "Vitamin C: amla, orange, capsicum", "hi": "विटामिन C: आंवला, संतरा, शिमला मिर्च"}, "k": "ok"}, {"t": {"en": "Iron & zinc: spinach, seeds, nuts", "hi": "आयरन-ज़िंक: पालक, बीज, मेवे"}, "k": "ok"}, {"t": {"en": "Water: 3–4 litres a day", "hi": "पानी: रोज़ 3–4 लीटर"}, "k": "ok"}]}, {"icon": "ti-ban", "title": {"en": "What to Avoid", "hi": "क्या न करें"}, "points": [{"t": {"en": "No smoking — the biggest risk", "hi": "धूम्रपान नहीं — सबसे बड़ा जोखिम"}, "k": "flag"}, {"t": {"en": "No alcohol for 2 weeks", "hi": "2 हफ्ते शराब नहीं"}, "k": "flag"}, {"t": {"en": "Less salt, sugar, fried food", "hi": "नमक, चीनी, तला कम"}, "k": "flag"}, {"t": {"en": "No heavy gym for 45 days", "hi": "45 दिन तक भारी जिम नहीं"}, "k": "flag"}]}, {"icon": "ti-plant-2", "title": {"en": "Be Patient", "hi": "धैर्य रखें"}, "points": [{"t": {"en": "Shedding at weeks 2–6 is normal", "hi": "2–6 हफ्ते में झड़ना सामान्य है"}, "k": "ok"}, {"t": {"en": "New growth around month 4–5", "hi": "नई ग्रोथ लगभग 4–5 महीने में"}, "k": "ok"}, {"t": {"en": "Real density by 7–10 months", "hi": "असली घनापन 7–10 महीने में"}, "k": "ok"}, {"t": {"en": "Final result around 12–14 months", "hi": "फाइनल रिज़ल्ट लगभग 12–14 महीने में"}, "k": "ok"}]}]}, {"id": "13", "title": {"en": "Questions to Ask a Clinic", "hi": "क्लिनिक से पूछने के सवाल"}, "cards": [{"icon": "ti-stethoscope", "title": {"en": "Who Will Operate?", "hi": "सर्जरी कौन करेगा?"}, "points": [{"t": {"en": "Will the doctor personally make the cuts and hairline?", "hi": "क्या डॉक्टर खुद कट और हेयरलाइन करेंगे?"}, "k": "ok"}, {"t": {"en": "Which steps: the doctor vs technicians?", "hi": "कौन से चरण: डॉक्टर या टेक्नीशियन?"}, "k": "ok"}, {"t": {"en": "Red flag: you meet the doctor once, never on surgery day", "hi": "रेड फ्लैग: डॉक्टर एक बार मिले, सर्जरी वाले दिन नहीं"}, "k": "flag"}]}, {"icon": "ti-certificate", "title": {"en": "Their Qualifications", "hi": "डॉक्टर की योग्यता"}, "points": [{"t": {"en": "MBBS + MCI/NMC registration — can I see proof?", "hi": "MBBS + MCI/NMC रजिस्ट्रेशन — प्रमाण देख सकता हूँ?"}, "k": "ok"}, {"t": {"en": "How many transplants have you personally done?", "hi": "आपने खुद कितने ट्रांसप्लांट किए हैं?"}, "k": "ok"}, {"t": {"en": "Red flag: experience they can't show", "hi": "रेड फ्लैग: अनुभव जो दिखा न सकें"}, "k": "flag"}]}, {"icon": "ti-photo", "title": {"en": "Real Results", "hi": "असली रिज़ल्ट"}, "points": [{"t": {"en": "Before/after of your patients with hair loss like mine", "hi": "मुझ जैसे मरीज़ों की before/after फोटो"}, "k": "ok"}, {"t": {"en": "Can I speak to one of your past patients?", "hi": "क्या मैं आपके पुराने मरीज़ से बात कर सकता हूँ?"}, "k": "ok"}, {"t": {"en": "Red flag: only polished, generic stock photos", "hi": "रेड फ्लैग: सिर्फ जनरल स्टॉक फोटो"}, "k": "flag"}]}, {"icon": "ti-clipboard-check", "title": {"en": "Am I Ready?", "hi": "क्या मैं अभी तैयार हूँ?"}, "points": [{"t": {"en": "Has my hair loss stabilised? (key if under 30)", "hi": "क्या मेरा झड़ना रुक गया है? (30 से कम पर अहम)"}, "k": "ok"}, {"t": {"en": "How many grafts — is my donor area enough?", "hi": "कितने ग्राफ्ट — मेरा डोनर एरिया काफी है?"}, "k": "ok"}, {"t": {"en": "Will you plan for my future hair loss too?", "hi": "भविष्य के झड़ने की प्लानिंग भी करेंगे?"}, "k": "ok"}]}, {"icon": "ti-tools", "title": {"en": "Technique & Plan", "hi": "तकनीक और प्लान"}, "points": [{"t": {"en": "FUE or FUT — and why for my case?", "hi": "FUE या FUT — मेरे केस के लिए क्यों?"}, "k": "ok"}, {"t": {"en": "Can I approve the hairline design before we start?", "hi": "शुरू करने से पहले हेयरलाइन देख/मंज़ूर कर सकता हूँ?"}, "k": "ok"}, {"t": {"en": "What graft survival rate do you get?", "hi": "आपका ग्राफ्ट सर्वाइवल रेट क्या है?"}, "k": "ok"}]}, {"icon": "ti-currency-rupee", "title": {"en": "The Real Cost", "hi": "असली खर्च"}, "points": [{"t": {"en": "A written quote — per graft or full package?", "hi": "लिखित कोटेशन — प्रति ग्राफ्ट या पूरा पैकेज?"}, "k": "ok"}, {"t": {"en": "What's included: meds, PRP, follow-ups, aftercare?", "hi": "शामिल क्या है: दवा, PRP, फॉलो-अप, आफ्टरकेयर?"}, "k": "ok"}, {"t": {"en": "Red flag: pressure to pay today, vague pricing", "hi": "रेड फ्लैग: आज ही पैसे भरने का दबाव, अस्पष्ट कीमत"}, "k": "flag"}]}, {"icon": "ti-users", "title": {"en": "Quality, Not Quantity", "hi": "क्वालिटी, न कि गिनती"}, "points": [{"t": {"en": "How many patients do you do per day?", "hi": "आप दिन में कितने मरीज़ करते हैं?"}, "k": "ok"}, {"t": {"en": "Red flag: 5–10 a day is a \"factory line\"", "hi": "रेड फ्लैग: दिन में 5–10 = \"फैक्ट्री लाइन\""}, "k": "flag"}, {"t": {"en": "Who do I contact after surgery if there's a problem?", "hi": "सर्जरी के बाद दिक्कत हो तो किससे संपर्क करूँ?"}, "k": "ok"}]}]}];
 const PREVIEW_SAMPLE = [{
   "type": "text",
   "heading": {
@@ -3383,7 +2751,15 @@ function Preview({
     size: 16
   }), " ", lang === 'hi' ? 'वापस' : 'Back'), React.createElement("p", {
     className: "inline-flex rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700"
-  }, L(UI.previewEyebrow, lang))), SWIPE_SECTIONS.map(sec => React.createElement("section", {
+  }, L(UI.previewEyebrow, lang))), React.createElement("section", {
+    key: "pv-diet",
+    className: "mb-5"
+  }, React.createElement("h2", {
+    className: "mb-3 font-serif text-lg text-emerald-700"
+  }, lang === 'hi' ? '5-दिन डाइट प्लान' : '5-Day Diet Plan'), React.createElement(DietPlan, {
+    lang: lang,
+    locked: true
+  })), SWIPE_SECTIONS.map(sec => React.createElement("section", {
     key: "pv-" + sec.id,
     className: "mb-5"
   }, React.createElement("h2", {
@@ -4561,6 +3937,23 @@ function FeaturedSwipe({ section, lang }) {
   if (!section) return null;
   return React.createElement("section", { className: "mb-6" }, React.createElement("h2", { className: "mb-3 font-serif text-xl text-emerald-800" }, L(section.title, lang)), React.createElement(SwipeGallery, { cards: section.cards, lang: lang }));
 }
+const DIET_DAYS = [{"d": {"en": "Day 1", "hi": "दिन 1"}, "t": {"en": "Soft & gentle", "hi": "नरम व हल्का"}, "meals": [{"ic": "🌅", "m": {"en": "Breakfast", "hi": "नाश्ता"}, "s": ["🍥", "Idli + sambar"], "n": ["🥣", "Veg daliya"]}, {"ic": "☀️", "m": {"en": "Lunch", "hi": "दोपहर का खाना"}, "s": ["🍚", "Curd rice + moong dal"], "n": ["🍲", "Moong dal khichdi"]}, {"ic": "🌙", "m": {"en": "Dinner", "hi": "रात का खाना"}, "s": ["🥘", "Rasam + soft rice"], "n": ["🥘", "Dal + soft rice"]}]}, {"d": {"en": "Day 2", "hi": "दिन 2"}, "t": {"en": "Easy protein", "hi": "आसान प्रोटीन"}, "meals": [{"ic": "🌅", "m": {"en": "Breakfast", "hi": "नाश्ता"}, "s": ["🍲", "Ven pongal"], "n": ["🥣", "Veg poha / oats"]}, {"ic": "☀️", "m": {"en": "Lunch", "hi": "दोपहर का खाना"}, "s": ["🍚", "Sambar rice + boiled veg"], "n": ["🫓", "Dal + soft roti + curd"]}, {"ic": "🌙", "m": {"en": "Dinner", "hi": "रात का खाना"}, "s": ["🍚", "Curd rice + steamed veg"], "n": ["🥘", "Palak dal + rice"]}]}, {"d": {"en": "Day 3", "hi": "दिन 3"}, "t": {"en": "Building up", "hi": "धीरे-धीरे बढ़ाना"}, "meals": [{"ic": "🌅", "m": {"en": "Breakfast", "hi": "नाश्ता"}, "s": ["🥞", "Dosa + chutney"], "n": ["🫓", "Paneer paratha + curd"]}, {"ic": "☀️", "m": {"en": "Lunch", "hi": "दोपहर का खाना"}, "s": ["🥘", "Veg sambar + rice + curd"], "n": ["🍛", "Rajma / chana + rice"]}, {"ic": "🌙", "m": {"en": "Dinner", "hi": "रात का खाना"}, "s": ["🍚", "Lemon rice + dal"], "n": ["🫓", "Mixed veg + roti + dal"]}]}, {"d": {"en": "Day 4", "hi": "दिन 4"}, "t": {"en": "Protein & iron", "hi": "प्रोटीन व आयरन"}, "meals": [{"ic": "🌅", "m": {"en": "Breakfast", "hi": "नाश्ता"}, "s": ["🥞", "Uttapam + sambar"], "n": ["🥞", "Besan chilla + curd"]}, {"ic": "☀️", "m": {"en": "Lunch", "hi": "दोपहर का खाना"}, "s": ["🐟", "Fish curry + rice"], "n": ["🍗", "Chicken / dal + roti + salad"]}, {"ic": "🌙", "m": {"en": "Dinner", "hi": "रात का खाना"}, "s": ["🥬", "Curd rice + spinach poriyal"], "n": ["🧀", "Palak paneer + roti"]}]}, {"d": {"en": "Day 5", "hi": "दिन 5"}, "t": {"en": "Full recovery", "hi": "पूरी रिकवरी"}, "meals": [{"ic": "🌅", "m": {"en": "Breakfast", "hi": "नाश्ता"}, "s": ["🍥", "Idli / dosa + sambar"], "n": ["🫓", "Paratha + curd + fruit"]}, {"ic": "☀️", "m": {"en": "Lunch", "hi": "दोपहर का खाना"}, "s": ["🍚", "Rice + rasam + veg + curd"], "n": ["🫓", "Dal + roti + sabzi + salad"]}, {"ic": "🌙", "m": {"en": "Dinner", "hi": "रात का खाना"}, "s": ["🍲", "Vegetable khichdi"], "n": ["🥘", "Dal + rice + veg"]}]}];
+function DietPlan({ lang, locked }) {
+  const trackRef = React.useRef(null);
+  const [idx, setIdx] = React.useState(0);
+  const n = DIET_DAYS.length;
+  const opt = (reg, o) => React.createElement("div", { className: "dp-opt" }, React.createElement("span", { className: "dp-reg" }, reg), React.createElement("span", { className: "dp-pic" }, o[0]), React.createElement("span", null, o[1]));
+  const meal = (ml, mi) => React.createElement("div", { key: mi, className: "dp-meal" }, React.createElement("div", { className: "dp-mh" }, ml.ic + " " + L(ml.m, lang)), opt(lang === "hi" ? "\u0938\u093e\u0909\u0925" : "SOUTH", ml.s), opt(lang === "hi" ? "\u0928\u0949\u0930\u094d\u0925" : "NORTH", ml.n));
+  const dhead = day => React.createElement("div", { className: "dp-dtop" }, React.createElement("span", { className: "dp-day" }, L(day.d, lang)), React.createElement("span", { className: "dp-sub" }, L(day.t, lang)));
+  if (locked) {
+    const d0 = DIET_DAYS[0];
+    return React.createElement("div", { className: "dp-wrap" }, React.createElement("div", { className: "dp-track", style: { overflow: "hidden" } }, React.createElement("div", { className: "dp-card" }, React.createElement("div", { className: "swg-pvtop" }, React.createElement("span", { className: "swg-pvtag" }, React.createElement(SwSvg, { n: "lock", size: 13 }), lang === "hi" ? "\u092b\u094d\u0930\u0940 \u092a\u094d\u0930\u0940\u0935\u094d\u092f\u0942" : "Free preview"), React.createElement("span", { className: "swg-pvnum" }, (lang === "hi" ? "\u0926\u093f\u0928 " : "Day ") + "1 / " + n)), dhead(d0), d0.meals.map((ml, mi) => meal(ml, mi)))), React.createElement("div", { className: "dp-dots" }, DIET_DAYS.map((day, di) => React.createElement("span", { key: di, className: "dp-dot" + (di === 0 ? " on" : "") }))), React.createElement("div", { className: "swg-pvnote" }, React.createElement(SwSvg, { n: "lock", size: 14 }), lang === "hi" ? ("\u0938\u092d\u0940 " + n + " \u0926\u093f\u0928 \u090f\u0938\u0947\u0902\u0936\u093f\u092f\u0932 \u092a\u094d\u0932\u093e\u0928 \u092e\u0947\u0902") : ("See all " + n + " days in Essential")));
+  }
+  const go = i => { const ni = Math.max(0, Math.min(n - 1, i)); setIdx(ni); const tr = trackRef.current; if (tr) tr.scrollTo({ left: ni * tr.clientWidth, behavior: "smooth" }); };
+  const onScroll = () => { const tr = trackRef.current; if (!tr) return; const ni = Math.round(tr.scrollLeft / tr.clientWidth); if (ni !== idx) setIdx(ni); };
+  const dayCard = (day, di) => React.createElement("div", { key: di, className: "dp-card" }, dhead(day), day.meals.map((ml, mi) => meal(ml, mi)));
+  return React.createElement("div", { className: "dp-wrap" }, React.createElement("div", { className: "dp-head" }, React.createElement("span", { className: "dp-eyebrow" }, lang === "hi" ? "5-\u0926\u093f\u0928 \u0930\u093f\u0915\u0935\u0930\u0940 \u0921\u093e\u0907\u091f" : "5-Day Recovery Diet"), React.createElement("span", { className: "dp-count" }, (lang === "hi" ? "\u0926\u093f\u0928 " : "Day ") + (idx + 1) + " / " + n)), React.createElement("div", { className: "dp-track", ref: trackRef, onScroll: onScroll }, DIET_DAYS.map((day, di) => dayCard(day, di))), React.createElement("div", { className: "dp-dots" }, DIET_DAYS.map((day, di) => React.createElement("button", { key: di, className: "dp-dot" + (di === idx ? " on" : ""), onClick: () => go(di), "aria-label": "Day " + (di + 1) }))), React.createElement("div", { className: "dp-nav" }, React.createElement("button", { className: "dp-btn", onClick: () => go(idx - 1), "aria-label": "Previous" }, "\u2039"), React.createElement("span", { className: "dp-hint" }, lang === "hi" ? "\u0926\u093f\u0928 \u0915\u0947 \u0939\u093f\u0938\u093e\u092c \u0938\u0947 \u0938\u094d\u0935\u093e\u0907\u092a \u0915\u0930\u0947\u0902" : "Swipe by day"), React.createElement("button", { className: "dp-btn", onClick: () => go(idx + 1), "aria-label": "Next" }, "\u203a")));
+}
 function GuideHome({
   lang,
   readSet,
@@ -4683,7 +4076,11 @@ function GuideHome({
     }), tb.label);
   }))), tab === 'essential' && React.createElement(React.Fragment, null, React.createElement(ProductsCard, {
     lang: lang
-  }), SWIPE_SECTIONS.map(sec => React.createElement(FeaturedSwipe, {
+  }), React.createElement("section", {
+    className: "mb-6"
+  }, React.createElement(DietPlan, {
+    lang: lang
+  })), SWIPE_SECTIONS.map(sec => React.createElement(FeaturedSwipe, {
     key: sec.id,
     section: sec,
     lang: lang
