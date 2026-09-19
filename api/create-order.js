@@ -15,7 +15,7 @@
 // When ready for real launch, tell Claude "switch to real prices" (server
 // amounts here + the display prices in app-source.jsx get flipped back).
 const TIERS = {
-  essential: { amount: 4900, label: 'Essential' },
+  essential: { amount: 2100, label: 'Essential' },
   premium:   { amount: 69900, label: 'Premium' },
   full:      { amount: 149900, label: 'Full' },
   clinic_check: { amount: 49900, label: 'Clinic Check' },
