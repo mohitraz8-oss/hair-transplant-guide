@@ -3,8 +3,8 @@
 // on the server; the browser only sends its access token and the target tier.
 //
 // TIER_AMOUNT must stay in sync with create-order.js.
-// Real launch amounts (paise): essential 29900, premium 69900, full 149900.
-const TIER_AMOUNT = { essential: 100, premium: 200, full: 300 }; // TEST prices
+// LIVE amounts (paise): essential 0 (free), premium 69900 (₹699), full 149900 (₹1,499).
+const TIER_AMOUNT = { essential: 0, premium: 69900, full: 149900 }; // LIVE (essential is free, so upgrade = full target price)
 const RANK = { essential: 1, premium: 2, full: 3 };
 
 module.exports = async (req, res) => {
