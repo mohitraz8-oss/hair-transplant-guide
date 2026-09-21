@@ -3,17 +3,12 @@
 // tier was picked (e.g. "premium"), never the amount. This means a person
 // can't tamper with the price by editing the page or the request.
 //
-// TEMPORARY TEST PRICES — ₹1 / ₹2 / ₹3 — for testing the full flow cheaply.
-// Real prices to restore later: essential 19900 (₹199), premium 49900 (₹499), full 99900 (₹999).
-// ==== REAL LAUNCH PRICES ACTIVE ====
-// Real launch prices to restore before going live (amount is in paise):
-//   essential     4900  (₹49 offer, ₹299 original)
+// ==== LIVE PRICES (amount is in paise) ====
+//   essential  = FREE (handled by /api/free-access — never charged here)
 //   premium      69900  (₹699)
 //   full        149900  (₹1,499)
 //   clinic_check  49900  (₹499)
 //   video_call    99900  (₹999)
-// When ready for real launch, tell Claude "switch to real prices" (server
-// amounts here + the display prices in app-source.jsx get flipped back).
 const TIERS = {
   essential: { amount: 2100, label: 'Essential' },
   premium:   { amount: 69900, label: 'Premium' },
