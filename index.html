@@ -720,8 +720,12 @@ const OFFERINGS = [{
 }];
 const TIERS = [{
   id: 'essential',
-  price: '₹21',
+  price: 'Free',
   compareAt: '₹299',
+  badge: {
+    en: 'Trial offer — only for first 100 followers',
+    hi: 'ट्रायल ऑफर — सिर्फ पहले 100 फॉलोअर्स के लिए'
+  },
   name: {
     en: 'Essential',
     hi: 'एसेंशियल'
@@ -807,7 +811,7 @@ const UI = {
     en: 'Hair Transplant Guide',
     hi: 'हेयर ट्रांसप्लांट गाइड'
   },
-  price: '₹21',
+  price: 'Free',
   oneTime: {
     en: 'One-time payment',
     hi: 'एक बार का भुगतान'
@@ -1896,7 +1900,10 @@ function PricingTable({
     className: `relative flex flex-col rounded-xl border bg-white p-5 ${tier.popular ? 'border-emerald-600 shadow-md sm:scale-105' : 'border-stone-200'}`
   }, tier.popular && React.createElement("span", {
     className: "absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-sage-600 px-3 py-1 text-[10px] font-bold tracking-wide text-stone-900"
-  }, L(UI.mostPopular, lang)), tier.compareAt && React.createElement("span", {
+  }, L(UI.mostPopular, lang)), tier.badge && /*#__PURE__*/React.createElement("span", {
+    className: "self-center mb-3 rounded-full px-3 py-1 text-center",
+    style: { background: "#FEF3C7", color: "#92400E", fontSize: "11px", fontWeight: 700, lineHeight: 1.3 }
+  }, L(tier.badge, lang)), tier.compareAt && React.createElement("span", {
     className: "absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-sage-600 px-3 py-1 text-[10px] font-bold tracking-wide text-stone-900"
   }, lang === 'hi' ? "सिर्फ़ पहले 50 फॉलोअर्स के लिए ट्रायल ऑफर" : "Trial offer only for first 50 followers"), React.createElement("p", {
     className: "text-center text-sm font-semibold uppercase tracking-wide text-stone-500"
@@ -2803,6 +2810,34 @@ function Preview({
     lang: lang,
     onGet: onGet
   }));
+}
+function FreeForm({ lang, onSubmit, busy, error, onBack }) {
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [err, setErr] = useState('');
+  const submit = () => {
+    const nm = name.trim();
+    let d = phone.replace(/\D/g, '');
+    if (d.length === 12 && d.slice(0, 2) === '91') d = d.slice(2);
+    if (d.length === 11 && d[0] === '0') d = d.slice(1);
+    const okp = /^[6-9]\d{9}$/.test(d) && !/^(\d)\1{9}$/.test(d) && d !== '1234567890' && d !== '9876543210';
+    if (nm.length < 2) { setErr(lang === 'hi' ? 'कृपया अपना नाम भरें' : 'Please enter your name'); return; }
+    if (!okp) { setErr(lang === 'hi' ? 'सही 10 अंकों का मोबाइल नंबर डालें' : 'Enter a valid 10-digit mobile number'); return; }
+    setErr('');
+    onSubmit(nm, d);
+  };
+  return React.createElement("div", { className: "mx-auto max-w-md px-5 pb-16" },
+    React.createElement("button", { onClick: onBack, className: "mt-6 mb-4 inline-flex items-center gap-1.5 text-sm font-medium text-stone-500 hover:text-stone-800" }, React.createElement(ArrowLeft, { size: 16 }), " ", lang === 'hi' ? 'वापस' : 'Back'),
+    React.createElement("h1", { className: "mb-2 font-serif text-2xl text-stone-900" }, lang === 'hi' ? 'फ्री एक्सेस पाएं' : 'Get free access'),
+    React.createElement("p", { className: "mb-6 text-sm leading-relaxed text-stone-500" }, lang === 'hi' ? 'बस अपना नाम और मोबाइल नंबर डालें — कोई पेमेंट नहीं। पहले 100 फॉलोअर्स के लिए फ्री।' : "Just your name and mobile number — no payment. Free for the first 100 followers."),
+    React.createElement("label", { className: "mb-1.5 block text-sm font-medium text-stone-700" }, lang === 'hi' ? 'नाम' : 'Name'),
+    React.createElement("input", { type: "text", value: name, onChange: e => setName(e.target.value), placeholder: lang === 'hi' ? 'आपका नाम' : 'Your name', className: "mb-4 w-full rounded-xl border border-stone-300 px-4 py-3 text-base text-stone-900 outline-none focus:border-emerald-600" }),
+    React.createElement("label", { className: "mb-1.5 block text-sm font-medium text-stone-700" }, lang === 'hi' ? 'मोबाइल नंबर' : 'Mobile number'),
+    React.createElement("input", { type: "tel", inputMode: "numeric", value: phone, onChange: e => setPhone(e.target.value), placeholder: "9876500000", className: "mb-4 w-full rounded-xl border border-stone-300 px-4 py-3 text-base text-stone-900 outline-none focus:border-emerald-600" }),
+    (err || error) && React.createElement("div", { className: "mb-5 flex gap-2.5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-xs leading-relaxed text-red-700" }, React.createElement(Info, { size: 15, className: "mt-0.5 shrink-0" }), React.createElement("p", null, err || error)),
+    React.createElement("button", { onClick: submit, disabled: busy, className: "inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-700 px-6 py-3.5 text-base font-semibold text-white transition hover:bg-emerald-800 disabled:opacity-70" }, busy ? (lang === 'hi' ? 'प्रोसेस हो रहा है…' : 'Please wait…') : (lang === 'hi' ? 'फ्री गाइड अनलॉक करें' : 'Unlock free guide')),
+    React.createElement("p", { className: "mt-3 flex items-center justify-center gap-1.5 text-center text-xs text-stone-400" }, React.createElement(ShieldCheck, { size: 13 }), " ", lang === 'hi' ? 'आपका नंबर सुरक्षित है — कभी शेयर नहीं होगा।' : "Your number is safe — we'll never share it.")
+  );
 }
 function Payment({
   lang,
@@ -4708,7 +4743,27 @@ function App() {
   }, []);
   function pickPlan(tierId) {
     setSelectedTierId(tierId);
-    go('payment');
+    go(tierId === 'essential' ? 'freeform' : 'payment');
+  }
+  async function startFree(name, phone) {
+    setPayBusy(true);
+    setPayError('');
+    try {
+      const r = await fetch('/api/free-access', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name, phone: phone })
+      });
+      const d = await r.json();
+      if (!r.ok || !d.ok || !d.token) throw new Error('free');
+      try { window.localStorage.setItem('ht_token', d.token); } catch (_) {}
+      const okc = await loadContent(d.token);
+      setPayBusy(false);
+      if (okc) go('success'); else throw new Error('content');
+    } catch (e) {
+      setPayBusy(false);
+      setPayError(L(UI.verifyError, lang));
+    }
   }
   async function startCheckout() {
     setPayBusy(true);
@@ -4952,6 +5007,12 @@ function App() {
     busy: payBusy,
     error: payError,
     onBack: () => go('landing')
+  }), view === 'freeform' && React.createElement(FreeForm, {
+    lang: lang,
+    onSubmit: startFree,
+    busy: payBusy,
+    error: payError,
+    onBack: () => go('landing')
   }), view === 'success' && React.createElement(Success, {
     lang: lang,
     onOpen: () => go('guide')
@@ -5002,7 +5063,7 @@ if ('serviceWorker' in navigator) {
 <script defer src="/_vercel/insights/script.js"></script>
 <a href="https://wa.me/919225285358?text=Hi%20Mohit%2C%20I%20saw%20Hair360%20and%20I%27d%20like%20to%20know%20more%20about%20hair%20transplant"
    target="_blank" rel="noopener noreferrer" aria-label="Chat with Mohit on WhatsApp"
-   style="position:fixed;right:16px;bottom:16px;z-index:99999;display:flex;align-items:center;gap:9px;background:#25D366;color:#fff;text-decoration:none;padding:12px 18px 12px 15px;border-radius:999px;box-shadow:0 6px 20px rgba(0,0,0,.22);font-family:inherit;font-weight:700;font-size:15px;line-height:1;-webkit-tap-highlight-color:transparent;">
+   style="position:fixed;left:16px;bottom:16px;z-index:99999;display:flex;align-items:center;gap:9px;background:#25D366;color:#fff;text-decoration:none;padding:12px 18px 12px 15px;border-radius:999px;box-shadow:0 6px 20px rgba(0,0,0,.22);font-family:inherit;font-weight:700;font-size:15px;line-height:1;-webkit-tap-highlight-color:transparent;">
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff" style="flex:none;"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.2 4.79 1.2h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.13h-.01c-1.52 0-3.01-.41-4.31-1.18l-.31-.18-3.2.84.85-3.12-.2-.32a8.23 8.23 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.25 8.24zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.16.25-.64.81-.79.97-.15.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43l-.48-.01c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg>
   Chat with me
 </a>
