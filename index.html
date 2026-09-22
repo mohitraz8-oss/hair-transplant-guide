@@ -2095,7 +2095,7 @@ function PlanCard({
     return React.createElement("button", {
       onClick: () => onGet(t.id),
       className: `w-full rounded-xl px-4 py-3.5 text-sm font-bold transition ${h.btn}`
-    }, lang === 'hi' ? 'यह प्लान लें' : 'Get this plan');
+    }, t.id === 'essential' ? (lang === 'hi' ? 'खोलें' : 'Open') : (lang === 'hi' ? 'यह प्लान लें' : 'Get this plan'));
   };
   return React.createElement("div", {
     className: `flex flex-col overflow-hidden rounded-xl bg-white ${t.popular ? 'shadow-sm border border-emerald-200' : 'border border-stone-200 shadow-sm'}`,
@@ -2629,7 +2629,7 @@ function Landing({
   }, React.createElement(Check, {
     size: 14,
     className: "shrink-0 text-teal-600"
-  }), lang === 'hi' ? o.hi : o.en))), !unlocked && React.createElement("button", {
+  }), lang === 'hi' ? o.hi : o.en))), false && React.createElement("button", {
     onClick: onPreview,
     className: "mt-3.5 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-emerald-700 px-6 py-2.5 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-50"
   }, lang === 'hi' ? 'फ्री झलक देखें' : 'Preview a free sample', React.createElement(ArrowRight, {
@@ -5076,10 +5076,15 @@ if ('serviceWorker' in navigator) {
 (function(){
   var f=document.getElementById('wa-fab'); if(!f) return;
   var t;
-  function collapseSoon(ms){ clearTimeout(t); t=setTimeout(function(){ f.classList.remove('wa-open'); }, ms); }
-  // brief peek on load so people notice it, then tuck into a circle
-  f.classList.add('wa-open'); collapseSoon(2500);
-  window.addEventListener('scroll', function(){ f.classList.add('wa-open'); collapseSoon(1500); }, {passive:true});
+  function collapse(ms){ clearTimeout(t); t=setTimeout(function(){ f.classList.remove('wa-open'); }, ms); }
+  function onMove(){ f.classList.add('wa-open'); collapse(1500); }
+  // brief peek on load so it's noticed, then tuck into a circle
+  f.classList.add('wa-open'); collapse(2500);
+  // capture:true also catches scrolling inside inner scroll containers, not just the window
+  window.addEventListener('scroll', onMove, { passive: true, capture: true });
+  document.addEventListener('scroll', onMove, { passive: true, capture: true });
+  window.addEventListener('touchmove', onMove, { passive: true });
+  window.addEventListener('wheel', onMove, { passive: true });
 })();
 </script>
 </body>
